@@ -14,7 +14,7 @@ public class DescriptionManager {
 	}
 	
 	public void insertDescription(Description d, int patientId) {
-		String sql = "INSERT into Description (description_id, gender, cause) VALUES (?, ?, ?) "; 
+		String sql = "INSERT into Descriptions (description_id, gender, cause, patient_id) VALUES (?, ?, ?, ?) "; 
 		
 			try {
 				Connection conn = connectionManager.getConnection(); 
