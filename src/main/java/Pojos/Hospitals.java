@@ -5,16 +5,16 @@ import java.util.Objects;
 public class Hospitals {
 	
 	public String hospitalName;
-	public String hospitalLocation;
+	public String hospitalCity;
 	public int hospitalId;
 	
 	
 	public Hospitals() {
 	}
 	
-	public Hospitals(String hospitalName, String hospitalLocation, int hospitalId) {
+	public Hospitals(String hospitalName, String hospitalCity, int hospitalId) {
 		this.hospitalName = hospitalName;
-		this.hospitalLocation = hospitalLocation;
+		this.hospitalCity = hospitalCity;
 		this.hospitalId = hospitalId;
 	}
 	
@@ -36,11 +36,11 @@ public class Hospitals {
 	}
 	
 	public String getHospitalLocation() {
-		return hospitalLocation;
+		return hospitalCity;
 	}
 	
-	public void setHospitalLocation(String hospitalLocation) {
-		this.hospitalLocation=hospitalLocation;
+	public void setHospitalLocation(String hospitalCity) {
+		this.hospitalCity=hospitalCity;
 	}
 
 	
@@ -63,7 +63,7 @@ public class Hospitals {
 		return  "Hospital:" + 
 	            "hospitalID=" + hospitalId +
                 ", name='" + hospitalName + '\'' +
-                ", location=" + hospitalLocation +
+                ", location=" + hospitalCity +
                 '}';
 	}
 }
