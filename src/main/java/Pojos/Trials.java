@@ -1,22 +1,35 @@
 package Pojos;
 import java.util.Objects;
+import java.time.LocalDate;
 
 public class Trials {
 
     
     private int trialId;      
     private String trialName; 
-    private int startingDate; // ahora esta como int pero creo que sera mejor hacer como LocalDate
+    private LocalDate startingDate;
+    private int durationDays;
+    private double budget;
+    private int targetPatients;
 
     
     public Trials() {
     }
 
    
-    public Trials(int trialId, String trialName, int startingDate) {
+    public Trials(int trialId, String trialName, LocalDate startingDate) {
         this.trialId = trialId;
         this.trialName = trialName;
         this.startingDate = startingDate;
+    }
+    
+    public Trials(int trialId, String trialName, LocalDate startingDate, int durationDays, double budget, int targetPatients) {
+        this.trialId = trialId;
+        this.trialName = trialName;
+        this.startingDate = startingDate;
+        this.durationDays = durationDays;
+        this.budget = budget;
+        this.targetPatients = targetPatients;
     }
 
     // Getters y Setters
@@ -36,12 +49,36 @@ public class Trials {
         this.trialName = trialName;
     }
 
-    public int getStartingDate() {
+    public LocalDate getStartingDate() {
         return startingDate;
     }
 
-    public void setStartingDate(int startingDate) {
+    public void setStartingDate(LocalDate startingDate) {
         this.startingDate = startingDate;
+    }
+    
+    public int getDurationDays() {
+        return durationDays;
+    }
+
+    public void setDurationDays(int durationDays) {
+        this.durationDays = durationDays;
+    }
+
+    public double getBudget() {
+        return budget;
+    }
+
+    public void setBudget(double budget) {
+        this.budget = budget;
+    }
+
+    public int getTargetPatients() {
+        return targetPatients;
+    }
+
+    public void setTargetPatients(int targetPatients) {
+        this.targetPatients = targetPatients;
     }
 
     
@@ -61,10 +98,13 @@ public class Trials {
 
     @Override
     public String toString() {
-        return "Trial{" +
+        return "Trials{" +
                 "trialId=" + trialId +
                 ", trialName='" + trialName + '\'' +
                 ", startingDate=" + startingDate +
+                ", durationDays=" + durationDays +
+                ", budget=" + budget +
+                ", targetPatients=" + targetPatients +
                 '}';
     }
 }

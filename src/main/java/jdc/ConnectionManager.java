@@ -24,11 +24,10 @@ public class ConnectionManager {
 	private void createTables() {
 		try {
 			Statement s = c.createStatement();
-
-			String TrialTable = "CREATE TABLE IF NOT EXISTS Trials (" + "trial_id INTEGER NOT NULL UNIQUE, "
-					+ "trial_name TEXT NOT NULL, " + "starting_date INTEGER NOT NULL, " + "PRIMARY KEY(trial_id)"
-					+ ");";
-	
+			
+			String trialTable = "CREATE TABLE IF NOT EXISTS Trials (" + "trial_id INTEGER NOT NULL UNIQUE, "
+			        + "trial_name TEXT NOT NULL, " + "starting_date TEXT NOT NULL, " + "duration_days INTEGER NOT NULL, "
+			        + "budget REAL NOT NULL, " + "target_patients INTEGER NOT NULL, " + "PRIMARY KEY(trial_id)" + ");";
 
 			String DoctorsTable = "CREATE TABLE IF NOT EXISTS Doctors (" + "doctor_id INTEGER NOT NULL UNIQUE, "
 					+ "doctor_name TEXT NOT NULL, " + "doctor_gender TEXT NOT NULL, " + "trial_id INTEGER NOT NULL, "
