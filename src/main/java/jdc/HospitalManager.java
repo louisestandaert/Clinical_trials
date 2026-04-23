@@ -1,5 +1,6 @@
 package jdc;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -27,5 +28,49 @@ public class HospitalManager {
 		}
 		
 	}
+	
+	
+	public void removeHospital(int hospitalId) {
+		String sql="DELETE FROM Hospitals WHERE hospital_id=?";
+		try {
+			PreparedStatement ps=c.prepareStatement(sql);
+			ps.setInt(1,hospitalId);
+			
+			int rowsAffected=ps.executeUpdate();
+			if(rowsAffected>0) {
+				System.out.println("Hospital has been removed correctly");
+			}else {
+				System.out.println("No hospital has the ID given: " + hospitalId);
+			}
+			
+			ps.close();
+			
+		}catch(SQLException e) {
+			System.err.println("There has been an error trying to remove the hospital: " + e.getMessage());
+		}
+	}
 
+	
+	public void showAllHospitals() {
+		String sql="SELECT * FROM Hospitals";
+		
+		try {
+			PreparedStatement ps= c.prepareStatement(sql);
+			ResultSet rs= ps.executeQuery();
+			
+			while(rs.next()) {
+				int hospitalId= rs.getInt("hospital_id");
+                String hospitalName= rs.getString("hospital_name");
+                String hospitalCity= rs.getString("city");
+                
+                System.out.println("Hospital ID: " + hospitalId + ", Name: " + hospitalName + ", City: " + hospitalCity);
+			}
+			rs.close();
+			ps.close();
+			
+			
+		}catch(SQLException e) {
+			System.err.println("There has been an error while trying to show all hospitals:" + e.getMessage());
+		}
+	}
 }

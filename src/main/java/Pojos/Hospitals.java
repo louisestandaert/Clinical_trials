@@ -12,7 +12,7 @@ public class Hospitals {
 	public Hospitals() {
 	}
 	
-	public Hospitals(String hospitalName, String hospitalCity, int hospitalId) {
+	public Hospitals(int hospitalId,String hospitalName, String hospitalCity) {
 		this.hospitalName = hospitalName;
 		this.hospitalCity = hospitalCity;
 		this.hospitalId = hospitalId;
