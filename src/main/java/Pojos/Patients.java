@@ -37,5 +37,12 @@ public class Patients {
 	    public int hashCode() {
 	        return Objects.hash(patientsId);
 	    }
+	    
+	    @Override
+		public String toString() {
+			return "Patients{" + "patientsId=" + patientsId + ", patientName='" + patientName + '\'' + ", results='"
+					+ results + '\'' + ", trialId=" + trialId + ", hospitalId=" + hospitalId + ", descriptionId="
+					+ descriptionId + '}';
+		}
 	}
 
