@@ -7,8 +7,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import Pojos.Trials;
-import jdbc.ConnectionManager; 
+import Pojos.Trials; 
 
 public class TrialManager {
 	private ConnectionManager connectionManager;
