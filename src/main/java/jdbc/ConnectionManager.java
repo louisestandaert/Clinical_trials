@@ -1,4 +1,4 @@
-package jdc;
+package jdbc;
 
 import java.sql.Connection;
 import java.sql.Statement;

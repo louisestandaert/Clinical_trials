@@ -1,4 +1,4 @@
-package jdc;
+package jdbc;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -134,8 +134,120 @@ public class TrialManager {
     }
 	
 	// See del ensayo 5
-	
+	 public Trials seeTrial(int trialId) {
+	        String sql = "SELECT * FROM trial WHERE trial_id = ?";
+
+	        try (Connection connection = connectionManager.getConnection();
+	             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+	            ps.setInt(1, trialId);
+
+	            try (ResultSet resultSet = ps.executeQuery()) {
+	                if (resultSet.next()) {
+	                    return buildTrial(resultSet);
+	                }
+	            }
+
+	        } catch (SQLException e) {
+	            System.err.println("Error getting trial: " + e.getMessage());
+	        }
+
+	        return null;
+	    }
+	 
+	 //remove trial 6
+	 public boolean removeTrial(int trialId) {
+		 String checkDoctorSql = "SELECT COUNT (*) FROM doctor WHERE trial_id = ?";
+		 String checkPatientSql = "SELECT COUNT(*) FROM patient WHERE trial_id = ?";
+		 String deleteTrialSql = "DELETE FROM trials WHERE trial_id = ?";
+		 
+		 try (Connection connection = connectionManager.getConnection()) {
+			 
+			 connection.setAutoCommit(false);
+			 
+			 try(PreparedStatement psDoctor = connection.prepareStatement(checkDoctorSql);
+					 PreparedStatement psPatient = connection.prepareStatement(checkPatientSql);
+					 PreparedStatement psDelete = connection.prepareStatement(deleteTrialSql)){
+				 
+				 psDoctor.setInt(1, trialId);
+				 ResultSet doctorResult = psDoctor.executeQuery();
+				 
+				 if(doctorResult.next() && doctorResult.getInt(1)>0) {
+					 System.err.println("Trial removal went wrong. There are Doctors assigned to this trial");
+					 connection.rollback();
+					 return false;
+				 }
+				 
+				 psPatient.setInt(1, trialId);
+				 ResultSet patientResult = psPatient.executeQuery();
+				 
+				 if(patientResult.next() && patientResult.getInt(1)>0) {
+					 System.err.println("Trial removal went wrong. There are Patients enrolled to this trial");
+					 connection.rollback();
+					 return false;
+					 
+				 }
+				 
+				 psDelete.setInt(1, trialId);
+				 int rowsAffected = psDelete.executeUpdate();
+				 connection.commit();
+		         return rowsAffected > 0;
+				 
+			 }catch (SQLException e) {
+		            connection.rollback();
+		            System.err.println("Error removing trial: " + e.getMessage());
+		            return false;	 
+			 }finally{
+	            connection.setAutoCommit(true);
+	         }
+			 
+	    } catch (SQLException e) {
+	        System.err.println("Database error removing trial: " + e.getMessage());
+	        return false;
+	    }  
+	 }
+	 
+	 //calcular media duracion 7
+	 public double calculateAverageDuration() {
+	        String sql = "SELECT AVG(duration_days) AS avg_duration FROM trial"; //añado el apodo AS para lgo recuperarlo por el nombre y no la posicion
+	        
+	        try(Connection connection = connectionManager.getConnection();
+	        	PreparedStatement ps = connection.prepareStatement(sql);
+	        	ResultSet resultSet = ps.executeQuery()){
+	        		
+	        		if(resultSet.next()) {
+	        			return resultSet.getDouble("avg_duration");
+	        		}
+	        		
+	        } catch (SQLException e) {
+	        	System.err.println("Error calculating average duration: " + e.getMessage());
+	        }
+	        return 0.0;
+	 }
+	 
+	//calcular media presupuesto 8
+	    public double calculateAverageBudget() {
+	        String sql = "SELECT AVG(budget) AS avg_budget FROM trial";
+
+	        try (Connection connection = connectionManager.getConnection();
+	             PreparedStatement ps = connection.prepareStatement(sql);
+	             ResultSet rs = ps.executeQuery()) {
+
+	            if (rs.next()) {
+	                return rs.getDouble("avg_budget");
+	            }
+
+	        } catch (SQLException e) {
+	            System.err.println("Error calculating average budget: " + e.getMessage());
+	        }
+
+	        return 0.0;
+	    }
+	    //hola
+	    
+	    
 }
+
 
 	
 
@@ -144,6 +256,7 @@ public class TrialManager {
 
 				
 			
+
 		
 		
 	

@@ -1,4 +1,4 @@
-package jdc;
+package jdbc;
 
 public class managers {
 	

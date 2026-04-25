@@ -1,8 +1,15 @@
 package main;
 
-import jdc.ConnectionManager;
-import jdc.HospitalManager;
-import jdc.PatientManager;
+<<<<<<< Updated upstream
+import jdbc.ConnectionManager;
+import jdbc.HospitalManager;
+import jdbc.PatientManager;
+=======
+import Pojos.Description;
+import jdbc.ConnectionManager;
+import jdbc.DescriptionManager;
+import jdbc.TrialManager; 
+>>>>>>> Stashed changes
 
 import java.util.Scanner;
 
@@ -16,7 +23,11 @@ public class Main {
 		
 		ConnectionManager cm = new ConnectionManager(); 
 		DescriptionManager dm = new DescriptionManager(cm); 
+<<<<<<< Updated upstream
 		HospitalManager hm = new HospitalManager(cm.getConnection());
+=======
+		TrialManager tm = new TrialManager(cm);
+>>>>>>> Stashed changes
 		
 		//fake userinterface 
 		

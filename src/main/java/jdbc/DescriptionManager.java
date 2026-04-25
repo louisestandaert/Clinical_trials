@@ -1,10 +1,10 @@
-package jdc;
+package jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import Pojos.Description;
-import jdc.ConnectionManager;
+import jdbc.ConnectionManager;
 
 public class DescriptionManager {
 	private ConnectionManager connectionManager;
