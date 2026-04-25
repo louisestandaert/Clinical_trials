@@ -12,13 +12,14 @@ public class HospitalManager {
 		this.c=c;
 	}
 	
-	public void insertHospital(String hospitalName, String city) {
-		String sql= "INSERT INTO Hospitals (hospital_name, city) VALUES (?,?)";
+	public void insertHospital(int hospital_id,String hospitalName, String city) {
+		String sql= "INSERT INTO Hospitals (hospital_id, hospital_name, city) VALUES (?,?,?)";
 		
 		try {
 			PreparedStatement ps=c.prepareStatement(sql);
-			ps.setString(1, hospitalName);
-			ps.setString(2, city);
+			ps.setInt(1, hospital_id);
+			ps.setString(2, hospitalName);
+			ps.setString(3, city);
 			
 			ps.executeUpdate();
 			System.out.println("The hospital has been inserted correctly.");
