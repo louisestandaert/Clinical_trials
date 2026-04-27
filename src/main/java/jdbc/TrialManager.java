@@ -243,10 +243,73 @@ public class TrialManager {
 
 	        return 0.0;
 	    }
-	    //hola
 	    
+	    //comparar resultados, si hay mas pos o neg 9
+	    public String resultsComparation(int trialId) {
+	        String sql =
+	            "SELECT " +
+	            "SUM(CASE WHEN LOWER(results) = 'positive' THEN 1 ELSE 0 END) AS positive_count, " +
+	            "SUM(CASE WHEN LOWER(results) = 'negative' THEN 1 ELSE 0 END) AS negative_count " +
+	            "FROM patient WHERE trial_id = ?";
+
+	        try (Connection connection = connectionManager.getConnection();
+	             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+	            ps.setInt(1, trialId);
+	            
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    int positive = rs.getInt("positive_count");
+	                    int negative = rs.getInt("negative_count");
+
+	                    if (positive > negative) {
+	                        return "Results are more positive.";
+	                    } else if (negative > positive) {
+	                        return "Results are more negative.";
+	                    } else {
+	                        return "Results are balanced or equal.";
+	                    }
+	                }
+	            }
+	        } catch (SQLException e) {
+	            System.err.println("Error checking results: " + e.getMessage());
+	        }
+	           
+	        return "No results available.";
+	    }
 	    
-}
+	    //prediccion pacientes nuevos 10
+	    public int predictHowManyNewPatientsRequired(int trialId) {
+	        String sql =
+	            "SELECT t.target_patients, COUNT(p.patient_id) AS current_patients " +
+	            "FROM trial AS t " +
+	            "JOIN patient AS p ON t.trial_id = p.trial_id " +
+	            "WHERE t.trial_id = ? " +
+	            "GROUP BY t.target_patients";
+
+	        try (Connection connection = connectionManager.getConnection();
+	             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+	            ps.setInt(1, trialId);
+
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    int targetPatients = rs.getInt("target_patients");
+	                    int currentPatients = rs.getInt("current_patients");
+
+	                    int needed = targetPatients - currentPatients;
+	                    return Math.max(needed, 0);
+	                }
+	            }
+
+	        } catch (SQLException e) {
+	            System.err.println("Error predicting new patients required: " + e.getMessage());
+	        }
+
+	        return 0;
+	    }
+}//end
+
 
 
 	
