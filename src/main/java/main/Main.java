@@ -4,8 +4,12 @@ import jdbc.ConnectionManager;
 import jdbc.HospitalManager;
 import jdbc.PatientManager;
 import jdbc.DescriptionManager;
+import jdbc.DoctorManager;
 import jdbc.TrialManager;
+
 import java.util.Scanner;
+
+import Pojos.DoctorSpecialty;
 
 public class Main {
 	public static void main(String[] args) {
@@ -15,11 +19,12 @@ public class Main {
 		// fake userinterface
 
 		System.out.println("Welcome to the Clinical Trials Database!");
-		System.out.println("please choose an opcion:");
+		System.out.println("please choose an option:");
 		System.out.println("1.probando patient manager");
 		System.out.println("2.probando hospital manager");
 		System.out.println("3.probando description manager");
 		System.out.println("4.probando trial manager");
+		System.out.println("5.probando doctor manager");
 
 		Scanner scanner = new Scanner(System.in);
 		int choice = scanner.nextInt();
@@ -59,6 +64,15 @@ public class Main {
 			//esta programado diferente dejo alvaro hacerlo. 
 			break;
 
+		case 5:
+			System.out.println("Testing Doctor Manager...");
+			DoctorManager dm= new DoctorManager(cm.getConnection());
+			System.out.println(dm.showAllDoctors());
+			dm.insertDoctor(2, "Dr. House", "male", DoctorSpecialty.CARDIOLOGY);
+			System.out.println(dm.findDoctorByGender("male"));
+			System.out.println(dm.sortDoctorBySpecialty(DoctorSpecialty.CARDIOLOGY));
+			dm.removeDoctor(2);
+			break;
 		default:
 			System.out.println("Invalid choice.");
 		}
@@ -66,15 +80,7 @@ public class Main {
 		/**
 		 * las cosas de mencia Description d1 = new Description(1, "Female", "Asthma");
 		 * Description d2 = new Description(2, "Male", "Diabetes"); Description d3 = new
-		 * Description(3, "Female", "Hypertension");
-		 * 
-		 * Hospitals h1= new Hospitals(1, "Hospital A", "Madrid"); Hospitals h2= new
-		 * Hospitals(2, "Hospital B", "Barcelona");
-		 * 
-		 * hm.insertHospital(h1.getHospitalName(), h1.getHospitalLocation());
-		 * hm.insertHospital(h2.getHospitalName(), h2.getHospitalLocation());
-		 * hm.showAllHospitals(); hm.removeHospital(1);
-		 * 
+		 * Description(3, "Female", "Hypertension"); 
 		 * dm.insertDescription(d1,1); dm.insertDescription(d2,2);
 		 * dm.insertDescription(d3,3);
 		 **/

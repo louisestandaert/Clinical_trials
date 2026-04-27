@@ -7,14 +7,16 @@ public class Doctors {
 	private int doctorId;
 	private String doctorName;
 	private String doctorGender;
+	private DoctorSpecialty doctorSpecialty;
 	
 	public Doctors() {
 	}
 	
-	public Doctors(int doctorId, String doctorName, String doctorGender) {
+	public Doctors(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpeciatly) {
 		this.doctorId=doctorId;
 		this.doctorName=doctorName;
 		this.doctorGender=doctorGender;
+		this.doctorSpecialty=doctorSpecialty;
 	}
 	
 	//Getters y setters
@@ -42,6 +44,14 @@ public class Doctors {
 		this.doctorGender=doctorGender;
 	}
 	
+	public DoctorSpecialty getDoctorSpecialty() {
+		        return doctorSpecialty;
+	}
+	
+	public void setDoctorSpecialty(DoctorSpecialty doctorSpecialty) {
+        this.doctorSpecialty=doctorSpecialty;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -60,8 +70,9 @@ public class Doctors {
 	public String toString() {
 		return  "Doctor:" + 
 	            "doctorID" + doctorId +
-                ", name='" + doctorName + '\'' +
+                ", name='" + doctorName + 
                 ", gender=" + doctorGender +
+                ", specialty=" + doctorSpecialty +
                 '}';
 	}
 }
