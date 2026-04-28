@@ -12,7 +12,7 @@ public class Hospitals {
 	public Hospitals() {
 	}
 	
-	public Hospitals(int hospitalId,String hospitalName, String hospitalCity) {
+	public Hospitals(String hospitalName, String hospitalCity, int hospitalId) {
 		this.hospitalName = hospitalName;
 		this.hospitalCity = hospitalCity;
 		this.hospitalId = hospitalId;
@@ -63,7 +63,7 @@ public class Hospitals {
 		return  "Hospital:" + 
 	            "hospitalID=" + hospitalId +
                 ", name='" + hospitalName + '\'' +
-                ", location=" + hospitalCity +
+                ", city=" + hospitalCity +
                 '}';
 	}
 }

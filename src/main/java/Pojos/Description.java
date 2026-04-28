@@ -6,14 +6,16 @@ public class Description {
 	private int description_id; 
 	private String gender; 
 	private String cause;
+	private int patient_id;
 	
 	public Description(){
 	}
 	
-	public Description(int description_id, String gender, String cause) {
+	public Description(int description_id, String gender, String cause, int patient_id) {
 		this.description_id=description_id;
 		this.gender=gender;
 		this.cause=cause;
+		this.patient_id=patient_id;
 	}
 	
 	//Getters y setters
@@ -41,10 +43,15 @@ public class Description {
 		this.cause=cause;
 	}
 	
+	public int getPatient_id() {
+		return patient_id;
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+        
         Description description = (Description) o;
         return description_id == description.description_id;
 		
@@ -60,7 +67,8 @@ public class Description {
 		return  "Description:" + 
 	            "descriptionID=" + description_id +
                 ", gender='" + gender + '\'' +
-                ", cause=" + cause +
+                ", cause=" + cause + '\'' +
+                ", patientID=" + patient_id +
                 '}';
 	}
 	
