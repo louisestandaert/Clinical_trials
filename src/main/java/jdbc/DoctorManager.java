@@ -44,7 +44,7 @@ public class DoctorManager {
 			if(row>0) {
                 System.out.println("The doctor has been removed correctly.");
 			}else {
-				System.out.println("No doctor has the ID given: " + d.getDoctorId());
+				System.out.println("No doctor has the ID given: " + doctorId);
 			}
 		}catch(SQLException e) {
 			System.err.println("There has been an error while trying to remove the doctor:" + e.getMessage());

@@ -66,12 +66,12 @@ public class Main {
 
 		case 5:
 			System.out.println("Testing Doctor Manager...");
-			DoctorManager dm= new DoctorManager(cm.getConnection());
-			System.out.println(dm.showAllDoctors());
-			dm.insertDoctor(2, "Dr. House", "male", DoctorSpecialty.CARDIOLOGY);
-			System.out.println(dm.findDoctorByGender("male"));
-			System.out.println(dm.sortDoctorBySpecialty(DoctorSpecialty.CARDIOLOGY));
-			dm.removeDoctor(2);
+			DoctorManager dm1= new DoctorManager(cm.getConnection());
+			System.out.println(dm1.showAllDoctors());
+			dm1.insertDoctor(2, "Dr. House", "male", DoctorSpecialty.CARDIOLOGY);
+			System.out.println(dm1.findDoctorByGender("male"));
+			System.out.println(dm1.sortDoctorBySpecialty(DoctorSpecialty.CARDIOLOGY));
+			dm1.removeDoctor(2);
 			break;
 		default:
 			System.out.println("Invalid choice.");
