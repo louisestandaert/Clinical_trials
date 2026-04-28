@@ -35,14 +35,14 @@ public class ConnectionManager {
 			        + "target_patients INTEGER NOT NULL, " 
 			        + "PRIMARY KEY(trial_id));";
 
-			String DoctorsTable = "CREATE TABLE IF NOT EXISTS Doctors (" 
-			        + "doctor_id INTEGER NOT NULL UNIQUE, "
-			        + "doctor_name TEXT NOT NULL, " 
-			        + "doctor_gender TEXT NOT NULL, "
-			        + "doctor_specialty TEXT NOT NULL,"
-			        + "trial_id INTEGER NOT NULL, "
-			        + "PRIMARY KEY(doctor_id), " 
-			        + "FOREIGN KEY(trial_id) REFERENCES Trials(trial_id));";
+			String DoctorsTable = "CREATE TABLE IF NOT EXISTS Doctors ("
+				    + "doctor_id INTEGER NOT NULL UNIQUE, "
+				    + "doctor_name TEXT NOT NULL, "         
+				    + "doctor_gender TEXT NOT NULL, "       
+				    + "doctor_specialty TEXT NOT NULL, "   
+				    + "trial_id INTEGER NOT NULL, "        
+				    + "PRIMARY KEY(doctor_id), "
+				    + "FOREIGN KEY(trial_id) REFERENCES Trials(trial_id));";
 
 			String HospitalsTable = "CREATE TABLE IF NOT EXISTS Hospitals ("
 			        + "hospital_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " 
@@ -123,6 +123,13 @@ public class ConnectionManager {
 			stmt.execute("DROP TABLE IF EXISTS Patients;");*/
 			
 			
+			try {
+	            stmt.executeUpdate("ALTER TABLE Doctors ADD COLUMN doctor_specialty TEXT DEFAULT 'UNKNOWN'");
+	        } catch (Exception e) {
+	            System.out.println("doctor_specialty already exists.");
+	        }
+			
+			
 			stmt.executeUpdate(
 					"INSERT OR IGNORE INTO Trials (trial_id, trial_name, starting_date, duration_days,"
 					+ " budget, target_patients) VALUES (1, 'Trial A', '2025-01-01', 180, 1000.00, 200)");
@@ -131,7 +138,7 @@ public class ConnectionManager {
 			stmt.executeUpdate("INSERT OR IGNORE INTO Hospitals (hospital_name, city, hospital_id) VALUES ('Hospital A', 'Madrid',1)");
 			
 			//anadir doctor
-			stmt.executeUpdate("INSERT OR IGNORE INTO Doctors (doctor_id, doctor_name, doctor_gender, doctor_specialty, trial_id) VALUES (1, 'Dr. Smith', 'female', 1)");
+			stmt.executeUpdate("INSERT OR IGNORE INTO Doctors (doctor_id, doctor_name, doctor_gender, doctor_specialty, trial_id) VALUES (1, 'Dr. Smith','female','surgeon', 1)");
 			
 			//anadir descripcion
 			stmt.executeUpdate("INSERT OR IGNORE INTO Descriptions (description_id, gender, cause, patient_id) VALUES (1, 'male', 'cause A', 1)");
