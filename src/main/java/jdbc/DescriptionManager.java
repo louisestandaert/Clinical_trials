@@ -29,7 +29,7 @@ public class DescriptionManager {
 						
 				pst.executeUpdate();
 				
-				System.out.println("DThe description has been inserted correctly."); 
+				System.out.println("The description has been inserted correctly."); 
 						
 				
 			} catch (SQLException e) {
@@ -59,7 +59,7 @@ public class DescriptionManager {
 			 e.printStackTrace();
 		}
 	}
-		
+	
 	
 	public List<Description> showAllDescriptions() {
 		List<Description> descriptionList = new ArrayList<>();
@@ -80,12 +80,46 @@ public class DescriptionManager {
 				descriptionList.add(description);
 			}
 			
-			} catch (SQLException e) {
+			
+		} catch (SQLException e) {
 				System.err.println("There has been an error while trying to show all descriptions: " + e.getMessage());
 				e.printStackTrace();
-			}
+		}
+		
 		return descriptionList;
 	}
+	
+	
+	public Description findDescriptionByID(int descriptionId) {
+		String sql = "SELECT * FROM Descriptions WHERE description_id = ?"; 
+		
+		try { 
+			PreparedStatement pst = descriptionConnection.prepareStatement(sql); 
+			
+			pst.setInt(1, descriptionId); 
+			
+			ResultSet rs = pst.executeQuery(); 
+			
+			if (rs.next()) {
+				Description description = new Description(
+						rs.getInt("description_id"),
+						rs.getString("gender"),
+						rs.getString("cause"),
+						rs.getInt("patient_id")
+						);
+				
+				return description;
+			} 
+			
+		} catch (SQLException e) {
+			System.err.println("There has been an error while trying to find the description by ID: " + e.getMessage());
+			 e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
 	
 	public List<Description> findDescriptionByGender(String gender){
 		List<Description> descriptionsByGender = new ArrayList<>();
@@ -108,15 +142,104 @@ public class DescriptionManager {
 						);
 				descriptionsByGender.add(description);
 			}
-			} catch (SQLException e) {
-				System.err.println("There has been an error while trying to find descriptions by gender" + e.getMessage());
+			
+		} catch (SQLException e) {
+				System.err.println("There has been an error while trying to find description by gender: " + e.getMessage());
 				e.printStackTrace();
-			}
+		}
+		
 		return descriptionsByGender;
+	
 	}
 	
 	
+	public List<Description> findDescriptionByCause(String cause){
+		List<Description> descriptionsByCause = new ArrayList<>();
+		
+		String sql = "SELECT * FROM Descriptions WHERE cause = ?";
+		
+		try {
+			PreparedStatement pst = descriptionConnection.prepareStatement(sql);
+			
+			pst.setString(1, cause);
+			
+			ResultSet rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				Description description = new Description(
+						rs.getInt("description_id"),
+						rs.getString("gender"),
+						rs.getString("cause"),
+						rs.getInt("patient_id")
+						); 
+				descriptionsByCause.add(description);
+			}
+			
+		} catch (SQLException e) {
+				System.err.println("There has been an error while trying to find description by cause: " + e.getMessage());
+				e.printStackTrace();
+		}
+
+		return descriptionsByCause;
 	
+	}
+	
+	
+	public Description findDescriptionByPatientId(int patientId){
+		
+		String sql = "SELECT * FROM Descriptions WHERE patient_id = ?";
+		
+		try {
+			PreparedStatement pst = descriptionConnection.prepareStatement(sql);
+			
+			pst.setInt(1, patientId);
+			
+			ResultSet rs = pst.executeQuery();
+			
+			while (rs.next()) {
+				Description description = new Description(
+						rs.getInt("description_id"),
+						rs.getString("gender"),
+						rs.getString("cause"),
+						rs.getInt("patient_id")
+						); 
+				
+				return description;
+			}
+			
+		} catch (SQLException e) {
+				System.err.println("There has been an error while trying to find description by patient ID: " + e.getMessage());
+				e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	
+	public void updateDescription(int descriptionId, String newGender, String newCause, int newPatientId) {
+		String sql = "UPDATE Descriptions SET gender = ?, cause = ?, patient_id = ? WHERE description_id = ?";
+		
+		try {
+			PreparedStatement pst = descriptionConnection.prepareStatement(sql);
+			
+			pst.setString(1, newGender);
+			pst.setString(2, newCause);
+			pst.setInt(3, newPatientId);
+			pst.setInt(4, descriptionId);
+			
+			int row = pst.executeUpdate();
+			
+			if (row > 0) {
+				System.out.println("The description has been updated correctly.");
+			} else {
+				System.out.println("No description has the ID given: " + descriptionId);
+			}
+			
+		} catch (SQLException e) {
+				System.err.println("There has been an error while trying to update the description: " + e.getMessage());
+				e.printStackTrace();
+		}
+	}
 	
 }
 		
