@@ -129,7 +129,7 @@ public class PatientManager {
 
             if (rs.next()) {
                 System.out.println("Description for patient " + patientName + ":");
-                description = new Description(rs.getInt("description_id"), rs.getString("gender"), rs.getString("cause"));
+                description = new Description(rs.getInt("description_id"), rs.getString("gender"), rs.getString("cause"), rs.getInt("patient_id"));
                 System.out.println(description);
 
 }

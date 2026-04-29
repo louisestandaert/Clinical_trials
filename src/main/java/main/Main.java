@@ -45,6 +45,7 @@ public class Main {
 			System.out.println(pm.getMalePatientsCount());
 			System.out.println(pm.getListOfPatientsWithDescription("cause A"));
 			break;
+			
 		case 2:
 			System.out.println("Testing Hospital Manager...");
 			HospitalManager hm = new HospitalManager(cm.getConnection());
@@ -53,11 +54,27 @@ public class Main {
 			hm.removeHospital(2);
 			hm.showAllHospitals();
 			break;
+			
 		case 3:
 			System.out.println("Testing Description Manager...");
-			DescriptionManager dm = new DescriptionManager(cm);
-			// esta programado diferente dejo mencia hacerlo.
+			DescriptionManager dm = new DescriptionManager(cm.getConnection());
+			
+			dm.insertDescription(4, "Female", "Asthma", 1);
+			dm.insertDescription(5, "Male", "Diabetes", 2); 
+			dm.insertDescription(6, "Female", "Hypertension", 3); 
+		
+			System.out.println(dm.showAllDescriptions());
+			
+			System.out.println(dm.findDescriptionByID(4));
+			System.out.println(dm.findDescriptionByGender("Female"));
+			System.out.println(dm.findDescriptionByCause("Asthma"));
+			System.out.println(dm.findDescriptionByPatientId(2));
+			dm.removeDescription(6);
+			
+			System.out.println(dm.showAllDescriptions());
+			
 			break;
+			
 		case 4:
 			System.out.println("Testing Trial Manager...");
 			TrialManager tm = new TrialManager(cm);
@@ -76,14 +93,6 @@ public class Main {
 		default:
 			System.out.println("Invalid choice.");
 		}
-
-		/**
-		 * las cosas de mencia Description d1 = new Description(1, "Female", "Asthma");
-		 * Description d2 = new Description(2, "Male", "Diabetes"); Description d3 = new
-		 * Description(3, "Female", "Hypertension"); 
-		 * dm.insertDescription(d1,1); dm.insertDescription(d2,2);
-		 * dm.insertDescription(d3,3);
-		 **/
 
 		cm.closeConnection();
 
