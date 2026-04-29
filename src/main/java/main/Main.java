@@ -65,11 +65,11 @@ public class Main {
 		
 			System.out.println(dm.showAllDescriptions());
 			
-			System.out.println(dm.findDescriptionByID(1));
+			System.out.println(dm.findDescriptionByID(4));
 			System.out.println(dm.findDescriptionByGender("Female"));
 			System.out.println(dm.findDescriptionByCause("Asthma"));
 			System.out.println(dm.findDescriptionByPatientId(2));
-			dm.removeDescription(3);
+			dm.removeDescription(6);
 			
 			System.out.println(dm.showAllDescriptions());
 			
