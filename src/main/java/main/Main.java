@@ -7,6 +7,7 @@ import jdbc.PatientManager;
 import jdbc.DescriptionManager;
 import jdbc.DoctorManager;
 import jdbc.TrialManager;
+import jpa.JPA_manager;
 
 import java.util.Scanner;
 
@@ -27,6 +28,7 @@ public class Main {
 		System.out.println("3.probando description manager");
 		System.out.println("4.probando trial manager");
 		System.out.println("5.probando doctor manager");
+		System.out.println("6. probando jpa manager ");
 
 		Scanner scanner = new Scanner(System.in);
 		int choice = scanner.nextInt();
@@ -47,7 +49,7 @@ public class Main {
 			System.out.println(pm.getMalePatientsCount());
 			System.out.println(pm.getListOfPatientsWithDescription("cause A"));
 			break;
-			
+
 		case 2:
 			System.out.println("Testing Hospital Manager...");
 			HospitalManager hm = new HospitalManager(cm.getConnection());
@@ -56,29 +58,30 @@ public class Main {
 			hm.removeHospital(2);
 			hm.showAllHospitals();
 			break;
-			
+
 		case 3:
 			System.out.println("Testing Description Manager...");
 			DescriptionManager dm = new DescriptionManager(cm.getConnection());
-			
+
 			dm.insertDescription(4, "Female", "Asthma", 1);
-			dm.insertDescription(5, "Male", "Diabetes", 2); 
-			dm.insertDescription(6, "Female", "Hypertension", 3); 
-		
+			dm.insertDescription(5, "Male", "Diabetes", 2);
+			dm.insertDescription(6, "Female", "Hypertension", 3);
+
 			System.out.println(dm.showAllDescriptions());
-			
+
 			System.out.println(dm.findDescriptionByID(4));
 			System.out.println(dm.findDescriptionByGender("Female"));
 			System.out.println(dm.findDescriptionByCause("Asthma"));
 			System.out.println(dm.findDescriptionByPatientId(2));
 			dm.removeDescription(6);
-			
+
 			System.out.println(dm.showAllDescriptions());
-			
+
 			break;
-			
+
 		case 4:
 			System.out.println("Testing Trial Manager...");
+
 
 		    TrialManager tm = new TrialManager(cm);
 
@@ -152,18 +155,25 @@ public class Main {
 
 		    break;
 
-            
-
 
 
 		case 5:
 			System.out.println("Testing Doctor Manager...");
-			DoctorManager dm1= new DoctorManager(cm.getConnection());
+			DoctorManager dm1 = new DoctorManager(cm.getConnection());
 			System.out.println(dm1.showAllDoctors());
 			dm1.insertDoctor(2, "Dr. House", "male", DoctorSpecialty.CARDIOLOGY);
 			System.out.println(dm1.findDoctorByGender("male"));
 			System.out.println(dm1.sortDoctorBySpecialty(DoctorSpecialty.CARDIOLOGY));
 			dm1.removeDoctor(2);
+			break;
+		case 6:
+			System.out.println("Testing JPA Manager...");
+			JPA_manager jpaManager = new JPA_manager();
+			// Aquí puedes probar los métodos del JPA_manager
+			// Por ejemplo:
+			// jpaManager.createRole(new Role("Admin"));
+			// List<Role> roles = jpaManager.getAllRoles();
+			// System.out.println(roles);
 			break;
 		default:
 			System.out.println("Invalid choice.");

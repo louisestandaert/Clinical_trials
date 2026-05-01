@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+             http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+	<persistence-unit name="Clinical_trials_provider" transaction-type="RESOURCE_LOCAL">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+		<!-- Entity Classes PONER SOLO USER Y ROLE CON TODA LA RUTA COMPLETA-->
+		<class>Pojos.role</class>
+		<class>Pojos.User</class>
+
+
+		<properties>	
+			<!-- Connection properties -->
+			<property name="javax.persistence.jdbc.driver"
+				value="org.sqlite.JDBC" />
+	    	<property name="javax.persistence.jdbc.url"
+				value="jdbc:sqlite:./db/ClinicalTrials.db" />
+			<!-- Fill if we need user and password -->
+			<property name="javax.persistence.jdbc.user" value="" />
+			<property name="javax.persistence.jdbc.password" value="" />
+	    
+	    	<!-- JPA creates the database schema if it doesn't exist -->
+	    
+			<property name="eclipselink.ddl-generation" value="create-tables" />
+		</properties>
+	</persistence-unit>
+</persistence>
