@@ -6,89 +6,108 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import Pojos.Trials; 
+import Pojos.Trial; 
+import java.time.LocalDate;
+
 
 public class TrialManager {
 	private ConnectionManager connectionManager;
 	
-	//constr
 	public  TrialManager (ConnectionManager connectionManager) {
 		this.connectionManager = connectionManager; 
 	}
 	
-	//metodo auxiliar
-	private Trials buildTrial(ResultSet rs) throws SQLException {
-	        Trials trial = new Trials();
+	private Trial buildTrial(ResultSet rs) throws SQLException {
+	    Trial trial = new Trial();
 
-	        trial.setTrialId(rs.getInt("trial_id"));
-	        trial.setTrialName(rs.getString("trial_name"));
-	        trial.setDurationDays(rs.getInt("duration_days"));
-	        trial.setBudget(rs.getDouble("budget"));
-	        trial.setTargetPatients(rs.getInt("target_patients"));
+	    trial.setTrialId(rs.getInt("trial_id"));
+	    trial.setTrialName(rs.getString("trial_name"));
+	    trial.setDurationDays(rs.getInt("duration_days"));
+	    trial.setBudget(rs.getDouble("budget"));
+	    trial.setTargetPatients(rs.getInt("target_patients"));
 
-	        java.sql.Date sqlDate = rs.getDate("starting_date");
-	        if (sqlDate != null) {
-	            trial.setStartingDate(sqlDate.toLocalDate());
+	    String dateText = rs.getString("starting_date");
+
+	    if (dateText != null && !dateText.isEmpty()) {
+	        if (dateText.contains("-")) {
+	            trial.setStartingDate(LocalDate.parse(dateText.substring(0, 10)));
+	        } else {
+	            trial.setStartingDate(
+	                java.time.Instant.ofEpochSecond(Long.parseLong(dateText))
+	                    .atZone(java.time.ZoneId.systemDefault())
+	                    .toLocalDate()
+	            );
 	        }
-
-	        return trial;
 	    }
 
+	    return trial;
+	}
 	
 	//add ensayo clinico 1
-	public boolean addTrial(Trials trial) {
-		String sql = "INSERT INTO trial (trialId, trialDate, startingDate, durationDays, budget, targetPatients) VALUES (?, ?, ?, ?, ?, ?)";
+	public boolean addTrial(Trial trial) {
+		String sql = "INSERT INTO Trials (trial_id, trial_name, starting_date, duration_days, budget, target_patients) VALUES (?, ?, ?, ?, ?, ?)";
 		if (trial==null) {
 			System.err.println("Error: Trial is null");
 			return false;
 		}
-		try (Connection connection = connectionManager.getConnection();
-				PreparedStatement ps = connection.prepareStatement(sql)){	
-			ps.setInt(1, trial.getTrialId());
-			ps.setString(2, trial.getTrialName());
-			ps.setDate(3, java.sql.Date.valueOf(trial.getStartingDate()));
-			ps.setInt(4, trial.getDurationDays());
-			ps.setDouble(5, trial.getBudget());
-			ps.setInt(6, trial.getTargetPatients());
+		try {
+		    Connection connection = connectionManager.getConnection();
 
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+		    try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-        } catch (SQLException e) {
-            System.err.println("Error inserting trial: " + e.getMessage());
-            return false;
-        }
-	}
+		    	ps.setInt(1, trial.getTrialId());
+		    	ps.setString(2, trial.getTrialName());
+		    	ps.setDate(3, java.sql.Date.valueOf(trial.getStartingDate()));
+		    	ps.setInt(4, trial.getDurationDays());
+		    	ps.setDouble(5, trial.getBudget());
+		    	ps.setInt(6, trial.getTargetPatients());
+
+		    	int rowsAffected = ps.executeUpdate();
+		    	return rowsAffected > 0;
+		    	}
+		    
+		    } catch (SQLException e) {
+		    	System.err.println("Error inserting trial: " + e.getMessage());
+		    	return false;	    
+		    
+		    }
+    }		
 	
 	//Select all 
-	public List<Trials> getAllTrials(){
-		List<Trials> trialsList = new ArrayList<>();
-		String sql = "SELECT * FROM trials";
-		
-		try(Connection connection = connectionManager.getConnection();
-				PreparedStatement ps = connection.prepareStatement(sql);
-				ResultSet resultSet = ps.executeQuery()) {					//!!!
-			while (resultSet.next()) {
-				trialsList.add(buildTrial(resultSet));
-			}	
+	public List<Trial> getAllTrials(){
+		List<Trial> trialsList = new ArrayList<>();
+		String sql = "SELECT * FROM Trials";
+
+	    try {
+	        Connection connection = connectionManager.getConnection();
+
+	        try (PreparedStatement ps = connection.prepareStatement(sql);
+	             ResultSet resultSet = ps.executeQuery()) {
+
+	            while (resultSet.next()) {
+	                trialsList.add(buildTrial(resultSet));
+	            }
+	        }
 		} catch (SQLException e) {
             System.err.println("Error getting all trials: " + e.getMessage());
         }
 		return trialsList;
 	}
 	
-	//asignar medico a ensayo 2
+	//COMPROBADO 
 	public boolean assignDoctorToTrial (int doctorId, int trialId) {
-		 String sql = "UPDATE doctor SET trial_id = ? WHERE doctor_id = ?";
+		 String sql = "UPDATE Doctors SET trial_id = ? WHERE doctor_id = ?";
 
-	        try (Connection connection = connectionManager.getConnection();
-	             PreparedStatement ps = connection.prepareStatement(sql)) {
+		 try {
+			 Connection connection = connectionManager.getConnection();
 
-	            ps.setInt(1, trialId);
-	            ps.setInt(2, doctorId);
+		        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+		            ps.setInt(1, trialId);
+		            ps.setInt(2, doctorId);
 
-	            int rowsAffected = ps.executeUpdate();
-	            return rowsAffected > 0;
+		            int rowsAffected = ps.executeUpdate();
+		            return rowsAffected > 0;
+		        }
 
 	        } catch (SQLException e) {
 	            System.err.println("Error assigning doctor to trial: " + e.getMessage());
@@ -97,16 +116,18 @@ public class TrialManager {
 	    }
 	//Inscribir paciente de ensayo 3
 	public boolean enrollPatientInTrial(int patientId, int trialId) {
-        String sql = "UPDATE patient SET trial_id = ? WHERE patient_id = ?";
+        String sql = "UPDATE Patients SET trial_id = ? WHERE patients_id = ?";
 
-        try (Connection connection = connectionManager.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+        try {
+            Connection connection = connectionManager.getConnection();
 
-            ps.setInt(1, trialId);
-            ps.setInt(2, patientId);
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, trialId);
+                ps.setInt(2, patientId);
 
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+                int rowsAffected = ps.executeUpdate();
+                return rowsAffected > 0;
+            }
 
         } catch (SQLException e) {
             System.err.println("Error enrolling patient in trial: " + e.getMessage());
@@ -116,15 +137,18 @@ public class TrialManager {
 	
 	//eliminar paciente de ensayo 4
 	public boolean quitPatientFromTrial(int patientId) {
-        String sql = "UPDATE patient SET trial_id = NULL WHERE patient_id = ?";
+		 String sql = "UPDATE Patients SET trial_id = 0 WHERE patients_id = ?";
+		 //para no hacer null, lo pongo a 0, que no existe en la tabla de ensayos. ID 0 = sin ensayo asignado.
+		 try {
+		        Connection connection = connectionManager.getConnection();
 
-        try (Connection connection = connectionManager.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
+		        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+		            ps.setInt(1, patientId);
 
-            ps.setInt(1, patientId);
+		            int rowsAffected = ps.executeUpdate();
+		            return rowsAffected > 0;
+		        }
 
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
 
         } catch (SQLException e) {
             System.err.println("Error quiting patient from trial: " + e.getMessage());
@@ -133,17 +157,19 @@ public class TrialManager {
     }
 	
 	// See del ensayo 5
-	 public Trials seeTrial(int trialId) {
-	        String sql = "SELECT * FROM trial WHERE trial_id = ?";
+	 public Trial seeTrial(int trialId) {
+	        String sql = "SELECT * FROM Trials WHERE trial_id = ?";
 
-	        try (Connection connection = connectionManager.getConnection();
-	             PreparedStatement ps = connection.prepareStatement(sql)) {
+	        try {
+	            Connection connection = connectionManager.getConnection();
 
-	            ps.setInt(1, trialId);
+	            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+	                ps.setInt(1, trialId);
 
-	            try (ResultSet resultSet = ps.executeQuery()) {
-	                if (resultSet.next()) {
-	                    return buildTrial(resultSet);
+	                try (ResultSet resultSet = ps.executeQuery()) {
+	                    if (resultSet.next()) {
+	                        return buildTrial(resultSet);
+	                    }
 	                }
 	            }
 
@@ -154,43 +180,47 @@ public class TrialManager {
 	        return null;
 	    }
 	 
-	 //remove trial 6
+	 //COMPROBADO
 	 public boolean removeTrial(int trialId) {
-		 String checkDoctorSql = "SELECT COUNT (*) FROM doctor WHERE trial_id = ?";
-		 String checkPatientSql = "SELECT COUNT(*) FROM patient WHERE trial_id = ?";
-		 String deleteTrialSql = "DELETE FROM trials WHERE trial_id = ?";
+		 String checkDoctorSql = "SELECT COUNT (*) FROM Doctors WHERE trial_id = ?";
+		 String checkPatientSql = "SELECT COUNT(*) FROM Patients WHERE trial_id = ?";
+		 String deleteTrialSql = "DELETE FROM Trials WHERE trial_id = ?";
 		 
-		 try (Connection connection = connectionManager.getConnection()) {
-			 
-			 connection.setAutoCommit(false);
-			 
-			 try(PreparedStatement psDoctor = connection.prepareStatement(checkDoctorSql);
-					 PreparedStatement psPatient = connection.prepareStatement(checkPatientSql);
-					 PreparedStatement psDelete = connection.prepareStatement(deleteTrialSql)){
-				 
-				 psDoctor.setInt(1, trialId);
-				 ResultSet doctorResult = psDoctor.executeQuery();
-				 
-				 if(doctorResult.next() && doctorResult.getInt(1)>0) {
-					 System.err.println("Trial removal went wrong. There are Doctors assigned to this trial");
-					 connection.rollback();
-					 return false;
-				 }
-				 
-				 psPatient.setInt(1, trialId);
-				 ResultSet patientResult = psPatient.executeQuery();
-				 
-				 if(patientResult.next() && patientResult.getInt(1)>0) {
-					 System.err.println("Trial removal went wrong. There are Patients enrolled to this trial");
-					 connection.rollback();
-					 return false;
-					 
-				 }
-				 
-				 psDelete.setInt(1, trialId);
-				 int rowsAffected = psDelete.executeUpdate();
-				 connection.commit();
-		         return rowsAffected > 0;
+		 try {
+		        Connection connection = connectionManager.getConnection();
+
+		        connection.setAutoCommit(false);
+
+		        try (PreparedStatement psDoctor = connection.prepareStatement(checkDoctorSql);
+		             PreparedStatement psPatient = connection.prepareStatement(checkPatientSql);
+		             PreparedStatement psDelete = connection.prepareStatement(deleteTrialSql)) {
+
+		            psDoctor.setInt(1, trialId);
+
+		            try (ResultSet doctorResult = psDoctor.executeQuery()) {
+		                if (doctorResult.next() && doctorResult.getInt(1) > 0) {
+		                    System.err.println("Trial removal went wrong. There are Doctors assigned to this trial");
+		                    connection.rollback();
+		                    return false;
+		                }
+		            }
+
+		            psPatient.setInt(1, trialId);
+
+		            try (ResultSet patientResult = psPatient.executeQuery()) {
+		                if (patientResult.next() && patientResult.getInt(1) > 0) {
+		                    System.err.println("Trial removal went wrong. There are Patients enrolled in this trial");
+		                    connection.rollback();
+		                    return false;
+		                }
+		            }
+
+		            psDelete.setInt(1, trialId);
+		            int rowsAffected = psDelete.executeUpdate();
+
+		            connection.commit();
+		            return rowsAffected > 0;
+
 				 
 			 }catch (SQLException e) {
 		            connection.rollback();
@@ -208,15 +238,20 @@ public class TrialManager {
 	 
 	 //calcular media duracion 7
 	 public double calculateAverageDuration() {
-	        String sql = "SELECT AVG(duration_days) AS avg_duration FROM trial"; //añado el apodo AS para lgo recuperarlo por el nombre y no la posicion
+	        String sql = "SELECT AVG(duration_days) AS avg_duration FROM Trials"; //añado el apodo AS para lgo recuperarlo por el nombre y no la posicion
 	        
-	        try(Connection connection = connectionManager.getConnection();
-	        	PreparedStatement ps = connection.prepareStatement(sql);
-	        	ResultSet resultSet = ps.executeQuery()){
-	        		
-	        		if(resultSet.next()) {
-	        			return resultSet.getDouble("avg_duration");
-	        		}
+
+	        try {
+	            Connection connection = connectionManager.getConnection();
+
+	            try (PreparedStatement ps = connection.prepareStatement(sql);
+	                 ResultSet resultSet = ps.executeQuery()) {
+
+	                if (resultSet.next()) {
+	                    return resultSet.getDouble("avg_duration");
+	                }
+	            }
+
 	        		
 	        } catch (SQLException e) {
 	        	System.err.println("Error calculating average duration: " + e.getMessage());
@@ -224,17 +259,20 @@ public class TrialManager {
 	        return 0.0;
 	 }
 	 
-	//calcular media presupuesto 8
+	//COMPROBADO
 	    public double calculateAverageBudget() {
-	        String sql = "SELECT AVG(budget) AS avg_budget FROM trial";
+	        String sql = "SELECT AVG(budget) AS avg_budget FROM Trials";
+	        try {
+	            Connection connection = connectionManager.getConnection();
 
-	        try (Connection connection = connectionManager.getConnection();
-	             PreparedStatement ps = connection.prepareStatement(sql);
-	             ResultSet rs = ps.executeQuery()) {
+	            try (PreparedStatement ps = connection.prepareStatement(sql);
+	                 ResultSet rs = ps.executeQuery()) {
 
-	            if (rs.next()) {
-	                return rs.getDouble("avg_budget");
+	                if (rs.next()) {
+	                    return rs.getDouble("avg_budget");
+	                }
 	            }
+
 
 	        } catch (SQLException e) {
 	            System.err.println("Error calculating average budget: " + e.getMessage());
@@ -243,30 +281,31 @@ public class TrialManager {
 	        return 0.0;
 	    }
 	    
-	    //comparar resultados, si hay mas pos o neg 9
+	    //COMPROBADO
 	    public String resultsComparation(int trialId) {
 	        String sql =
 	            "SELECT " +
 	            "SUM(CASE WHEN LOWER(results) = 'positive' THEN 1 ELSE 0 END) AS positive_count, " +
 	            "SUM(CASE WHEN LOWER(results) = 'negative' THEN 1 ELSE 0 END) AS negative_count " +
-	            "FROM patient WHERE trial_id = ?";
+	            "FROM Patients WHERE trial_id = ?";
+	        try {
+	            Connection connection = connectionManager.getConnection();
 
-	        try (Connection connection = connectionManager.getConnection();
-	             PreparedStatement ps = connection.prepareStatement(sql)) {
+	            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+	                ps.setInt(1, trialId);
 
-	            ps.setInt(1, trialId);
-	            
-	            try (ResultSet rs = ps.executeQuery()) {
-	                if (rs.next()) {
-	                    int positive = rs.getInt("positive_count");
-	                    int negative = rs.getInt("negative_count");
+	                try (ResultSet rs = ps.executeQuery()) {
+	                    if (rs.next()) {
+	                        int positive = rs.getInt("positive_count");
+	                        int negative = rs.getInt("negative_count");
 
-	                    if (positive > negative) {
-	                        return "Results are more positive.";
-	                    } else if (negative > positive) {
-	                        return "Results are more negative.";
-	                    } else {
-	                        return "Results are balanced or equal.";
+	                        if (positive > negative) {
+	                            return "Results are more positive.";
+	                        } else if (negative > positive) {
+	                            return "Results are more negative.";
+	                        } else {
+	                            return "Results are balanced or equal.";
+	                        }
 	                    }
 	                }
 	            }
@@ -280,27 +319,29 @@ public class TrialManager {
 	    //prediccion pacientes nuevos 10
 	    public int predictHowManyNewPatientsRequired(int trialId) {
 	        String sql =
-	            "SELECT t.target_patients, COUNT(p.patient_id) AS current_patients " +
-	            "FROM trial AS t " +
-	            "JOIN patient AS p ON t.trial_id = p.trial_id " +
+	            "SELECT t.target_patients, COUNT(p.patients_id) AS current_patients " +
+	            "FROM Trials AS t " +
+	            "JOIN Patients AS p ON t.trial_id = p.trial_id " +
 	            "WHERE t.trial_id = ? " +
 	            "GROUP BY t.target_patients";
+	        try {
+	            Connection connection = connectionManager.getConnection();
 
-	        try (Connection connection = connectionManager.getConnection();
-	             PreparedStatement ps = connection.prepareStatement(sql)) {
+	            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+	                ps.setInt(1, trialId);
 
-	            ps.setInt(1, trialId);
+	                try (ResultSet rs = ps.executeQuery()) {
+	                    if (rs.next()) {
+	                        int targetPatients = rs.getInt("target_patients");
+	                        int currentPatients = rs.getInt("current_patients");
 
-	            try (ResultSet rs = ps.executeQuery()) {
-	                if (rs.next()) {
-	                    int targetPatients = rs.getInt("target_patients");
-	                    int currentPatients = rs.getInt("current_patients");
-
-	                    int needed = targetPatients - currentPatients;
-	                    return Math.max(needed, 0);
+	                        int needed = targetPatients - currentPatients;
+	                        return Math.max(needed, 0);
+	                    }
 	                }
 	            }
 
+	        
 	        } catch (SQLException e) {
 	            System.err.println("Error predicting new patients required: " + e.getMessage());
 	        }
@@ -308,21 +349,4 @@ public class TrialManager {
 	        return 0;
 	    }
 }//end
-
-
-
-	
-
-	
-
-
-				
-			
-
-		
-		
-	
-	
-
-
 

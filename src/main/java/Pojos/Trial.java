@@ -2,7 +2,7 @@ package Pojos;
 import java.util.Objects;
 import java.time.LocalDate;
 
-public class Trials {
+public class Trial {
 
     
     private int trialId;      
@@ -13,17 +13,17 @@ public class Trials {
     private int targetPatients;
 
     
-    public Trials() {
+    public Trial() {
     }
 
    
-    public Trials(int trialId, String trialName, LocalDate startingDate) {
+    public Trial(int trialId, String trialName, LocalDate startingDate) {
         this.trialId = trialId;
         this.trialName = trialName;
         this.startingDate = startingDate;
     }
     
-    public Trials(int trialId, String trialName, LocalDate startingDate, int durationDays, double budget, int targetPatients) {
+    public Trial(int trialId, String trialName, LocalDate startingDate, int durationDays, double budget, int targetPatients) {
         this.trialId = trialId;
         this.trialName = trialName;
         this.startingDate = startingDate;
@@ -86,7 +86,7 @@ public class Trials {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Trials trial = (Trials) o;
+        Trial trial = (Trial) o;
         return trialId == trial.trialId;
     }
 

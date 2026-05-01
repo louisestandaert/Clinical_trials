@@ -1,5 +1,6 @@
 package main;
 
+import java.time.LocalDate;
 import jdbc.ConnectionManager;
 import jdbc.HospitalManager;
 import jdbc.PatientManager;
@@ -10,6 +11,7 @@ import jdbc.TrialManager;
 import java.util.Scanner;
 
 import Pojos.DoctorSpecialty;
+import Pojos.Trial;
 
 public class Main {
 	public static void main(String[] args) {
@@ -77,77 +79,81 @@ public class Main {
 			
 		case 4:
 			System.out.println("Testing Trial Manager...");
-			 TrialManager tm = new TrialManager(cm);
 
-			    int testTrialId = (int) (System.currentTimeMillis() % 1000000);
-			    int removeTrialId = testTrialId + 1;
+		    TrialManager tm = new TrialManager(cm);
 
-			    // 1. addTrial
-			    Trial trial1 = new Trial();
-			    trial1.setTrialId(testTrialId);
-			    trial1.setTrialName("Cancer Research");
-			    trial1.setStartingDate(LocalDate.of(2026, 5, 1));
-			    trial1.setDurationDays(90);
-			    trial1.setBudget(15000.0);
-			    trial1.setTargetPatients(20);
+		    int testTrialId = (int) (System.currentTimeMillis() % 1000000);
+		    int removeTrialId = testTrialId + 1;
 
-			    boolean added = tm.addTrial(trial1);
-			    System.out.println("1. addTrial -> " + added);
+		    // 1. addTrial
+		    Trial trial1 = new Trial();
+		    trial1.setTrialId(testTrialId);
+		    trial1.setTrialName("Cancer Research");
+		    trial1.setStartingDate(LocalDate.of(2026, 5, 1));
+		    trial1.setDurationDays(90);
+		    trial1.setBudget(15000.0);
+		    trial1.setTargetPatients(20);
 
-			    // 2. getAllTrials
-			    System.out.println("2. getAllTrials -> ");
-			    System.out.println(tm.getAllTrials());
+		    boolean added = tm.addTrial(trial1);
+		    System.out.println("1. addTrial -> " + added);
 
-			    // 3. seeTrial
-			    System.out.println("3. seeTrial -> ");
-			    System.out.println(tm.seeTrial(testTrialId));
+		    // 2. getAllTrials
+		    System.out.println("2. getAllTrials -> ");
+		    System.out.println(tm.getAllTrials());
 
-			    // 4. assignDoctorToTrial
-			    boolean doctorAssigned = tm.assignDoctorToTrial(1, testTrialId);
-			    System.out.println("4. assignDoctorToTrial -> " + doctorAssigned);
+		    // 3. seeTrial
+		    System.out.println("3. seeTrial -> ");
+		    System.out.println(tm.seeTrial(testTrialId));
 
-			    // 5. enrollPatientInTrial
-			    boolean patientEnrolled = tm.enrollPatientInTrial(1, testTrialId);
-			    System.out.println("5. enrollPatientInTrial -> " + patientEnrolled);
+		    // 4. assignDoctorToTrial
+		    boolean doctorAssigned = tm.assignDoctorToTrial(1, testTrialId);
+		    System.out.println("4. assignDoctorToTrial -> " + doctorAssigned);
 
-			    // 6. resultsComparation
-			    System.out.println("6. resultsComparation -> ");
-			    System.out.println(tm.resultsComparation(testTrialId));
+		    // 5. enrollPatientInTrial
+		    boolean patientEnrolled = tm.enrollPatientInTrial(1, testTrialId);
+		    System.out.println("5. enrollPatientInTrial -> " + patientEnrolled);
 
-			    // 7. predictHowManyNewPatientsRequired
-			    System.out.println("7. predictHowManyNewPatientsRequired -> ");
-			    System.out.println(tm.predictHowManyNewPatientsRequired(testTrialId));
+		    // 6. resultsComparation
+		    System.out.println("6. resultsComparation -> ");
+		    System.out.println(tm.resultsComparation(testTrialId));
 
-			    // 8. calculateAverageDuration
-			    System.out.println("8. calculateAverageDuration -> ");
-			    System.out.println(tm.calculateAverageDuration());
+		    // 7. predictHowManyNewPatientsRequired
+		    System.out.println("7. predictHowManyNewPatientsRequired -> ");
+		    System.out.println(tm.predictHowManyNewPatientsRequired(testTrialId));
 
-			    // 9. calculateAverageBudget
-			    System.out.println("9. calculateAverageBudget -> ");
-			    System.out.println(tm.calculateAverageBudget());
+		    // 8. calculateAverageDuration
+		    System.out.println("8. calculateAverageDuration -> ");
+		    System.out.println(tm.calculateAverageDuration());
 
-			    // 10. quitPatientFromTrial
-			    boolean patientRemoved = tm.quitPatientFromTrial(1);
-			    System.out.println("10. quitPatientFromTrial -> " + patientRemoved);
+		    // 9. calculateAverageBudget
+		    System.out.println("9. calculateAverageBudget -> ");
+		    System.out.println(tm.calculateAverageBudget());
 
-			    // Vuelvo a asignar el médico al trial inicial para poder eliminar el trial de prueba
-			    tm.assignDoctorToTrial(1, 1);
+		    // 10. quitPatientFromTrial
+		    boolean patientRemoved = tm.quitPatientFromTrial(1);
+		    System.out.println("10. quitPatientFromTrial -> " + patientRemoved);
 
-			    // 11. removeTrial
-			    Trial trialToRemove = new Trial();
-			    trialToRemove.setTrialId(removeTrialId);
-			    trialToRemove.setTrialName("Temporary Trial");
-			    trialToRemove.setStartingDate(LocalDate.of(2026, 6, 1));
-			    trialToRemove.setDurationDays(30);
-			    trialToRemove.setBudget(5000.0);
-			    trialToRemove.setTargetPatients(5);
+		    // Vuelvo a asignar el médico al trial inicial para poder eliminar el trial de prueba
+		    tm.assignDoctorToTrial(1, 1);
 
-			    tm.addTrial(trialToRemove);
+		    // 11. removeTrial
+		    Trial trialToRemove = new Trial();
+		    trialToRemove.setTrialId(removeTrialId);
+		    trialToRemove.setTrialName("Temporary Trial");
+		    trialToRemove.setStartingDate(LocalDate.of(2026, 6, 1));
+		    trialToRemove.setDurationDays(30);
+		    trialToRemove.setBudget(5000.0);
+		    trialToRemove.setTargetPatients(5);
 
-			    boolean removed = tm.removeTrial(removeTrialId);
-			    System.out.println("11. removeTrial -> " + removed);
+		    tm.addTrial(trialToRemove);
 
-			    break;
+		    boolean removed = tm.removeTrial(removeTrialId);
+		    System.out.println("11. removeTrial -> " + removed);
+
+		    break;
+
+            
+
 
 
 		case 5:

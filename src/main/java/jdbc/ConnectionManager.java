@@ -145,6 +145,38 @@ public class ConnectionManager {
 			
 			//anadir paciente
 			stmt.executeUpdate("INSERT OR IGNORE INTO Patients (patients_id, patient_name, results, trial_id, hospital_id, description_id) VALUES (1, 'John Doe', 'positive', 1, 1, 1)");
+			   // Trial ficticio para pacientes sin ensayo asignado
+	        stmt.executeUpdate(
+	            "INSERT OR IGNORE INTO Trials (trial_id, trial_name, starting_date, duration_days, budget, target_patients) " +
+	            "VALUES (0, 'No trial assigned', '1900-01-01', 0, 0.0, 0)"
+	        );
+
+	        // Trial inicial real
+	        stmt.executeUpdate(
+	            "INSERT OR IGNORE INTO Trials (trial_id, trial_name, starting_date, duration_days, budget, target_patients) " +
+	            "VALUES (1, 'Trial A', '2025-01-01', 180, 1000.00, 200)"
+	        );
+
+	        stmt.executeUpdate(
+	            "INSERT OR IGNORE INTO Hospitals (hospital_id, hospital_name, city) " +
+	            "VALUES (1, 'Hospital A', 'Madrid')"
+	        );
+
+	        stmt.executeUpdate(
+	            "INSERT OR IGNORE INTO Doctors (doctor_id, doctor_name, doctor_gender, doctor_specialty, trial_id) " +
+	            "VALUES (1, 'Dr. Smith', 'female', 'surgeon', 1)"
+	        );
+
+	        stmt.executeUpdate(
+	            "INSERT OR IGNORE INTO Descriptions (description_id, gender, cause, patient_id) " +
+	            "VALUES (1, 'male', 'cause A', 1)"
+	        );
+
+	        stmt.executeUpdate(
+	            "INSERT OR IGNORE INTO Patients (patients_id, patient_name, results, trial_id, hospital_id, description_id) " +
+	            "VALUES (1, 'John Doe', 'positive', 1, 1, 1)"
+	        );
+			
 			
 			System.out.println("Initial data has been inserted.");
 		
