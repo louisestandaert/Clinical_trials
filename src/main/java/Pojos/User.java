@@ -22,9 +22,9 @@ public class User {
 
 	private String password;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY) // para indicar que un user puede tener muchos roles y que el
-															// mapeo se hace desde la clase Role
-	private List<Role> roles;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "role_id") 										
+	private Role role;
 
 	
 	//CONSTRUCTORES
@@ -32,12 +32,11 @@ public class User {
 	public User() {
 	}
 
-	public User(int id, String username, String password, List<Role> roles) {
+	public User(int id, String username, String password, Role role) {
 		this.user_id = id;
 		this.username = username;
 		this.password = password;
-		this.roles = roles;
-
+		this.role = role;
 	}
 
 	// Getters y Setters

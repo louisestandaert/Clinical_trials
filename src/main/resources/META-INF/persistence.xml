@@ -9,7 +9,7 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
 		<!-- Entity Classes PONER SOLO USER Y ROLE CON TODA LA RUTA COMPLETA-->
-		<class>Pojos.role</class>
+		<class>Pojos.Role</class>
 		<class>Pojos.User</class>
 
 

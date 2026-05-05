@@ -1,5 +1,7 @@
 package Pojos;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,9 +20,9 @@ public class Role {
 	@Column(name= "role", unique = true, nullable = false)
 	private String role;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id")
-	private User user;
+
+	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
+	private List<User> users;
 	
 	
 	//constructores
@@ -29,10 +31,14 @@ public class Role {
 	
 	}
 	
-	public Role(int role_id, String role, User user){
-		this.role_id= role_id; 
-		this.role=role;
-		this.user=user;
+	public Role(int id, String role, List<User> users) {
+		this.role_id = id;
+		this.role = role;
+		this.users = users;
+	}
+
+	public void setRole(String string) {
+		this.role = string;
 	}
 	
 	
