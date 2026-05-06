@@ -41,5 +41,9 @@
 	<classpathentry kind="lib" path="Libraries/eclipselink-2.7.10.jar"/>
 	<classpathentry kind="lib" path="Libraries/javax.persistence_2.1.1.v201509150925.jar"/>
 	<classpathentry kind="lib" path="Libraries/org/eclipselink.jar"/>
+	<classpathentry kind="lib" path="Libraries/istack-commons-runtime-3.0.7.jar"/>
+	<classpathentry kind="lib" path="Libraries/javax.activation-api-1.2.0.jar"/>
+	<classpathentry kind="lib" path="Libraries/jaxb-api-2.3.1.jar"/>
+	<classpathentry kind="lib" path="Libraries/jaxb-impl-2.3.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

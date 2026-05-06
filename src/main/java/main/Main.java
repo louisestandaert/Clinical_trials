@@ -8,6 +8,7 @@ import jdbc.DescriptionManager;
 import jdbc.DoctorManager;
 import jdbc.TrialManager;
 import jpa.JPA_manager;
+import xml.XmlManager;
 
 import java.util.Scanner;
 
@@ -17,11 +18,9 @@ import Pojos.Trial;
 public class Main {
 	public static void main(String[] args) {
 
-
 		System.out.println("Welcome to the Clinical Trials Database!");
-		System.out.println("las comprobaciones");
+		System.out.println("1. las comprobaciones");
 		System.out.println("please select an option:");
-		
 
 		Scanner scanner = new Scanner(System.in);
 		int choice = scanner.nextInt();
@@ -35,13 +34,12 @@ public class Main {
 			break;
 		}
 
-
 	}
 
 	public static void comprobaciones() {
 
 		ConnectionManager cm = new ConnectionManager();
-		
+
 		System.out.println("please choose an option:");
 		System.out.println("1.probando patient manager");
 		System.out.println("2.probando hospital manager");
@@ -49,6 +47,7 @@ public class Main {
 		System.out.println("4.probando trial manager");
 		System.out.println("5.probando doctor manager");
 		System.out.println("6. probando jpa manager ");
+		System.out.println("7. probando el xml");
 
 		Scanner scanner = new Scanner(System.in);
 		int choice = scanner.nextInt();
@@ -179,7 +178,6 @@ public class Main {
 			System.out.println("Testing Doctor Manager...");
 			DoctorManager dm1 = new DoctorManager(cm.getConnection());
 			System.out.println(dm1.showAllDoctors());
-			dm1.insertDoctor(2, "Dr. House", "male", DoctorSpecialty.CARDIOLOGY);
 			System.out.println(dm1.findDoctorByGender("male"));
 			System.out.println(dm1.sortDoctorBySpecialty(DoctorSpecialty.CARDIOLOGY));
 			dm1.removeDoctor(2);
@@ -193,10 +191,28 @@ public class Main {
 			// List<Role> roles = jpaManager.getAllRoles();
 			// System.out.println(roles);
 			break;
+		case 7:
+			System.out.println("Testing XML...");
+
+			// creando un patient para poder mandarlo al xml
+			PatientManager pm1 = new PatientManager(cm.getConnection());
+			//pm1.insertPatient(4, "Juan", "Negative", 1, 1, 1);
+
+			String filePath = "xmlFiles/patients.xml";
+
+			try {
+				XmlManager xmlManager = new XmlManager();
+				xmlManager.marshal(pm1.getPatientById(4), filePath);
+				System.out.println("Patients written to XML successfully.");
+			} catch (Exception e) {
+				System.err.println("Error writing to XML: " + e.getMessage());
+				e.printStackTrace();
+			}
+			break;
 		default:
 			System.out.println("Invalid choice.");
 		}
-		
+
 		cm.closeConnection();
 
 	}
