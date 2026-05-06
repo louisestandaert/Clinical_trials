@@ -57,7 +57,7 @@ public class DoctorManager {
 	//Enseña todos los doctores registrados en la base de datos independientemente de si estan asignados a algun hospital o a algun trial
 	public List<Doctors> showAllDoctors() {
 		List<Doctors> doctorsList = new ArrayList<>();
-		String sql="SELECTO * FROM Doctors";
+		String sql="SELECT * FROM Doctors";
 		try {
 			PreparedStatement ps= doctorConnection.prepareStatement(sql);
 			ResultSet rs= ps.executeQuery();
