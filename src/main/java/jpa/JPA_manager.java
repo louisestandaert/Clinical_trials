@@ -1,6 +1,7 @@
 package jpa;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -94,6 +95,22 @@ public class JPA_manager {
 		user.setPassword(newPassword);
 		this.em.getTransaction().commit();
 		System.out.println("Password updated successfully for user: " + username);
+	}
+	
+	
+	public List<User> findUserByRole(String roleName) {
+		try {
+			Query query = em.createNativeQuery("SELECT u.* FROM users u JOIN Role r ON u.role_id = r.role_id WHERE r.role = ?", 
+					User.class);
+			
+			query.setParameter(1, roleName);
+			
+			return query.getResultList();
+			
+		} catch (Exception e) {
+			System.err.println("Error finding users by role: " + e.getMessage());
+			return new ArrayList<User>();
+		}
 	}
 	
 	//Con la contraseña encriptada pero creo que hay que añadir un .jar o una libreria o algo y no se si estaría bien así
