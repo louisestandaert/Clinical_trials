@@ -54,6 +54,50 @@ public class JPA_manager {
 		return query.getResultList();
 	}
 	
+	public void login(String username, String password) {
+		try {
+			Query query = em.createNativeQuery("SELECT * FROM users WHERE username = ? AND password = ?", User.class);
+			query.setParameter(1, username);
+			query.setParameter(2, password);
+			User user = (User) query.getSingleResult();
+			System.out.println("Login successful for user: " + user.getUsername());
+		
+		} catch (Exception e) {
+			System.err.println("Login failed: " + e.getMessage());
+
+		}
+	}
+	
+	public void createUser(String username, String password, String roleName) {
+		try {
+			Query query = em.createQuery("SELECT r FROM Role r WHERE r.role = :roleName", Role.class);
+			query.setParameter("roleName", roleName);
+			Role role = (Role) query.getSingleResult();
+
+			User newUser = new User();
+			newUser.setUsername(username);
+			newUser.setPassword(password);
+			newUser.setRole(role);
+
+			this.em.getTransaction().begin();
+			this.em.persist(newUser);
+			this.em.getTransaction().commit();
+			System.out.println("User created successfully: " + username);
+		} catch (Exception e) {
+			System.err.println("Error creating user: " + e.getMessage());
+		}
+	}
+	
+	public List<User> findAllUsers() {
+	    try {
+	        Query query = em.createQuery("SELECT u FROM User u", User.class);
+	        return query.getResultList();
+
+	    } catch (Exception e) {
+	        System.err.println("Error finding all users: " + e.getMessage());
+	        return null;
+	    }
+	}
 	
 	public void deleteUser(String username) {
 		User user= findUserByUsername(username);

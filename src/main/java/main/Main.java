@@ -9,6 +9,9 @@ import jdbc.DoctorManager;
 import jdbc.TrialManager;
 import jpa.JPA_manager;
 import xml.XmlManager;
+import java.util.List;
+import Pojos.User;
+
 
 import java.util.Scanner;
 
@@ -182,15 +185,34 @@ public class Main {
 			System.out.println(dm1.sortDoctorBySpecialty(DoctorSpecialty.CARDIOLOGY));
 			dm1.removeDoctor(2);
 			break;
+
 		case 6:
-			System.out.println("Testing JPA Manager...");
-			JPA_manager jpaManager = new JPA_manager();
-			// Aquí puedes probar los métodos del JPA_manager
-			// Por ejemplo:
-			// jpaManager.createRole(new Role("Admin"));
-			// List<Role> roles = jpaManager.getAllRoles();
-			// System.out.println(roles);
-			break;
+		    System.out.println("Testing JPA Manager...");
+
+		    JPA_manager jpaManager = new JPA_manager();
+
+		    // Crear usuario de prueba
+		    //jpaManager.createUser("testUser", "testPassword", "default");
+
+		    // Comprobar login con ese usuario
+		    //jpaManager.login("testUser", "testPassword");
+
+		    // Mostrar todos los usuarios
+		    List<User> users = jpaManager.findAllUsers();
+
+		    if (users == null || users.isEmpty()) {
+		        System.out.println("No users found.");
+		    } else {
+		        System.out.println("Users found:");
+
+		        for (User user : users) {
+		            System.out.println("ID: " + user.getId());
+		            System.out.println("Username: " + user.getUsername());
+		            System.out.println("------------------------");
+		        }
+		    }
+
+		    break;
 		case 7:
 			System.out.println("Testing XML...");
 
