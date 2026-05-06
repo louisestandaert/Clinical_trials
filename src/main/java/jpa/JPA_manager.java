@@ -7,7 +7,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+
 import Pojos.Role;
+import Pojos.User;
 
 public class JPA_manager {
 
@@ -50,11 +52,103 @@ public class JPA_manager {
 		Query query = em.createQuery("SELECT r FROM Role r");
 		return query.getResultList();
 	}
+	
+	
+	public void deleteUser(String username) {
+		User user= findUserByUsername(username);
+		
+		if(user!=null) {
+            this.em.getTransaction().begin();
+            this.em.remove(user);
+            this.em.getTransaction().commit();
+            System.out.println("User deleted successfully.");
+            
+		} else {
+			System.out.println("No user found with username: " + username);
+		}
+		
+		
+	}
+	
+	public User findUserByUsername(String username) {
+		try {
+			Query query=em.createNativeQuery("SELECT * FROM users WHERE username=?", User.class);
+			query.setParameter(1, username);
+			return (User) query.getSingleResult();
+		}catch(Exception e) {
+			System.err.println("Error finding user: " + e.getMessage());
+			return null;
+		}
+	}
+	
+	//Sin que este la contraseña encriptada
+	public void updatePassword(String username, String newPassword) {
+		User user = findUserByUsername(username);
+
+		if (user == null) {
+			System.out.println("No user found with username: " + username);
+			return;
+		}
+		
+		this.em.getTransaction().begin();
+		user.setPassword(newPassword);
+		this.em.getTransaction().commit();
+		System.out.println("Password updated successfully for user: " + username);
+	}
+	
+	//Con la contraseña encriptada pero creo que hay que añadir un .jar o una libreria o algo y no se si estaría bien así
+	/*public void updateEncryptedPassword(String username, String newEncryptedPassword) {
+		User user = findUserByUsername(username);
+
+        if (user == null) {
+            System.out.println("No user found with username: " + username);
+            return;
+        }
+        String encryptedPassword = BCrypt.hashpw(newEncryptedPassword, BCrypt.gensalt());
+        em.getTransaction().begin();
+        user.setPassword(encryptedPassword);
+        em.getTransaction().commit();
+        System.out.println("The password has been updated successfully for user: " + username);
+	}
+	
+	*/
+
 }
 
+// ahora hacemos el manager
 
-// TODO : login , create user (dentro estas creando password) , update(change) password , delete user (opcional), un select user where ... nos inventamos. 
+// jpamanager
+// primero el constructor - segundo los metodos
 
+// el constructor
+// el nombre que has puesto en el persistence unit. (xml)
+// un if importante - if my list de roles esta vacía - entonces le añades un
+// role por defecto.
+// tenemos que crear los roles y asignarlos
+
+// ahora los metodos
+//
+
+// empezar con el create role:
+// parametro - un role role
+// em.gettransaction.begin() - esto es para empezar la transaccion
+// em.persist(role) - esto es para persistir el role en la base de datos
+// em.gettransaction.commit() - esto es para confirmar la transaccion
+// y punchhhh!
+
+// para los metodos de usar un query - em.createquery("SELECT r FROM Role r") -
+// esto es para seleccionar todos los roles de la base de datos
+
+// modificar - son transactiones
+// si es solo para ver cosas - query q - q.getresultlist() - esto es para
+// obtener una lista de resultados - haces una query directamente y el segundo
+// parametro , a donde , user.class!
+// q.setparameter("name", name) - esto es para establecer un parametro en la
+// consulta
+// q.getsingleResult() - esto es para obtener un solo resultado
+
+// ahora tines que crear el user - user user = (user) q.getsingleResult() - esto
+// es para obtener un solo resultado y castearlo a user.
 
 // metodo login _ el mas importante
 // tiene que devolverte el user

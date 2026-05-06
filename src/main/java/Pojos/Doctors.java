@@ -8,8 +8,18 @@ public class Doctors {
 	private String doctorName;
 	private String doctorGender;
 	private DoctorSpecialty doctorSpecialty;
+	private int hospitalId;
+	private int trialId;
 	
 	public Doctors() {
+	}
+	
+	public Doctors(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpeciatly, int hospitalId) {
+		this.doctorId=doctorId;
+		this.doctorName=doctorName;
+		this.doctorGender=doctorGender;
+		this.doctorSpecialty=doctorSpecialty;
+		this.hospitalId=hospitalId;
 	}
 	
 	public Doctors(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpeciatly) {
@@ -17,6 +27,15 @@ public class Doctors {
 		this.doctorName=doctorName;
 		this.doctorGender=doctorGender;
 		this.doctorSpecialty=doctorSpecialty;
+	}
+	
+	public Doctors(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpeciatly, int hospitalId, int trialId) {
+		this.doctorId=doctorId;
+        this.doctorName=doctorName;
+        this.doctorGender=doctorGender;
+        this.doctorSpecialty=doctorSpecialty;
+        this.hospitalId=hospitalId;
+        this.trialId=trialId;
 	}
 	
 	//Getters y setters

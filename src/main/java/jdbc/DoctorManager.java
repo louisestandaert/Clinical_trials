@@ -17,8 +17,8 @@ public class DoctorManager {
 		this.doctorConnection=doctorConnection;
 	}
 	
-	public void insertDoctor(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpecialty) {
-		String sql= "INSERT INTO Doctors (doctor_id, doctor_name, doctor_gender, doctor_specialty) VALUES (?,?,?,?)";
+	public void insertDoctor(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpecialty, int hospitalId, int trialId) {
+		String sql= "INSERT INTO Doctors (doctor_id, doctor_name, doctor_gender, doctor_specialty, hospital_id, trial_id) VALUES (?,?,?,?,?,?)";
 		
 		try {
 			PreparedStatement ps=doctorConnection.prepareStatement(sql);
@@ -26,6 +26,8 @@ public class DoctorManager {
             ps.setString(2, doctorName);
             ps.setString(3, doctorGender);
             ps.setString(4, doctorSpecialty.name());
+            ps.setInt(5, hospitalId);
+            ps.setInt(6, trialId);
             ps.executeUpdate();
             System.out.println("The doctor has been inserted correctly.");
 		}catch(SQLException e) {
@@ -131,6 +133,65 @@ public class DoctorManager {
 	   }
 		return doctorsBySpecialty;
     }
+	
+	public Doctors findDoctorById(int doctorId) {
+		String sql = "SELECT * FROM Doctors WHERE doctor_id = ?";
+		
+		try {
+			PreparedStatement ps = doctorConnection.prepareStatement(sql);
+	        ps.setInt(1, doctorId);
+	        ResultSet rs = ps.executeQuery();
+	        
+	        if (rs.next()) {
+	            DoctorSpecialty specialty =
+	                    DoctorSpecialty.valueOf(rs.getString("doctor_specialty"));
+
+	            Doctors doctor = new Doctors(
+	                    rs.getInt("doctor_id"),
+	                    rs.getString("doctor_name"),
+	                    rs.getString("doctor_gender"),
+	                    specialty,
+	                    rs.getInt("hospital_id"),
+	                    rs.getInt("trial_id")
+	            );
+
+	            return doctor;
+	        }
+		}catch(SQLException e) {
+			System.err.println("There has been an error trying to find the doctor by the id given: " + e.getMessage());
+		}
+		return null;
+	}
+	
+	public void assignDoctorToHospital(int doctorId, int newhospitalId) {
+		String sql= "UPDATE Doctors SET hospital_id= ? WHERE doctor_id= ?";
+		try {
+			PreparedStatement ps= doctorConnection.prepareStatement(sql);
+			ps.setInt(1, newhospitalId);
+			ps.setInt(2, doctorId);
+			
+			ps.executeUpdate();
+			System.out.println("The doctor has been assigned to another hospital");
+		}catch(SQLException e) {
+			System.err.println("There has been an error while assigning the doctor to the new hospital:" + e.getMessage());
+		}
+	}
+	
+	public void assignDoctorToTrial(int doctorId, int newTrialId) {
+	    String sql = "UPDATE Doctors SET trial_id = ? WHERE doctor_id = ?";
+
+	    try {
+	        PreparedStatement ps = doctorConnection.prepareStatement(sql);
+	        ps.setInt(1, newTrialId);
+	        ps.setInt(2, doctorId);
+
+	        ps.executeUpdate();
+	        System.out.println("Doctor assigned to another trial correctly.");
+
+	    } catch (SQLException e) {
+	        System.err.println("Error assigning doctor to trial: " + e.getMessage());
+	    }
+	}
 }
 	
 	

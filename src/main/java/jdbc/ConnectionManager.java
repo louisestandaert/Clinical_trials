@@ -39,9 +39,11 @@ public class ConnectionManager {
 				    + "doctor_id INTEGER NOT NULL UNIQUE, "
 				    + "doctor_name TEXT NOT NULL, "         
 				    + "doctor_gender TEXT NOT NULL, "       
-				    + "doctor_specialty TEXT NOT NULL, "   
+				    + "doctor_specialty TEXT NOT NULL, "  
+				    + "hospital_id INTEGER NOT NULL,"
 				    + "trial_id INTEGER NOT NULL, "        
 				    + "PRIMARY KEY(doctor_id), "
+				    + "FOREIGN KEY(hospital_id) REFERENCES Hospitals(hospital_id), "
 				    + "FOREIGN KEY(trial_id) REFERENCES Trials(trial_id));";
 
 			String HospitalsTable = "CREATE TABLE IF NOT EXISTS Hospitals ("
@@ -129,6 +131,11 @@ public class ConnectionManager {
 	            System.out.println("doctor_specialty already exists.");
 	        }
 			
+			try {
+			    stmt.executeUpdate("ALTER TABLE Doctors ADD COLUMN hospital_id INTEGER REFERENCES Hospitals(hospital_id)");
+			} catch (Exception e) {
+			    System.out.println("hospital_id already exists in Doctors.");
+			}
 			
 			stmt.executeUpdate(
 					"INSERT OR IGNORE INTO Trials (trial_id, trial_name, starting_date, duration_days,"
@@ -138,7 +145,7 @@ public class ConnectionManager {
 			stmt.executeUpdate("INSERT OR IGNORE INTO Hospitals (hospital_name, city, hospital_id) VALUES ('Hospital A', 'Madrid',1)");
 			
 			//anadir doctor
-			stmt.executeUpdate("INSERT OR IGNORE INTO Doctors (doctor_id, doctor_name, doctor_gender, doctor_specialty, trial_id) VALUES (1, 'Dr. Smith','female','surgeon', 1)");
+			stmt.executeUpdate("INSERT OR IGNORE INTO Doctors (doctor_id, doctor_name, doctor_gender, doctor_specialty, hospital_id, trial_id) VALUES (1, 'Dr. Smith','female','surgeon', 1, 1)");
 			
 			//anadir descripcion
 			stmt.executeUpdate("INSERT OR IGNORE INTO Descriptions (description_id, gender, cause, patient_id) VALUES (1, 'male', 'cause A', 1)");
