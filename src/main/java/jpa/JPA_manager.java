@@ -113,6 +113,7 @@ public class JPA_manager {
 		}
 	}
 	
+	
 	//Con la contraseña encriptada pero creo que hay que añadir un .jar o una libreria o algo y no se si estaría bien así
 	/*public void updateEncryptedPassword(String username, String newEncryptedPassword) {
 		User user = findUserByUsername(username);

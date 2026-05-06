@@ -36,6 +36,10 @@ public class Role {
 		this.role = role;
 		this.users = users;
 	}
+	
+	public String getRole() {
+		return role;
+	}
 
 	public void setRole(String string) {
 		this.role = string;
