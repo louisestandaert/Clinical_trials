@@ -315,6 +315,22 @@ public class JPA_manager {
 		}
 	}
 	
+	//no estoy 100% que esto funcione! 
+		public String getUserRole(String username) {
+			try {
+				Query query = em.createNativeQuery(
+						"SELECT r.role FROM users u JOIN Role r ON u.role_id = r.role_id WHERE u.username = ?",
+						String.class);
+
+				query.setParameter(1, username);
+				return (String) query.getSingleResult();
+
+			} catch (Exception e) {
+				System.err.println("Error getting user role: " + e.getMessage());
+				return null;
+			}
+		}
+	
 	
 	//Con la contraseña encriptada pero creo que hay que añadir un .jar o una libreria o algo y no se si estaría bien así
 	/*public void updateEncryptedPassword(String username, String newEncryptedPassword) {
