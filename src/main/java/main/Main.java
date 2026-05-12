@@ -167,7 +167,14 @@ public class Main {
 			System.out.println("Testing JPA Manager...");
 
 		    JPA_manager jpaManager = new JPA_manager();
+		    
+		    //Create roles 
+		    jpaManager.createRole("default");
+		    jpaManager.createRole("admin");
+		    jpaManager.createRole("doctor");
+		    
 
+		    // Create user with role default
 		    jpaManager.createUser("testEncryptedUser", "testPassword123", "default");
 
 		    jpaManager.login("testEncryptedUser", "testPassword123");
@@ -185,11 +192,45 @@ public class Main {
 		            System.out.println("ID: " + user.getId());
 		            System.out.println("Username: " + user.getUsername());
 		            System.out.println("Stored password: " + user.getPassword());
+		            
+		            if (user.getRole() != null) {
+		                System.out.println("Role: " + user.getRole().getRole());
+		            } else {
+		                System.out.println("Role: null");
+		            }
+		            
+		            System.out.println("------------------------");
+		        }
+		    }
+		    
+		 // Test find users by role
+		    System.out.println("Finding users with role 'default':");
+		    
+		    List<User> usersByRole = jpaManager.findUserByRole("default");
+		    
+		    if(usersByRole == null || usersByRole.isEmpty()) {
+		        System.out.println("No users with role 'default' found.");
+		    } else {
+		        for (User user : usersByRole) {
+		            System.out.println("ID: " + user.getId());
+		            System.out.println("Username: " + user.getUsername());
+		            
+		            //Normalmente no se muestra la contraseña porque esta encriptada y aparece código, si quereis la quitamos 
+		            System.out.println("Stored password: " + user.getPassword());
+		            
+		            if (user.getRole() != null) {
+		                System.out.println("Role: " + user.getRole().getRole());
+		            } else {
+		                System.out.println("Role: null");
+		            }
+		            
 		            System.out.println("------------------------");
 		        }
 		    }
 
 		    break;
+		    
+		    
 		case 7:
 			System.out.println("Testing XML...");
 

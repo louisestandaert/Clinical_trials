@@ -7,6 +7,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import javax.persistence.NoResultException;
+
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -33,11 +35,9 @@ public class JPA_manager {
 			this.em.getTransaction().commit(); // para confirmar la transaccion
 
 			List<Role> roles = getAllRoles();
-
+			
 			if (roles == null || roles.isEmpty()) {
-				Role defaultRole = new Role();
-				defaultRole.setRole("default");
-				this.createRole(defaultRole);
+				this.createRole("default");
 			}
 
 			System.out.println("EntityManagerFactory created successfully.");
@@ -48,14 +48,56 @@ public class JPA_manager {
 
 	}
 	
-	private void createRole(Role defaultRole) {
-		this.em.getTransaction().begin();
-		this.em.persist(defaultRole);
-		this.em.getTransaction().commit();
+	//Métodos nuevos de role 
+	
+	public void createRole(String roleName) {
+		try {
+			Role existingRole = findRoleByName(roleName);
+			
+			if (existingRole != null) {
+				System.out.println("A role with this name already exists." + roleName);
+				return;
+			}
+			
+			em.getTransaction().begin();
+			
+			Role role = new Role(roleName);
+			
+			em.persist(role);
+			
+			em.getTransaction().commit();
+			
+			System.out.println("Role created successfully: " + roleName);
+			
+		} catch (Exception e) {
+			if (em.getTransaction().isActive()) {
+				this.em.getTransaction().rollback();
+			}
+			System.err.println("Error checking for existing role: " + e.getMessage());
+			
+			 return;
+		}
 		
 	}
-
-	private List<Role> getAllRoles() {
+	
+	public Role findRoleByName(String roleName) {
+	    try {
+	        Query query = em.createQuery("SELECT r FROM Role r WHERE r.role = :roleName", Role.class);
+	        
+	        query.setParameter("roleName", roleName);
+	        
+	            return (Role) query.getSingleResult();
+	            
+	    } catch (NoResultException e) {
+	        return null;
+	        
+	} catch (Exception e) {
+	        System.err.println("Error finding role: " + e.getMessage());
+	        return null;
+	    }
+	}
+	
+	public List<Role> getAllRoles() {
 		Query query = em.createQuery("SELECT r FROM Role r");
 		return query.getResultList();
 	}
@@ -95,8 +137,11 @@ public class JPA_manager {
 9. Si hay error, rollback.
     */
 
-	
-	public void createUser(String username, String password, String roleName) {
+	/** CHAT ME DICE QUE QUIET ESTE, LO PONGO ASÍ POR SI ACASO 
+	 * Por que dice que no es crear un user sino un role, y confunde, he creado un create role arriba, 
+	 * POR SI QUEREIS MIRARLO Y CAMBIARLO O ALGO 
+	 * 
+	 public void createUser(String username, String password, String roleName) {
 		try {
 			User existingUser = findUserByUsername(username);
 			if (existingUser != null) {
@@ -131,7 +176,49 @@ public class JPA_manager {
             System.err.println("Error creating user: " + e.getMessage());
         }
     }
+**/ 
+	public void createUser(String userName, String password, String roleName) {
+	    try {
+	    	User existingUser = findUserByUsername(userName);
+	    	
+	    	if(existingUser != null) {
+	    		System.out.println("A user with this username already exists." + userName);
+	    		return;
+	    	}
+	    	
+	        Role role = findRoleByName(roleName);
+	        
+	        if (role == null) {
+	            System.out.println("Role not found: " + roleName);
+	            return;
+	        }
+	        
 
+	        User newUser = new User();
+	        newUser.setUsername(userName);
+	        
+	        String hashedPassword = PasswordUtil.hashPassword(password);
+	        newUser.setPassword(hashedPassword);
+	        newUser.setRole(role);
+	        
+	        
+	    	em.getTransaction().begin();
+	    	
+	        em.persist(newUser);
+	        
+	        em.getTransaction().commit();
+	        
+	        System.out.println("User created successfully: " + userName);
+
+	        
+	        } catch (Exception e) {
+	            if (em.getTransaction().isActive()) {
+	                this.em.getTransaction().rollback();
+	            }
+
+	            System.err.println("Error creating user: " + e.getMessage());
+	    }
+	}
 	/*
 	 * login:
 1. Busca el usuario por username.
@@ -215,10 +302,10 @@ public class JPA_manager {
 	
 	public List<User> findUserByRole(String roleName) {
 		try {
-			Query query = em.createNativeQuery("SELECT u.* FROM users u JOIN Role r ON u.role_id = r.role_id WHERE r.role = ?", 
+			Query query = em.createQuery("SELECT u FROM User u  WHERE u.role.role = :roleName", 
 					User.class);
 			
-			query.setParameter(1, roleName);
+			query.setParameter("roleName", roleName);
 			
 			return query.getResultList();
 			

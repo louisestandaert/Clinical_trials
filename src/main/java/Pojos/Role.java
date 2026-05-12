@@ -31,11 +31,24 @@ public class Role {
 	
 	}
 	
+	public Role(String role) {
+		this.role = role;
+	}
+	
 	public Role(int id, String role, List<User> users) {
 		this.role_id = id;
 		this.role = role;
 		this.users = users;
 	}
+	
+	public int getRole_id() {
+		return role_id;
+	}
+	
+	public void setRole_id(int role_id) {
+		this.role_id = role_id;
+	}
+	
 	
 	public String getRole() {
 		return role;
@@ -45,5 +58,8 @@ public class Role {
 		this.role = string;
 	}
 	
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}	
 	
 }
