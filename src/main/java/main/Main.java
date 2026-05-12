@@ -227,6 +227,45 @@ public class Main {
 		            System.out.println("------------------------");
 		        }
 		    }
+		    
+		    //test find user by username
+		    System.out.println("Finding user with username 'testEncryptedUser':");
+		    User foundUser = jpaManager.findUserByUsername("testEncryptedUser");
+		    if(foundUser ==null) {
+		    	System.out.println("User not found.");
+		    }else {
+		    	System.out.println("User found:");
+				System.out.println("ID: " + foundUser.getId());
+				System.out.println("Username: " + foundUser.getUsername());
+				System.out.println("Password: " + foundUser.getPassword());
+		    }
+
+		    //test update password
+		    System.out.println("Updating password for user 'testEncryptedUser'...");
+		    jpaManager.updatePassword("testEncryptedUser", "newpassword");
+		    
+		    // Login with old password after update
+		    System.out.println("\nTesting login with old password after update:");
+		    jpaManager.login("testEncryptedUser", "testPassword123");
+
+		    // Login with new password after update
+		    System.out.println("\nTesting login with new password after update:");
+		    jpaManager.login("testEncryptedUser", "newpassword");
+		    
+		    
+		    // Check updated user
+		    System.out.println("\nChecking user after password update:");
+
+		    User updatedUser = jpaManager.findUserByUsername("testEncryptedUser");
+
+		    if (updatedUser == null) {
+		        System.out.println("User not found after update.");
+		    } else {
+		        System.out.println("Updated user:");
+		        System.out.println("ID: " + updatedUser.getId());
+		        System.out.println("Username: " + updatedUser.getUsername());
+		        System.out.println("Stored password: " + updatedUser.getPassword());
+		    }
 
 		    break;
 		    
