@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlAccessType;
@@ -24,13 +25,13 @@ public class Patients {
 	@XmlAttribute(name = "results")
 	private String results;
 
-	@XmlAttribute(name = "trialId")
+	@XmlElement(name = "trialId")
 	private int trialId;
 
-	@XmlAttribute(name = "hospitalId")
+	@XmlElement(name = "hospitalId")
 	private int hospitalId;
 
-	@XmlAttribute(name = "descriptionId")
+	@XmlElement(name = "descriptionId")
 	private int descriptionId;
 
 	public Patients() {

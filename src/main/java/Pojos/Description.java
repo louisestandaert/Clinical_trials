@@ -1,11 +1,27 @@
 package Pojos;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
 
 import java.util.Objects;
 
+@XmlRootElement(name = "Descriptions")
+@XmlAccessorType(XmlAccessType.FIELD)
+
 public class Description {
+	
+	@XmlAttribute(name = "descriptionId")
 	private int description_id; 
+	
+	@XmlAttribute(name = "gender")
 	private String gender; 
+	
+	@XmlAttribute(name = "cause")
 	private String cause;
+	
+	@XmlElement(name = "patientId")
 	private int patient_id;
 	
 	public Description(){

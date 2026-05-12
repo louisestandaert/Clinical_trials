@@ -1,0 +1,8 @@
+<!ELEMENT Trial EMPTY>
+<!ATTLIST Trial
+    trialId CDATA #REQUIRED
+    trialName CDATA #REQUIRED
+    budget CDATA #REQUIRED
+    startingDate CDATA #REQUIRED
+    targetPatients CDATA #REQUIRED
+   >

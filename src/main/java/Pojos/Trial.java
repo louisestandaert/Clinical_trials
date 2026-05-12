@@ -1,15 +1,34 @@
 package Pojos;
 import java.util.Objects;
 import java.time.LocalDate;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import xml.LocalDateAdapter;
+
+@XmlRootElement(name = "Trials")
+@XmlAccessorType(XmlAccessType.FIELD)
 
 public class Trial {
 
-    
+    @XmlAttribute(name = "trialId")
     private int trialId;      
+    
+    @XmlAttribute(name = "trialName")
     private String trialName; 
+    
+    @XmlAttribute(name = "startingDate")
     private LocalDate startingDate;
+    
+    @XmlAttribute(name = "durationDays")
     private int durationDays;
+    
+    @XmlAttribute(name = "budget")
     private double budget;
+    
+    @XmlAttribute(name = "targetPatients")
     private int targetPatients;
 
     

@@ -1,15 +1,35 @@
 package Pojos;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlElement;
+
 
 import java.util.Objects;
 
+@XmlRootElement(name = "Doctors")
+@XmlAccessorType(XmlAccessType.FIELD)
+
 public class Doctors {
 
+	@XmlAttribute(name = "doctorId")
 	private int doctorId;
+	
+	@XmlAttribute(name = "doctorName")
 	private String doctorName;
+	
+    @XmlAttribute(name = "doctorGender")
 	private String doctorGender;
+    
+    @XmlAttribute(name = "doctorSpecialty")
 	private DoctorSpecialty doctorSpecialty;
+    
+    @XmlElement(name = "hospitalId")
 	private int hospitalId;
-	private int trialId;
+    
+    @XmlElement(name = "trialId")
+    private int trialId;
 	
 	public Doctors() {
 	}
