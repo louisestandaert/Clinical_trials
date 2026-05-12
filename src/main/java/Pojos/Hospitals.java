@@ -2,10 +2,23 @@ package Pojos;
 
 import java.util.Objects;
 
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+@XmlRootElement(name = "Hospitals")
+@XmlAccessorType(XmlAccessType.FIELD)
+
+
 public class Hospitals {
 	
+	@XmlAttribute(name = "hospitalName")
 	public String hospitalName;
+	
+	@XmlAttribute(name = "hospitalCity")
 	public String hospitalCity;
+	
+	@XmlAttribute(name = "hospitalId")
 	public int hospitalId;
 	
 	
