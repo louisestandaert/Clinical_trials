@@ -108,8 +108,6 @@ public class Main {
 
 			int testTrialId = (int) (System.currentTimeMillis() % 1000000);
 			int removeTrialId = testTrialId + 1;
-
-			// 1. addTrial
 			Trial trial1 = new Trial();
 			trial1.setTrialId(testTrialId);
 			trial1.setTrialName("Cancer Research");
@@ -117,48 +115,27 @@ public class Main {
 			trial1.setDurationDays(90);
 			trial1.setBudget(15000.0);
 			trial1.setTargetPatients(20);
-
 			boolean added = tm.addTrial(trial1);
 			System.out.println("1. addTrial -> " + added);
-
-			// 2. getAllTrials
 			System.out.println("2. getAllTrials -> ");
 			System.out.println(tm.getAllTrials());
-
-			// 3. seeTrial
 			System.out.println("3. seeTrial -> ");
 			System.out.println(tm.seeTrial(testTrialId));
-
-			// 4. assignDoctorToTrial
 			boolean doctorAssigned = tm.assignDoctorToTrial(1, testTrialId);
 			System.out.println("4. assignDoctorToTrial -> " + doctorAssigned);
-
-			// 5. enrollPatientInTrial
 			boolean patientEnrolled = tm.enrollPatientInTrial(1, testTrialId);
 			System.out.println("5. enrollPatientInTrial -> " + patientEnrolled);
-
-			// 6. resultsComparation
 			System.out.println("6. resultsComparation -> ");
 			System.out.println(tm.resultsComparation(testTrialId));
-
-			// 7. predictHowManyNewPatientsRequired
 			System.out.println("7. predictHowManyNewPatientsRequired -> ");
 			System.out.println(tm.predictHowManyNewPatientsRequired(testTrialId));
-
-			// 8. calculateAverageDuration
 			System.out.println("8. calculateAverageDuration -> ");
 			System.out.println(tm.calculateAverageDuration());
-
-			// 9. calculateAverageBudget
 			System.out.println("9. calculateAverageBudget -> ");
 			System.out.println(tm.calculateAverageBudget());
-
-			// 10. quitPatientFromTrial
 			boolean patientRemoved = tm.quitPatientFromTrial(1);
 			System.out.println("10. quitPatientFromTrial -> " + patientRemoved);
 
-			// Vuelvo a asignar el médico al trial inicial para poder eliminar el trial de
-			// prueba
 			tm.assignDoctorToTrial(1, 1);
 
 			// 11. removeTrial
@@ -187,17 +164,16 @@ public class Main {
 			break;
 
 		case 6:
-		    System.out.println("Testing JPA Manager...");
+			System.out.println("Testing JPA Manager...");
 
 		    JPA_manager jpaManager = new JPA_manager();
 
-		    // Crear usuario de prueba
-		    //jpaManager.createUser("testUser", "testPassword", "default");
+		    jpaManager.createUser("testEncryptedUser", "testPassword123", "default");
 
-		    // Comprobar login con ese usuario
-		    //jpaManager.login("testUser", "testPassword");
+		    jpaManager.login("testEncryptedUser", "testPassword123");
 
-		    // Mostrar todos los usuarios
+		    jpaManager.login("testEncryptedUser", "wrongPassword");
+
 		    List<User> users = jpaManager.findAllUsers();
 
 		    if (users == null || users.isEmpty()) {
@@ -208,6 +184,7 @@ public class Main {
 		        for (User user : users) {
 		            System.out.println("ID: " + user.getId());
 		            System.out.println("Username: " + user.getUsername());
+		            System.out.println("Stored password: " + user.getPassword());
 		            System.out.println("------------------------");
 		        }
 		    }

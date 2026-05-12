@@ -2,11 +2,16 @@ package jpa;
 
 import java.util.List;
 import java.util.ArrayList;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
+import java.security.SecureRandom;
+import java.util.Base64;
+
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
 
 
 import Pojos.Role;
@@ -42,11 +47,12 @@ public class JPA_manager {
 		}
 
 	}
-
+	
 	private void createRole(Role defaultRole) {
 		this.em.getTransaction().begin();
 		this.em.persist(defaultRole);
 		this.em.getTransaction().commit();
+		
 	}
 
 	private List<Role> getAllRoles() {
@@ -55,39 +61,87 @@ public class JPA_manager {
 	}
 	
 	public void login(String username, String password) {
-		try {
-			Query query = em.createNativeQuery("SELECT * FROM users WHERE username = ? AND password = ?", User.class);
-			query.setParameter(1, username);
-			query.setParameter(2, password);
-			User user = (User) query.getSingleResult();
-			System.out.println("Login successful for user: " + user.getUsername());
-		
-		} catch (Exception e) {
-			System.err.println("Login failed: " + e.getMessage());
+	    try {
+	        User user = findUserByUsername(username);
 
-		}
+	        if (user == null) {
+	            System.out.println("Login failed. User not found.");
+	            return;
+	        }
+
+	        boolean passwordCorrect = PasswordUtil.verifyPassword(password, user.getPassword());
+
+	        if (passwordCorrect) {
+	            System.out.println("Login successful for user: " + user.getUsername());
+	        } else {
+	            System.out.println("Login failed. Incorrect password.");
+	        }
+
+	    } catch (Exception e) {
+	        System.err.println("Login failed: " + e.getMessage());
+	    }
 	}
+	
+/*
+ * createUser:
+1. Busca si el username ya existe.
+2. Busca el role con JPQL.
+3. Crea un objeto User.
+4. Hashea la password.
+5. Asigna username, password hasheada y role.
+6. Abre transacción.
+7. Persiste el usuario.
+8. Hace commit.
+9. Si hay error, rollback.
+    */
+
 	
 	public void createUser(String username, String password, String roleName) {
 		try {
-			Query query = em.createQuery("SELECT r FROM Role r WHERE r.role = :roleName", Role.class);
+			User existingUser = findUserByUsername(username);
+			if (existingUser != null) {
+                System.out.println("A user with this username already exists.");
+                return;
+            }
+			Query query = em.createQuery(
+                    "SELECT r FROM Role r WHERE r.role = :roleName",
+                    Role.class
+            );
+
 			query.setParameter("roleName", roleName);
-			Role role = (Role) query.getSingleResult();
+            Role role = (Role) query.getSingleResult();
+            User newUser = new User();
+            newUser.setUsername(username);
+            String hashedPassword = PasswordUtil.hashPassword(password);
+            
+            newUser.setPassword(hashedPassword);
+            newUser.setUsername(username);
+            
+            this.em.getTransaction().begin();
+            this.em.persist(newUser);
+            this.em.getTransaction().commit();
+            
+            System.out.println("User created successfully: " + username);
 
-			User newUser = new User();
-			newUser.setUsername(username);
-			newUser.setPassword(password);
-			newUser.setRole(role);
+        } catch (Exception e) {
+            if (this.em.getTransaction().isActive()) {
+                this.em.getTransaction().rollback();
+            }
 
-			this.em.getTransaction().begin();
-			this.em.persist(newUser);
-			this.em.getTransaction().commit();
-			System.out.println("User created successfully: " + username);
-		} catch (Exception e) {
-			System.err.println("Error creating user: " + e.getMessage());
-		}
-	}
-	
+            System.err.println("Error creating user: " + e.getMessage());
+        }
+    }
+
+	/*
+	 * login:
+1. Busca el usuario por username.
+2. Si no existe, falla.
+3. Si existe, compara la password introducida con el hash guardado.
+4. Si coincide, login correcto.
+5. Si no coincide, login incorrecto.
+
+	 */
+            
 	public List<User> findAllUsers() {
 	    try {
 	        Query query = em.createQuery("SELECT u FROM User u", User.class);
@@ -117,28 +171,45 @@ public class JPA_manager {
 	
 	public User findUserByUsername(String username) {
 		try {
-			Query query=em.createNativeQuery("SELECT * FROM users WHERE username=?", User.class);
-			query.setParameter(1, username);
-			return (User) query.getSingleResult();
+			Query query=em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+			query.setParameter("username", username);
+			List <User> users = query.getResultList();
+			
+			if (users.isEmpty()) {
+				return null;
+			} else {
+				return users.get(0);
+			}
 		}catch(Exception e) {
 			System.err.println("Error finding user: " + e.getMessage());
 			return null;
 		}
 	}
 	
-	//Sin que este la contraseña encriptada
 	public void updatePassword(String username, String newPassword) {
-		User user = findUserByUsername(username);
+	    User user = findUserByUsername(username);
 
-		if (user == null) {
-			System.out.println("No user found with username: " + username);
-			return;
-		}
-		
-		this.em.getTransaction().begin();
-		user.setPassword(newPassword);
-		this.em.getTransaction().commit();
-		System.out.println("Password updated successfully for user: " + username);
+	    if (user == null) {
+	        System.out.println("No user found with username: " + username);
+	        return;
+	    }
+
+	    try {
+	        String hashedPassword = PasswordUtil.hashPassword(newPassword);
+
+	        this.em.getTransaction().begin();
+	        user.setPassword(hashedPassword);
+	        this.em.getTransaction().commit();
+
+	        System.out.println("Password updated successfully for user: " + username);
+
+	    } catch (Exception e) {
+	        if (this.em.getTransaction().isActive()) {
+	            this.em.getTransaction().rollback();
+	        }
+
+	        System.err.println("Error updating password: " + e.getMessage());
+	    }
 	}
 	
 	
