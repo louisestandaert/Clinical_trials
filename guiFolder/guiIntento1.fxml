@@ -93,17 +93,17 @@
         </Label>
             <Accordion layoutX="192.0" layoutY="62.0">
               <panes>
-                <TitledPane animated="false" text="untitled 1">
+                <TitledPane animated="false" text="Login">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
                 </TitledPane>
-                <TitledPane animated="false" text="untitled 2">
+                <TitledPane animated="false" text="Sign up">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
                 </TitledPane>
-                <TitledPane fx:id="kk" animated="false" text="untitled 3">
+                <TitledPane fx:id="kk" animated="false" text="Enter as guest ">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   </content>
