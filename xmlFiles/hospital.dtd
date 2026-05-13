@@ -1,0 +1,7 @@
+<!ELEMENT Hospitals EMPTY>
+
+<!ATTLIST Hospitals
+    hospitalName CDATA #REQUIRED
+    hospitalCity CDATA #REQUIRED
+    hospitalId CDATA #REQUIRED
+>

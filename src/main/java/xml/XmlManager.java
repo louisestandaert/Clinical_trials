@@ -25,7 +25,7 @@ public class XmlManager {
                 
         marshall.marshal(patient, new File(rutaArchivo));
         
-        System.out.println("XML creado con éxito en: " + rutaArchivo);
+        System.out.println("XML correctly created in: " + rutaArchivo);
         
 		}catch(Exception e) {
 			System.err.println("JAXB Error: " + e.getMessage());
@@ -42,7 +42,7 @@ public class XmlManager {
 			Unmarshaller unmarshall = contexto.createUnmarshaller();
 			Patients patient = (Patients) unmarshall.unmarshal(new File(rutaArchivo));
 			
-			System.out.println("XML leído con éxito desde: " + rutaArchivo);
+			System.out.println("XML correctly created in: " + rutaArchivo);
 			return patient;
 		} catch (Exception e) {
 			System.err.println("JAXB Error while unmarshalling patient: " + e.getMessage());
@@ -60,7 +60,7 @@ public class XmlManager {
 			marshall.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshall.marshal(hospital, new File(rutaArchivo));
 
-			System.out.println("XML de hospital creado con éxito en: " + rutaArchivo);
+			System.out.println("XML correctly created in:" + rutaArchivo);
 		} catch (Exception e) {
 			System.err.println("JAXB Error while marshalling hospital: " + e.getMessage());
 			e.printStackTrace();
@@ -73,7 +73,7 @@ public class XmlManager {
 			Unmarshaller unmarshall = contexto.createUnmarshaller();
 			Hospitals hospital = (Hospitals) unmarshall.unmarshal(new File(rutaArchivo));
 
-			System.out.println("XML de hospital leído con éxito desde: " + rutaArchivo);
+			System.out.println("XML correctly created in: " + rutaArchivo);
 			return hospital;
 		} catch (Exception e) {
 			System.err.println("JAXB Error while unmarshalling hospital: " + e.getMessage());
@@ -91,7 +91,7 @@ public class XmlManager {
 			marshaler.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshaler.marshal(trial, new File(rutaArchivo));
 
-			System.out.println("XML de trial creado con éxito en: " + rutaArchivo);
+			System.out.println("XML correctly created in: " + rutaArchivo);
 		} catch (Exception e) {
 			System.err.println("JAXB Error while marshalling trial: " + e.getMessage());
 			e.printStackTrace();
@@ -104,7 +104,7 @@ public class XmlManager {
 			Unmarshaller unmarshall = contexto.createUnmarshaller();
 			Trial trial = (Trial) unmarshall.unmarshal(new File(rutaArchivo));
 
-			System.out.println("XML de trial leído con éxito desde: " + rutaArchivo);
+			System.out.println("XML correctly created in: " + rutaArchivo);
 			return trial;
 		} catch (Exception e) {
 			System.err.println("JAXB Error while unmarshalling trial: " + e.getMessage());
@@ -121,7 +121,7 @@ public class XmlManager {
 			marshaler.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshaler.marshal(doctor, new File(rutaArchivo));
 
-			System.out.println("XML de doctor creado con éxito en: " + rutaArchivo);
+			System.out.println("XML correctly created in: " + rutaArchivo);
 		} catch (Exception e) {
 			System.err.println("JAXB Error while marshalling doctor: " + e.getMessage());
 			e.printStackTrace();
@@ -134,7 +134,7 @@ public class XmlManager {
 			Unmarshaller unmarshall = contexto.createUnmarshaller();
 			Doctors doctor = (Doctors) unmarshall.unmarshal(new File(rutaArchivo));
 
-			System.out.println("XML de doctor leído con éxito desde: " + rutaArchivo);
+			System.out.println("XML correctly created in: " + rutaArchivo);
 			return doctor;
 		} catch (Exception e) {
 			System.err.println("JAXB Error while unmarshalling doctor: " + e.getMessage());
@@ -152,7 +152,7 @@ public class XmlManager {
 			marshaler.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 			marshaler.marshal(description, new File(rutaArchivo));
 
-			System.out.println("XML de descripción creado con éxito en: " + rutaArchivo);
+			System.out.println("XML correctly created in: " + rutaArchivo);
 		} catch (Exception e) {
 			System.err.println("JAXB Error while marshalling description: " + e.getMessage());
 			e.printStackTrace();
@@ -165,7 +165,7 @@ public class XmlManager {
 			Unmarshaller unmarshall = contexto.createUnmarshaller();
 			Description description = (Description) unmarshall.unmarshal(new File(rutaArchivo));
 
-			System.out.println("XML de descripción leído con éxito desde: " + rutaArchivo);
+			System.out.println("Description's XML created: " + rutaArchivo);
 			return description;
 		} catch (Exception e) {
 			System.err.println("JAXB Error while unmarshalling description: " + e.getMessage());
@@ -174,6 +174,36 @@ public class XmlManager {
 		}
 	}
 	
+	
+	//THE WHOLE DATABASE AT THE SAME TIME 
+	public void marshalDatabase(ClinicalTrialsXMLDataBase database, String rutaArchivo) {
+        try {
+            JAXBContext contexto = JAXBContext.newInstance(ClinicalTrialsXMLDataBase.class);
+            Marshaller marshaler = contexto.createMarshaller();
+            marshaler.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaler.marshal(database, new File(rutaArchivo));
+
+            System.out.println("Database XML correctly created in: " + rutaArchivo);
+        } catch (Exception e) {
+            System.err.println("JAXB Error while marshalling database: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+	
+	public ClinicalTrialsXMLDataBase unmarshalDatabase(String rutaArchivo) {
+		try {
+			JAXBContext contexto = JAXBContext.newInstance(ClinicalTrialsXMLDataBase.class);
+			Unmarshaller unmarshall = contexto.createUnmarshaller();
+			ClinicalTrialsXMLDataBase database = (ClinicalTrialsXMLDataBase) unmarshall.unmarshal(new File(rutaArchivo));
+
+			System.out.println("Database XML correctly created in: " + rutaArchivo);
+			return database;
+		} catch (Exception e) {
+			System.err.println("JAXB Error while unmarshalling database: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 	

@@ -1,0 +1,9 @@
+<!ELEMENT Descriptions (patientId)>
+
+<!ATTLIST Descriptions
+    descriptionId CDATA #REQUIRED
+    gender CDATA #REQUIRED
+    cause CDATA #REQUIRED
+>
+
+<!ELEMENT patientId (#PCDATA)>

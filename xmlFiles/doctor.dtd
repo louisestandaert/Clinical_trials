@@ -1,0 +1,11 @@
+<!ELEMENT Doctors (hospitalId, trialId)>
+
+<!ATTLIST Doctors
+    doctorId CDATA #REQUIRED
+    doctorName CDATA #REQUIRED
+    doctorGender CDATA #REQUIRED
+    doctorSpecialty CDATA #REQUIRED
+>
+
+<!ELEMENT hospitalId (#PCDATA)>
+<!ELEMENT trialId (#PCDATA)>
