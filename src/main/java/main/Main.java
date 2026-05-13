@@ -58,7 +58,7 @@ public class Main {
 				case "Trial Manager":
 					System.out.println("Welcome, Trial Manager! You have full access to the system.");
 					trialManagerFunctions();
-			
+
 					break;
 				case "Doctor":
 					System.out.println("Welcome, doctor! You can manage your trials and patients.");
@@ -107,12 +107,9 @@ public class Main {
 		} while (choice != 4);
 
 	}
-	
-	
-	
 
 	private static void trialManagerFunctions() {
-		
+
 		ConnectionManager cm = new ConnectionManager();
 		TrialManager tm = new TrialManager(cm);
 
@@ -127,41 +124,128 @@ public class Main {
 		System.out.println("8. Calculate average trial duration");
 		System.out.println("9. Calculate average trial budget");
 		System.out.println("10. Remove patient from trial");
-		
+		System.out.println("11. Remove trial");
+
 		Scanner signupScanner = new Scanner(System.in);
 		int trialChoice = signupScanner.nextInt();
-		
-		switch(trialChoice) {
+
+		switch (trialChoice) {
 		case 1:
 			System.out.println("Creating a new trial...");
-			//aqui esta algo incoorecto, falta un constructor que crear un trialcon todos los parametros 
-			//creo que es la funcion buildtrial pero no entiendo el parametro de entrada. 
-			tm.addTrial(new Trial());
+			System.out.println("Please enter trial details:");
+			System.out.println("Trial ID:");
+			int trialId = signupScanner.nextInt();
+			System.out.println("Trial Name:");
+			String trialName = signupScanner.nextLine();
+			System.out.println("Starting Date (YYYY-MM-DD):");
+			LocalDate startingDateStr = LocalDate.parse(signupScanner.nextLine());
+			System.out.println("Duration (days):");
+			int durationDays = signupScanner.nextInt();
+			System.out.println("Budget:");
+			double budget = signupScanner.nextDouble();
+			System.out.println("Target Patients:");
+			int targetPatients = signupScanner.nextInt();
+
+			tm.addTrial(trialId, trialName, startingDateStr, durationDays, budget, targetPatients);
 			break;
-		case 2: 
+		case 2:
 			System.out.println("viewing all trials");
-			// tienes que crear una lista para despues imprimir la 
 			tm.getAllTrials();
-			
-		}	
+			break;
+		case 3:
+			// quiza seria mejor hacerlo con el nombre del trial en vez del id.
+			System.out.println("Viewing trial details...");
+			System.out.println("Enter trial ID:");
+			int viewTrialId = signupScanner.nextInt();
+			tm.seeTrial(viewTrialId);
+			break;
+		case 4:
+			System.out.println("Assigning doctor to trial...");
+			System.out.println("Enter doctor ID:");
+			int doctorId = signupScanner.nextInt();
+			System.out.println("Enter trial ID:");
+			int assignTrialId = signupScanner.nextInt();
+			tm.assignDoctorToTrial(doctorId, assignTrialId);
+			break;
+		case 5:
+			System.out.println("Enrolling patient in trial...");
+			System.out.println("Enter patient ID:");
+			int patientId = signupScanner.nextInt();
+			System.out.println("Enter trial ID:");
+			int enrollTrialId = signupScanner.nextInt();
+			tm.enrollPatientInTrial(patientId, enrollTrialId);
+			break;
+		case 6:
+			System.out.println("Comparing trial results...");
+			System.out.println("Enter trial ID:");
+			int compareTrialId = signupScanner.nextInt();
+			tm.resultsComparation(compareTrialId);
+			break;
+		case 7:
+			System.out.println("Predicting how many new patients are required...");
+			System.out.println("Enter trial ID:");
+			int predictTrialId = signupScanner.nextInt();
+			tm.predictHowManyNewPatientsRequired(predictTrialId);
+			break;
+		case 8:
+			System.out.println("Calculating average trial duration...");
+			tm.calculateAverageDuration();
+			break;
+		case 9:
+			System.out.println("Calculating average trial budget...");
+			tm.calculateAverageBudget();
+			break;
+		case 10:
+			System.out.println("Removing patient from trial...");
+			System.out.println("Enter patient ID:");
+			int quitPatientId = signupScanner.nextInt();
+			tm.quitPatientFromTrial(quitPatientId);
+			break;
+		case 11:
+			System.out.println("Removing trial...");
+			System.out.println("Enter trial ID:");
+			int removeTrialId = signupScanner.nextInt();
+			tm.removeTrial(removeTrialId);
+			break;
+		default:
+			System.out.println("Invalid choice.");
+			break;
+		}
 
 	}
-	
-	
+
 	private static void doctorFunctions() {
+
+		ConnectionManager cm = new ConnectionManager();
+		DoctorManager dm = new DoctorManager(cm.getConnection());
+		
+		System.out.println("Please choose an option:");
+		System.out.println("1. add patient to trial");
+		System.out.println("2. add patient description");
+		System.out.println("3. update patient description");
+		System.out.println("4. Remove patient decription");
+		Scanner doctorScanner = new Scanner(System.in);
+		int doctorChoice = doctorScanner.nextInt();
+		switch (doctorChoice) {
+		case 1:
+			System.out.println("Viewing all doctors...");
+			dm.showAllDoctors();
+			break;
+			case 2:
+				System.out.println("Finding doctors...");
+                
+                
+		}
 		
 	}
-	
-	
+
 	private static void patientFunctions() {
-		
+
 	}
-	
-	
+
 	private static void guestFunctions() {
-		
+
 	}
-	
 
 	public static void comprobaciones() {
 
@@ -239,8 +323,8 @@ public class Main {
 			trial1.setDurationDays(90);
 			trial1.setBudget(15000.0);
 			trial1.setTargetPatients(20);
-			boolean added = tm.addTrial(trial1);
-			System.out.println("1. addTrial -> " + added);
+			// boolean added = tm.addTrial(trial1);
+			// System.out.println("1. addTrial -> " + added);
 			System.out.println("2. getAllTrials -> ");
 			System.out.println(tm.getAllTrials());
 			System.out.println("3. seeTrial -> ");
@@ -271,7 +355,7 @@ public class Main {
 			trialToRemove.setBudget(5000.0);
 			trialToRemove.setTargetPatients(5);
 
-			tm.addTrial(trialToRemove);
+			// tm.addTrial(trialToRemove);
 
 			boolean removed = tm.removeTrial(removeTrialId);
 			System.out.println("11. removeTrial -> " + removed);

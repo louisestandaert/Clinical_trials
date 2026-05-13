@@ -43,34 +43,32 @@ public class TrialManager {
 	    return trial;
 	}
 	
-	//add ensayo clinico 1
-	public boolean addTrial(Trial trial) {
+	//add ensayo clinico
+	public boolean addTrial(int trialId, String trialName, LocalDate startingDate, int durationDays, double budget,
+			int targetPatients) {
 		String sql = "INSERT INTO Trials (trial_id, trial_name, starting_date, duration_days, budget, target_patients) VALUES (?, ?, ?, ?, ?, ?)";
-		if (trial==null) {
-			System.err.println("Error: Trial is null");
+		try {
+			Connection connection = connectionManager.getConnection();
+
+			try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+				ps.setInt(1, trialId);
+				ps.setString(2, trialName);
+				ps.setDate(3, java.sql.Date.valueOf(startingDate));
+				ps.setInt(4, durationDays);
+				ps.setDouble(5, budget);
+				ps.setInt(6, targetPatients);
+
+				int rowsAffected = ps.executeUpdate();
+				return rowsAffected > 0;
+			}
+
+		} catch (SQLException e) {
+			System.err.println("Error inserting trial: " + e.getMessage());
 			return false;
 		}
-		try {
-		    Connection connection = connectionManager.getConnection();
-
-		    try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-		    	ps.setInt(1, trial.getTrialId());
-		    	ps.setString(2, trial.getTrialName());
-		    	ps.setDate(3, java.sql.Date.valueOf(trial.getStartingDate()));
-		    	ps.setInt(4, trial.getDurationDays());
-		    	ps.setDouble(5, trial.getBudget());
-		    	ps.setInt(6, trial.getTargetPatients());
-
-		    	int rowsAffected = ps.executeUpdate();
-		    	return rowsAffected > 0;
-		    	}
-		    
-		    } catch (SQLException e) {
-		    	System.err.println("Error inserting trial: " + e.getMessage());
-		    	return false;	    
-		    
-		    }
+		
+		
     }		
 	
 	//Select all 
