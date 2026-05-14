@@ -264,6 +264,25 @@ public class JPA_manager {
     		
 	}
 	
+	
+	public boolean checkLogin(String username, String password) {
+	    try {
+	        User user = findUserByUsername(username);
+
+	        if (user == null) {
+	            return false;
+	        }
+
+	        boolean passwordCorrect = PasswordUtil.verifyPassword(password, user.getPassword());
+
+	        return passwordCorrect;
+
+	    } catch (Exception e) {
+	        System.err.println("Login failed: " + e.getMessage());
+	        return false;
+	    }
+	}
+	
 }
 	
 	
