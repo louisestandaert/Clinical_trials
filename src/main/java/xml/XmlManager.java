@@ -10,6 +10,7 @@ import Pojos.Doctors;
 import Pojos.Hospitals;
 import Pojos.Patients;
 import Pojos.Trial;
+import Pojos.HospitalTrial;
 
 public class XmlManager {
 	
@@ -173,6 +174,37 @@ public class XmlManager {
 			return null;
 		}
 	}
+	
+	//HOSPITAL TRIAL
+	public void marshalHospitalTrial(HospitalTrial hospitalTrial, String rutaArchivo) {
+		try {
+			JAXBContext contexto = JAXBContext.newInstance(HospitalTrial.class);
+			Marshaller marshaler = contexto.createMarshaller();
+			marshaler.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+			marshaler.marshal(hospitalTrial, new File(rutaArchivo));
+
+			System.out.println("XML correctly created in: " + rutaArchivo);
+		} catch (Exception e) {
+			System.err.println("JAXB Error while marshalling hospital trial: " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	public HospitalTrial unmarshalHospitalTrial(String rutaArchivo) {
+		try {
+			JAXBContext contexto = JAXBContext.newInstance(HospitalTrial.class);
+			Unmarshaller unmarshall = contexto.createUnmarshaller();
+			HospitalTrial hospitalTrial = (HospitalTrial) unmarshall.unmarshal(new File(rutaArchivo));
+
+			System.out.println("XML correctly created in: " + rutaArchivo);
+			return hospitalTrial;
+		} catch (Exception e) {
+			System.err.println("JAXB Error while unmarshalling hospital trial: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	
 	
 	//THE WHOLE DATABASE AT THE SAME TIME 

@@ -11,6 +11,7 @@ import Pojos.Description;
 import Pojos.Hospitals;
 import Pojos.Patients;
 import Pojos.Trial;
+import Pojos.HospitalTrial;
 
 @XmlRootElement(name = "ClinicalTrials")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -37,16 +38,21 @@ public class ClinicalTrialsXMLDataBase {
 	@XmlElement(name = "Trial")
 	private List<Trial> trials;
 	
+	@XmlElementWrapper(name = "HospitalTrials")
+	@XmlElement(name = "HospitalTrial")
+	private List<HospitalTrial> hospitalTrials;
+	
 	public ClinicalTrialsXMLDataBase() {
 	}
 	
 	public ClinicalTrialsXMLDataBase(List<Doctors> doctors, List<Hospitals> hospitals, List<Patients> patients,
-			List<Description> descriptions, List<Trial> trials) {
+			List<Description> descriptions, List<Trial> trials, List<HospitalTrial> hospitalTrials) {
 		this.doctors = doctors;
 		this.hospitals = hospitals;
 		this.patients = patients;
 		this.descriptions = descriptions;
 		this.trials = trials;
+		this.hospitalTrials = hospitalTrials;
 	}
 	
 	public List<Doctors> getDoctors() {
@@ -89,4 +95,11 @@ public class ClinicalTrialsXMLDataBase {
 		this.trials = trials;
 	}
 
+	public List<HospitalTrial> getHospitalTrials() {
+		return hospitalTrials;
+	}
+	
+	public void setHospitalTrials(List<HospitalTrial> hospitalTrials) {
+		this.hospitalTrials = hospitalTrials;
+	}
 }

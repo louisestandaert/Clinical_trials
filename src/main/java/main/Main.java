@@ -11,6 +11,8 @@ import jpa.JPA_manager;
 import xml.XmlManager;
 import java.util.List;
 import Pojos.User;
+import Pojos.HospitalTrial;
+import jdbc.HospitalTrialManager;
 
 import java.util.Scanner;
 
@@ -259,6 +261,7 @@ public class Main {
 		System.out.println("5.probando doctor manager");
 		System.out.println("6. probando jpa manager ");
 		System.out.println("7. probando el xml");
+		System.out.println("8. probando hospital trial manager");
 
 		Scanner scanner = new Scanner(System.in);
 		int choice = scanner.nextInt();
@@ -493,6 +496,64 @@ public class Main {
 				System.err.println("Error writing to XML: " + e.getMessage());
 				e.printStackTrace();
 			}
+			break;
+			
+		case 8:
+			System.out.println("Testing Hospital Trial Manager...");
+			int testTrialIDForHT=1;
+			int testHospitalIDForHT=1;
+			HospitalTrialManager htm = new HospitalTrialManager(cm.getConnection());
+			System.out.println("Checking if the trial is already assigned to the hospital:");
+			boolean isAssigned=htm.isTrialAssignedToHospital(testTrialIDForHT, testHospitalIDForHT);
+			if (isAssigned) {
+				System.out.println(
+						"Trial " + testTrialIDForHT + " is already assigned to hospital " + testHospitalIDForHT);
+			} else {
+				System.out.println("Trial " + testTrialIDForHT + " is not assigned to hospital " + testHospitalIDForHT);
+			}
+			
+			//Assign hospital to trial
+			System.out.println("Assigning hospital to trial...");
+			if(!isAssigned) {
+				htm.assignTrialToHospital(testTrialIDForHT, testHospitalIDForHT);
+			} else {
+				System.out.println("Trial is already assigned to the hospital, skipping assignment.");
+			}
+			
+			//Check if now the trial is assigned to the hospital
+			System.out.println("Checking if the trial is assigned to the hospital after assignment:");
+			boolean isAssignedAfter=htm.isTrialAssignedToHospital(testTrialIDForHT, testHospitalIDForHT);
+			if (isAssignedAfter) {
+				System.out.println("Trial " + testTrialIDForHT + " is now assigned to hospital " + testHospitalIDForHT);
+			} else {
+				System.out.println(
+						"Trial " + testTrialIDForHT + " is still not assigned to hospital " + testHospitalIDForHT);
+			}
+			
+			//show all relations
+			System.out.println("Showing all hospital-trial assignments:");
+			System.out.println(htm.showAllHospitalTrials());
+			
+			//Show trials assigned to a hospital
+			System.out.println("Showing trials assigned to hospital " + testHospitalIDForHT + ":");
+			System.out.println(htm.findTrialsByHospitalId(testHospitalIDForHT));
+			
+			//remove trial from hospital
+			System.out.println("Removing trial from hospital...");
+			htm.removeTrialFromHospital(testTrialIDForHT, testHospitalIDForHT);
+			//checking if the relation has been removed
+			System.out.println("Checking if the trial is assigned to the hospital after removal:");
+			boolean isAssignedAfterRemoval=htm.isTrialAssignedToHospital(testTrialIDForHT, testHospitalIDForHT);
+			if (isAssignedAfterRemoval) {
+				System.out
+						.println("Trial " + testTrialIDForHT + " is still assigned to hospital " + testHospitalIDForHT);
+			} else {
+				System.out.println(
+						"Trial " + testTrialIDForHT + " is no longer assigned to hospital " + testHospitalIDForHT);
+			}
+			
+			
+			
 			break;
 		default:
 			System.out.println("Invalid choice.");
