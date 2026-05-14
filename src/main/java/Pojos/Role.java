@@ -62,4 +62,8 @@ public class Role {
 		this.users = users;
 	}	
 	
+	public String toString() {
+		return "Role [id=" + role_id + ", role=" + role + "]";
+	}
+	
 }

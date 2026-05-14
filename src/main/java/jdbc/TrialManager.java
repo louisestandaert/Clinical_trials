@@ -134,7 +134,7 @@ public class TrialManager {
     }
 	
 	//eliminar paciente de ensayo 4
-	public boolean quitPatientFromTrial(int patientId) {
+	public boolean removePatientFromTrial(int patientId) {
 		 String sql = "UPDATE Patients SET trial_id = 0 WHERE patients_id = ?";
 		 //para no hacer null, lo pongo a 0, que no existe en la tabla de ensayos. ID 0 = sin ensayo asignado.
 		 try {
@@ -155,7 +155,7 @@ public class TrialManager {
     }
 	
 	// See del ensayo 5
-	 public Trial seeTrial(int trialId) {
+	 public Trial viewTrial(int trialId) {
 	        String sql = "SELECT * FROM Trials WHERE trial_id = ?";
 
 	        try {

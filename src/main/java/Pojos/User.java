@@ -71,5 +71,9 @@ public class User {
 	public void setRole(Role role) {
 		this.role = role;
 	}
+	
+	public String toString() {
+		return "User [id=" + user_id + ", username=" + username + ", password=" + password + ", role=" + role + "]";
+	}
 
 }

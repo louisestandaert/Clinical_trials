@@ -24,7 +24,7 @@ public class JPA_manager {
 	private EntityManagerFactory emf;
 	private EntityManager em;
 
-	public JPA_manager() {
+	public JPA_manager() {	
 
 		try {
 			this.emf = Persistence.createEntityManagerFactory("Clinical_trials_provider");
@@ -123,60 +123,9 @@ public class JPA_manager {
 	        System.err.println("Login failed: " + e.getMessage());
 	    }
 	}
+
 	
-/*
- * createUser:
-1. Busca si el username ya existe.
-2. Busca el role con JPQL.
-3. Crea un objeto User.
-4. Hashea la password.
-5. Asigna username, password hasheada y role.
-6. Abre transacción.
-7. Persiste el usuario.
-8. Hace commit.
-9. Si hay error, rollback.
-    */
-
-	/** CHAT ME DICE QUE QUIET ESTE, LO PONGO ASÍ POR SI ACASO 
-	 * Por que dice que no es crear un user sino un role, y confunde, he creado un create role arriba, 
-	 * POR SI QUEREIS MIRARLO Y CAMBIARLO O ALGO 
-	 * 
-	 public void createUser(String username, String password, String roleName) {
-		try {
-			User existingUser = findUserByUsername(username);
-			if (existingUser != null) {
-                System.out.println("A user with this username already exists.");
-                return;
-            }
-			Query query = em.createQuery(
-                    "SELECT r FROM Role r WHERE r.role = :roleName",
-                    Role.class
-            );
-
-			query.setParameter("roleName", roleName);
-            Role role = (Role) query.getSingleResult();
-            User newUser = new User();
-            newUser.setUsername(username);
-            String hashedPassword = PasswordUtil.hashPassword(password);
-            
-            newUser.setPassword(hashedPassword);
-            newUser.setUsername(username);
-            
-            this.em.getTransaction().begin();
-            this.em.persist(newUser);
-            this.em.getTransaction().commit();
-            
-            System.out.println("User created successfully: " + username);
-
-        } catch (Exception e) {
-            if (this.em.getTransaction().isActive()) {
-                this.em.getTransaction().rollback();
-            }
-
-            System.err.println("Error creating user: " + e.getMessage());
-        }
-    }
-**/ 
+	
 	public void createUser(String userName, String password, String roleName) {
 	    try {
 	    	User existingUser = findUserByUsername(userName);
@@ -219,15 +168,9 @@ public class JPA_manager {
 	            System.err.println("Error creating user: " + e.getMessage());
 	    }
 	}
-	/*
-	 * login:
-1. Busca el usuario por username.
-2. Si no existe, falla.
-3. Si existe, compara la password introducida con el hash guardado.
-4. Si coincide, login correcto.
-5. Si no coincide, login incorrecto.
 
-	 */
+	
+	
             
 	public List<User> findAllUsers() {
 	    try {
@@ -315,90 +258,13 @@ public class JPA_manager {
 		}
 	}
 	
-	//no estoy 100% que esto funcione! 
-		public String getUserRole(String username) {
-			try {
-				Query query = em.createNativeQuery(
-						"SELECT r.role FROM users u JOIN Role r ON u.role_id = r.role_id WHERE u.username = ?",
-						String.class);
-
-				query.setParameter(1, username);
-				return (String) query.getSingleResult();
-
-			} catch (Exception e) {
-				System.err.println("Error getting user role: " + e.getMessage());
-				return null;
-			}
-		}
+	public String getRoleByUser(User user) {
 	
-	
-	//Con la contraseña encriptada pero creo que hay que añadir un .jar o una libreria o algo y no se si estaría bien así
-	/*public void updateEncryptedPassword(String username, String newEncryptedPassword) {
-		User user = findUserByUsername(username);
-
-        if (user == null) {
-            System.out.println("No user found with username: " + username);
-            return;
-        }
-        String encryptedPassword = BCrypt.hashpw(newEncryptedPassword, BCrypt.gensalt());
-        em.getTransaction().begin();
-        user.setPassword(encryptedPassword);
-        em.getTransaction().commit();
-        System.out.println("The password has been updated successfully for user: " + username);
+		return user.getRole().getRole();
+    		
 	}
 	
-	*/
-
 }
-
-// ahora hacemos el manager
-
-// jpamanager
-// primero el constructor - segundo los metodos
-
-// el constructor
-// el nombre que has puesto en el persistence unit. (xml)
-// un if importante - if my list de roles esta vacía - entonces le añades un
-// role por defecto.
-// tenemos que crear los roles y asignarlos
-
-// ahora los metodos
-//
-
-// empezar con el create role:
-// parametro - un role role
-// em.gettransaction.begin() - esto es para empezar la transaccion
-// em.persist(role) - esto es para persistir el role en la base de datos
-// em.gettransaction.commit() - esto es para confirmar la transaccion
-// y punchhhh!
-
-// para los metodos de usar un query - em.createquery("SELECT r FROM Role r") -
-// esto es para seleccionar todos los roles de la base de datos
-
-// modificar - son transactiones
-// si es solo para ver cosas - query q - q.getresultlist() - esto es para
-// obtener una lista de resultados - haces una query directamente y el segundo
-// parametro , a donde , user.class!
-// q.setparameter("name", name) - esto es para establecer un parametro en la
-// consulta
-// q.getsingleResult() - esto es para obtener un solo resultado
-
-// ahora tines que crear el user - user user = (user) q.getsingleResult() - esto
-// es para obtener un solo resultado y castearlo a user.
-
-// metodo login _ el mas importante
-// tiene que devolverte el user
-// los dos parametros - username y password
-// query q = em.createNativeQuery("SELECT u FROM User u WHERE u.username =
-// :username AND u.password = :password", User.class);
-// q.setParameter("username", username);
-// verificar los username existe
-// aqui empieza el rolle de la seguridad. - pero hacerlo despues.
-//
-
-// create tu password
-// ahora la forma de lo primero es comprobar que hay un match con el username y
-// el password.
-
-// update password
-//
+	
+	
+	

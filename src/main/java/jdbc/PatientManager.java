@@ -206,7 +206,7 @@ public class PatientManager {
 		
 		
 		//este metodo esta comprobado
-		public Set<Patients> getListOfPatientsWithDescription(String cause){
+		public Set<Patients> getListOfPatientsWithSameCause(String cause){
 			String sql = "SELECT p.* FROM Patients p JOIN Descriptions d ON p.description_id = d.description_id WHERE d.cause =?";
 			Set<Patients> patientsSet = new HashSet<>();
 
