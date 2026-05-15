@@ -7,12 +7,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.LoginController">
    <children>
-      <Label layoutX="90.0" layoutY="33.0" text="CLINICAL TRIALS DATABASE">
+      <Label layoutX="102.0" layoutY="41.0" text="CLINICAL TRIALS DATABASE">
          <font>
-            <Font name="Helvetica Neue" size="31.0" />
+            <Font name="Apple SD Gothic Neo Bold" size="31.0" />
          </font>
       </Label>
       <PasswordField fx:id="passwordField" layoutX="224.0" layoutY="200.0" promptText="PASSWORD" />

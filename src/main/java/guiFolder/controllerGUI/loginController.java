@@ -29,6 +29,11 @@ public class LoginController {
 	private Label messageLabel;
 
 	private JPA_manager jpaManager = new JPA_manager();
+	
+	@FXML
+	private void initialize() {
+		messageLabel.setText("");
+	}
 
 	@FXML
 	private void handleLogin() {
@@ -53,9 +58,7 @@ public class LoginController {
 			messageLabel.setText("User not found.");
 			return;
 		}
-		
 		String roleName = jpaManager.getRoleByUser(user);
-		
 		if (roleName == null) {
 			messageLabel.setText("User role not found.");
 			return;

@@ -55,6 +55,14 @@ public class Patients {
 	public void setPatientsId(int patientsId) {
 		this.patientsId = patientsId;
 	}
+	
+	public int getTrialId() {
+		return trialId;
+	}
+	
+	public void setTrialId(int trialId) {
+		this.trialId = trialId;
+	}
 
 	@Override
 	public boolean equals(Object o) {
