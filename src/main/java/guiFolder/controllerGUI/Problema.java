@@ -16,7 +16,8 @@ import javafx.stage.Stage;
 
 
 
-public class LoginController {
+public class Problema {
+	
 	@FXML
 	private TextField usernameField;
 
