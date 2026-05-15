@@ -75,9 +75,9 @@ public class Main {
 					System.out.println("Welcome, doctor! You can manage your trials and patients.");
 					doctorFunctions(scanner, dm, dpm, tm, pm, htm);
 					break;
-				case "patient":
+				case "Patient":
 					System.out.println("Welcome, patient! You can view your trial information and results.");
-					patientFunctions();
+					patientFunctions(scanner, pm);
 					break;
 				default:
 					System.out.println("Role not recognized. please try again.");
@@ -87,7 +87,7 @@ public class Main {
 				break;
 			case 2:
 				System.out.println("Entering as Guest...");
-				guestFunctions();
+				guestFunctions(scanner, tm);
 				break;
 			case 3:
 				System.out.println("Signing up...");
@@ -466,11 +466,95 @@ public class Main {
 
 	}
 
-	private static void patientFunctions() {
+	private static void patientFunctions(Scanner scanner, PatientManager pm) {
+		int patientChoice;
+		
+		do {
+			System.out.println("Please choose an option:");
+			System.out.println("1. View my trial by ID");
+			System.out.println("2. View patient description");
+		    System.out.println("00. Exit - volver al login");
+		    
+		    patientChoice = scanner.nextInt();
+		    scanner.nextLine();
+		    
+		    switch (patientChoice) {
+			case 1:
+				System.out.println("Viewing patient by ID...");
+				System.out.println("Enter patient ID:");
+				int patientIdToView = scanner.nextInt();
+				scanner.nextLine();
+
+				System.out.println(pm.getPatientById(patientIdToView));
+				break;
+
+			case 2:
+				System.out.println("Viewing patient description...");
+				System.out.println("Enter patient name:");
+				String patientName = scanner.nextLine();
+
+				pm.getPatientDescription(patientName);
+				break;
+
+			case 00:
+				System.out.println("Exiting to login...");
+				break;
+
+			default:
+				System.out.println("Invalid choice.");
+				break;
+			}
+
+		} while (patientChoice != 00);
 
 	}
 
-	private static void guestFunctions() {
+			
+
+	private static void guestFunctions(Scanner scanner, TrialManager tm) {
+		int guestChoice;
+
+		do {
+			System.out.println("Please choose an option:");
+			System.out.println("1. View all trials");
+			System.out.println("2. View trial details");
+			System.out.println("00. Exit - volver al login");
+
+			guestChoice = scanner.nextInt();
+			scanner.nextLine();
+
+			switch (guestChoice) {
+			case 1:
+				System.out.println("Viewing all trials...");
+				System.out.println("All trials in the system:");
+
+				for (Trial trial : tm.getAllTrials()) {
+					System.out.println("Trial ID: " + trial.getTrialId());
+					System.out.println("Trial Name: " + trial.getTrialName());
+					System.out.println("More details are hidden.");
+					System.out.println("------------------------");
+				}
+				break;
+
+			case 2:
+				System.out.println("Viewing trial details...");
+				System.out.println("Enter trial ID:");
+				int trialIdToView = scanner.nextInt();
+				scanner.nextLine();
+
+				System.out.println(tm.viewTrial(trialIdToView));
+				break;
+
+			case 00:
+				System.out.println("Exiting to login...");
+				break;
+
+			default:
+				System.out.println("Invalid choice.");
+				break;
+			}
+
+		} while (guestChoice != 00);
 
 	}
 

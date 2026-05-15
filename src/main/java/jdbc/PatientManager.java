@@ -131,8 +131,11 @@ public class PatientManager {
                 System.out.println("Description for patient " + patientName + ":");
                 description = new Description(rs.getInt("description_id"), rs.getString("gender"), rs.getString("cause"), rs.getInt("patient_id"));
                 System.out.println(description);
+            } else {
+    			System.out.println("No description found for patient: " + patientName);
+    		}
 
-}
+
             }catch (SQLException e) {
             	System.err.println("Error retrieving patient description: " + e.getMessage());
             }
