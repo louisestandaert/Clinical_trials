@@ -92,10 +92,10 @@ public class Main {
 			case 3:
 				System.out.println("Signing up...");
 
-				jpaManager.createRole("Trial Manager");
-				jpaManager.createRole("Doctor");
-				jpaManager.createRole("Patient");
-				jpaManager.createRole("Guest");
+				//jpaManager.createRole("Trial Manager");
+				//jpaManager.createRole("Doctor");
+				//jpaManager.createRole("Patient");
+				//jpaManager.createRole("Guest");
 
 				System.out.println("Enter username: ");
 				username = scanner.nextLine();
@@ -338,43 +338,62 @@ public class Main {
 
 	private static void doctorFunctions(Scanner scanner, DoctorManager dm, DescriptionManager dpm, TrialManager tm, PatientManager pm, HospitalTrialManager htm) {
 
-		System.out.println("Please choose an option:");
-		System.out.println("1. add patient");
-		System.out.println("2. Assign patient to existing trial");
-		System.out.println("3. View patient by id"); // seria mejor hacerlo por nombre pero bueno
-		System.out.println("4. View all patients");
-
-		System.out.println("5. add patient description");
-		System.out.println("6. update patient description");
-		System.out.println("7. View patient description by patient id");
-		System.out.println("8. Remove patient decription");
-
-		System.out.println("9. Get female count of patients");
-		System.out.println("10. Get male count of patients");
-		System.out.println("11. Get list a patients with the same cause");
-		System.out.println("12. View all trials in given hospital");
-
-		System.out.println("00. Exit - volver al login");
-
-		int doctorChoice = scanner.nextInt();
+		int doctorChoice;
 
 		do {
+			
+			System.out.println("Please choose an option:");
+			System.out.println("1. add patient");
+			System.out.println("2. Assign patient to existing trial");
+			System.out.println("3. View patient by id"); // seria mejor hacerlo por nombre pero bueno
+			System.out.println("4. View all patients");
+
+			System.out.println("5. add patient description");
+			System.out.println("6. update patient description");
+			System.out.println("7. View patient description by patient id");
+			System.out.println("8. Remove patient decription");
+
+			System.out.println("9. Get female count of patients");
+			System.out.println("10. Get male count of patients");
+			System.out.println("11. Get list a patients with the same cause");
+			System.out.println("12. View all trials in given hospital");
+
+			System.out.println("00. Exit - volver al login");
+			doctorChoice = scanner.nextInt();
+			scanner.nextLine();
 
 			switch (doctorChoice) {
 			case 1: // add patient
 				System.out.println("Adding patient...");
+				
 				System.out.println("Enter patient ID:");
 				int patientIdToAdd = scanner.nextInt();
+				scanner.nextLine();
+
 				System.out.println("Enter patient name:");
 				String patientName = scanner.nextLine();
+				
 				System.out.println("Enter patient test result (Positive/Negative):");
 				String testResult = scanner.nextLine();
+				
 				System.out.println("Enter trial ID:");
 				int trialIdForPatient = scanner.nextInt();
+				
 				System.out.println("Enter hospital ID:");
 				int hospitalIdForPatient = scanner.nextInt();
+				
 				System.out.println("Enter description ID:");
 				int descriptionIdForPatient = scanner.nextInt();
+				scanner.nextLine();
+				
+				System.out.println("Enter patient gender:");
+				String gender = scanner.nextLine();
+
+				System.out.println("Enter patient cause:");
+				String cause = scanner.nextLine();
+				
+				dpm.insertDescription(descriptionIdForPatient, gender, cause, patientIdToAdd);
+				
 				pm.insertPatient(patientIdToAdd, patientName, testResult, trialIdForPatient, hospitalIdForPatient,
 						descriptionIdForPatient);
 				break;
@@ -384,41 +403,59 @@ public class Main {
 				int patientId = scanner.nextInt();
 				System.out.println("Enter trial ID:");
 				int trialId = scanner.nextInt();
-				tm.enrollPatientInTrial(patientId, trialId);
+				scanner.nextLine();
+				boolean assigned = tm.enrollPatientInTrial(patientId, trialId);
+				
+				if (assigned) {
+					System.out.println("Patient assigned to trial successfully.");
+				} else {
+					System.out.println("Failed to assign patient to trial. Please check the IDs and try again.");
+				}
 				break;
 			case 3: // view patient by id
 				System.out.println("Viewing patient by ID...");
 				System.out.println("Enter patient ID:");
 				int patientIdToView = scanner.nextInt();
-				pm.getPatientById(patientIdToView);
+				scanner.nextLine();
+				System.out.println(pm.getPatientById(patientIdToView));
 				break;
 			case 4: // view all patients
 				System.out.println("Viewing all patients...");
-				System.out.println("All patients in the system:" + pm.getAllPatients());
+				System.out.println("All patients in the system:");
+				System.out.println(pm.getAllPatients());
 				break;
 			case 5: // add patient description
 				System.out.println("Adding patient description...");
 				System.out.println("Enter patient ID:");
 				int patientIdForDescription = scanner.nextInt();
-				System.out.println("please add the description of the patient:");
-				System.out.println("description id:");
+				
+				System.out.println("Please add the description of the patient:");
+				System.out.println("Description id:");
 				int descriptionId = scanner.nextInt();
-				System.out.println("gender:");
-				String gender = scanner.nextLine();
-				System.out.println("cause:");
-				String cause = scanner.nextLine();
+				scanner.nextLine();
+				
+				System.out.println("Gender:");
+				gender = scanner.nextLine();
+				
+				System.out.println("Cause:");
+				cause = scanner.nextLine();
+				
 				dpm.insertDescription(descriptionId, gender, cause, patientIdForDescription);
 				break;
 			case 6: // update patient description
 				System.out.println("Updating patient description...");
 				System.out.println("Enter patient ID of the description you want to change:");
 				int patientIdForNewDescription = scanner.nextInt();
-				System.out.println("please add the description of the patient:");
+				
+				System.out.println("Please add the description of the patient:");
 				System.out.println("description id:");
 				int newDescriptionId = scanner.nextInt();
-				System.out.println("gender:");
+				scanner.nextLine();
+				
+				System.out.println("Gender:");
 				String newGender = scanner.nextLine();
-				System.out.println("cause:");
+				
+				System.out.println("Cause:");
 				String newCause = scanner.nextLine();
 				dpm.updateDescription(newDescriptionId, newGender, newCause, patientIdForNewDescription);
 				break;
@@ -426,12 +463,15 @@ public class Main {
 				System.out.println("Viewing patient description by patient ID...");
 				System.out.println("Enter patient ID:");
 				int patientIdForDescriptionView = scanner.nextInt();
-				dpm.findDescriptionByPatientId(patientIdForDescriptionView);
+				scanner.nextLine();
+				
+				System.out.println(dpm.findDescriptionByPatientId(patientIdForDescriptionView));
 				break;
 			case 8: // remove patient description
 				System.out.println("Removing patient description...");
 				System.out.println("Enter description ID:");
 				int descriptionIdToRemove = scanner.nextInt();
+				scanner.nextLine();
 				dpm.removeDescription(descriptionIdToRemove);
 				break;
 			case 9: // get female count of patients
@@ -452,6 +492,7 @@ public class Main {
 				System.out.println("Viewing all trials in given hospital...");
 				System.out.println("Enter hospital ID:");
 				int hospitalIdForTrialsView = scanner.nextInt();
+				scanner.nextLine();
 				System.out.println(htm.findTrialsByHospitalId(hospitalIdForTrialsView));
 				break;
 			case 00:

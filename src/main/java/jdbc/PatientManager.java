@@ -188,7 +188,7 @@ public class PatientManager {
 		
 		//este metodo esta comprobado
 		public int getMalePatientsCount() {
-			String sql = "SELECT COUNT(*) AS count FROM Patients p JOIN Descriptions d ON p.description_id = d.description_id WHERE d.gender='male'";
+			String sql = "SELECT COUNT(*) AS count FROM Patients p JOIN Descriptions d ON p.description_id = d.description_id WHERE d.gender='Male'";
 			int count = 0;
 			
 			try {
@@ -202,7 +202,7 @@ public class PatientManager {
                 rs.close();
                 ps.close();
             } catch (SQLException e) {
-                System.err.println("Error counting female:' " + e.getMessage());
+                System.err.println("Error counting male:' " + e.getMessage());
             }
 			return count;
 		}
