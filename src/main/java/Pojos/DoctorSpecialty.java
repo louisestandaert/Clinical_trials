@@ -6,5 +6,6 @@ public enum DoctorSpecialty {
 	ONCOLOGY,
 	PEDRIATICS,
 	GENERAL_MEDICINE,
+	UNKNOWN,
 
 }

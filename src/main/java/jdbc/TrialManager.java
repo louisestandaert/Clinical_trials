@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
+import Pojos.Doctors;
 import Pojos.Trial; 
 import java.time.LocalDate;
 
@@ -111,7 +113,8 @@ public class TrialManager {
 	            System.err.println("Error assigning doctor to trial: " + e.getMessage());
 	            return false;
 	        }
-	    }
+	    }                             
+	
 	//Inscribir paciente de ensayo 3
 	public boolean enrollPatientInTrial(int patientId, int trialId) {
         String sql = "UPDATE Patients SET trial_id = ? WHERE patients_id = ?";
@@ -179,7 +182,7 @@ public class TrialManager {
 	    }
 	 
 	 //COMPROBADO
-	 public boolean removeTrial(int trialId) {
+	 public boolean removeTrial(int trialId) throws Exception {
 		 String checkDoctorSql = "SELECT COUNT (*) FROM Doctors WHERE trial_id = ?";
 		 String checkPatientSql = "SELECT COUNT(*) FROM Patients WHERE trial_id = ?";
 		 String deleteTrialSql = "DELETE FROM Trials WHERE trial_id = ?";
@@ -222,8 +225,7 @@ public class TrialManager {
 				 
 			 }catch (SQLException e) {
 		            connection.rollback();
-		            System.err.println("Error removing trial: " + e.getMessage());
-		            return false;	 
+		            throw new Exception("Error removing trial: " + e.getMessage(), e);	 
 			 }finally{
 	            connection.setAutoCommit(true);
 	         }

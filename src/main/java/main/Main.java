@@ -58,7 +58,13 @@ public class Main {
 				System.out.println("Enter password: ");
 				password = scanner.nextLine();
 
-				jpaManager.login(username, password);
+				try {
+					jpaManager.login(username, password);
+				} catch (Exception e) {
+					System.out.println("Login failed dentro de catch: " + e.getMessage());
+					break;
+
+				}
 
 				System.out.println("Retrieving user role...");
 
@@ -77,13 +83,12 @@ public class Main {
 					break;
 				case "Patient":
 					System.out.println("Welcome, patient! You can view your trial information and results.");
-					patientFunctions(scanner, pm);
+					patientFunctions(scanner, pm, jpaManager.findUserByUsername(username));
 					break;
 				default:
 					System.out.println("Role not recognized. please try again.");
 					break;
 				}
-
 				break;
 			case 2:
 				System.out.println("Entering as Guest...");
@@ -92,10 +97,10 @@ public class Main {
 			case 3:
 				System.out.println("Signing up...");
 
-				//jpaManager.createRole("Trial Manager");
-				//jpaManager.createRole("Doctor");
-				//jpaManager.createRole("Patient");
-				//jpaManager.createRole("Guest");
+				// jpaManager.createRole("Trial Manager");
+				// jpaManager.createRole("Doctor");
+				// jpaManager.createRole("Patient");
+				// jpaManager.createRole("Guest");
 
 				System.out.println("Enter username: ");
 				username = scanner.nextLine();
@@ -164,22 +169,22 @@ public class Main {
 			System.out.println("1. Create a new trial");
 			System.out.println("2. View all trials");
 			System.out.println("3. View trial details");
-			System.out.println("4. Compare trial results"); // 6
-			System.out.println("5. Calculate average trial duration"); // 8
-			System.out.println("6. Calculate average trial budget"); // 9
-			System.out.println("7. Remove trial"); // 11
-			System.out.println("8. Predict how many new patients are required"); // 7
+			System.out.println("4. Compare trial results");
+			System.out.println("5. Calculate average trial duration");
+			System.out.println("6. Calculate average trial budget");
+			System.out.println("7. Remove trial");
+			System.out.println("8. Predict how many new patients are required");
 			System.out.println("9. Get the number of positive results from patients");
 
 			System.out.println("Handle doctors:");
 			System.out.println("10. add doctor");
-			System.out.println("11. Assign doctor to trial");// 4
+			System.out.println("11. Assign doctor to trial");
 			System.out.println("12. Assign doctor to hospital");
 			System.out.println("13. remove doctor");
 
 			System.out.println("Handle hospitals:");
 			System.out.println("14. add hospital");
-			System.out.println("15. Assign hospital to trial"); // 12
+			System.out.println("15. Assign hospital to trial");
 			System.out.println("16. Remove hospital from trial");
 
 			System.out.println("00. Exit - volver al login");
@@ -192,16 +197,20 @@ public class Main {
 				System.out.println("Please enter trial details:");
 				System.out.println("Trial ID:");
 				int trialId = scanner.nextInt();
+				scanner.nextLine();
 				System.out.println("Trial Name:");
 				String trialName = scanner.nextLine();
 				System.out.println("Starting Date (YYYY-MM-DD):");
 				LocalDate startingDateStr = LocalDate.parse(scanner.nextLine());
 				System.out.println("Duration (days):");
 				int durationDays = scanner.nextInt();
+				scanner.nextLine();
 				System.out.println("Budget:");
 				double budget = scanner.nextDouble();
+				scanner.nextLine();
 				System.out.println("Target Patients:");
 				int targetPatients = scanner.nextInt();
+				scanner.nextLine();
 
 				tm.addTrial(trialId, trialName, startingDateStr, durationDays, budget, targetPatients);
 				break;
@@ -214,42 +223,53 @@ public class Main {
 				System.out.println("Viewing trial details...");
 				System.out.println("Enter trial ID:");
 				int viewTrialId = scanner.nextInt();
-				tm.viewTrial(viewTrialId);
+				scanner.nextLine();
+				System.out.println(tm.viewTrial(viewTrialId));
 				break;
 			case 4: // compare trial results
 				System.out.println("Comparing trial results...");
 				System.out.println("Enter trial ID:");
 				int compareTrialId = scanner.nextInt();
-				tm.resultsComparation(compareTrialId);
+				scanner.nextLine();
+				System.out.println(tm.resultsComparation(compareTrialId));
 				break;
 			case 5: // calculate average trial duration
 				System.out.println("Calculating average trial duration...");
-				tm.calculateAverageDuration();
+				System.out.println("the averge trial duration is" + tm.calculateAverageDuration());
 				break;
 			case 6:// calculate average trial budget
 				System.out.println("Calculating average trial budget...");
-				tm.calculateAverageBudget();
+				System.out.println("the average trial budget is" + tm.calculateAverageBudget());
 				break;
 			case 7: // remove trial
 				System.out.println("Removing trial...");
 				System.out.println("Enter trial ID:");
 				int removeTrialId = scanner.nextInt();
-				tm.removeTrial(removeTrialId);
+				scanner.nextLine();
+				try {
+					tm.removeTrial(removeTrialId);
+				} catch (Exception e) {
+					System.out.println("Error while trying to remove the trial: " + e.getMessage());
+					break;
+				}
 				break;
 			case 8: // predict how many new patients are required
 				System.out.println("Predicting how many new patients are required...");
 				System.out.println("Enter trial ID:");
 				int predictTrialId = scanner.nextInt();
-				tm.predictHowManyNewPatientsRequired(predictTrialId);
+				scanner.nextLine();
+				System.out.println("there are " + tm.predictHowManyNewPatientsRequired(predictTrialId)
+						+ " new patients required for the trial");
 				break;
 			case 9: // get the number of positive results from patients
 				System.out.println("Getting the number of positive results from patients...");
-				pm.getPatientCountOfPositiveResults();
+				System.out.println(pm.getPatientCountOfPositiveResults());
 				break;
 			case 10: // add doctor
 				System.out.println("Adding doctor...");
 				System.out.println("Enter doctor ID:");
 				int doctorIdToAdd = scanner.nextInt();
+				scanner.nextLine();
 
 				System.out.println("Enter doctor name:");
 				String doctorName = scanner.nextLine();
@@ -275,14 +295,17 @@ public class Main {
 
 				dm.insertDoctor(doctorIdToAdd, doctorName, doctorGender, doctorSpecialty, trialIdForDoctor,
 						hospitalIdForDoctor);
-
+				break;
 			case 11: // assign doctor to trial
 				System.out.println("Assigning doctor to trial...");
 				System.out.println("Enter doctor ID:");
 				int doctorId = scanner.nextInt();
+				scanner.nextLine();
 				System.out.println("Enter trial ID:");
 				int assignTrialId = scanner.nextInt();
+				scanner.nextLine();
 				tm.assignDoctorToTrial(doctorId, assignTrialId);
+				System.out.println("Doctor assigned to trial successfully.");
 				break;
 			case 12: // assign doctor to hospital
 				System.out.println("Assigning doctor to hospital...");
@@ -291,6 +314,7 @@ public class Main {
 				System.out.println("Enter hospital ID:");
 				int hospitalId = scanner.nextInt();
 				dm.assignDoctorToHospital(doctorIdForHospital, hospitalId);
+				System.out.println("Doctor assigned to hospital correctly");
 				break;
 			case 13: // remove doctor
 				System.out.println("removing doctor...");
@@ -302,6 +326,7 @@ public class Main {
 				System.out.println("adding hospital...");
 				System.out.println("Enter hospital ID:");
 				int hospitalIdToAdd = scanner.nextInt();
+				scanner.nextLine();
 				System.out.println("Enter hospital name:");
 				String hospitalName = scanner.nextLine();
 				System.out.println("Enter hospital location:");
@@ -315,6 +340,7 @@ public class Main {
 				System.out.println("Enter trial ID:");
 				int trialIdForHospital = scanner.nextInt();
 				htm.assignTrialToHospital(trialIdForHospital, hospitalIdForTrial);
+				System.out.println("Hospital assigned to trial correctly");
 				break;
 			case 16: // remove hospital from trial
 				System.out.println("removing hospital from trial...");
@@ -336,12 +362,13 @@ public class Main {
 
 	}
 
-	private static void doctorFunctions(Scanner scanner, DoctorManager dm, DescriptionManager dpm, TrialManager tm, PatientManager pm, HospitalTrialManager htm) {
+	private static void doctorFunctions(Scanner scanner, DoctorManager dm, DescriptionManager dpm, TrialManager tm,
+			PatientManager pm, HospitalTrialManager htm) {
 
 		int doctorChoice;
 
 		do {
-			
+
 			System.out.println("Please choose an option:");
 			System.out.println("1. add patient");
 			System.out.println("2. Assign patient to existing trial");
@@ -357,6 +384,7 @@ public class Main {
 			System.out.println("10. Get male count of patients");
 			System.out.println("11. Get list a patients with the same cause");
 			System.out.println("12. View all trials in given hospital");
+			System.out.println("13. remove patient");
 
 			System.out.println("00. Exit - volver al login");
 			doctorChoice = scanner.nextInt();
@@ -365,35 +393,27 @@ public class Main {
 			switch (doctorChoice) {
 			case 1: // add patient
 				System.out.println("Adding patient...");
-				
+
 				System.out.println("Enter patient ID:");
 				int patientIdToAdd = scanner.nextInt();
 				scanner.nextLine();
 
 				System.out.println("Enter patient name:");
 				String patientName = scanner.nextLine();
-				
+
 				System.out.println("Enter patient test result (Positive/Negative):");
 				String testResult = scanner.nextLine();
-				
+
 				System.out.println("Enter trial ID:");
 				int trialIdForPatient = scanner.nextInt();
-				
+
 				System.out.println("Enter hospital ID:");
 				int hospitalIdForPatient = scanner.nextInt();
-				
+
 				System.out.println("Enter description ID:");
 				int descriptionIdForPatient = scanner.nextInt();
 				scanner.nextLine();
-				
-				System.out.println("Enter patient gender:");
-				String gender = scanner.nextLine();
 
-				System.out.println("Enter patient cause:");
-				String cause = scanner.nextLine();
-				
-				dpm.insertDescription(descriptionIdForPatient, gender, cause, patientIdToAdd);
-				
 				pm.insertPatient(patientIdToAdd, patientName, testResult, trialIdForPatient, hospitalIdForPatient,
 						descriptionIdForPatient);
 				break;
@@ -405,7 +425,7 @@ public class Main {
 				int trialId = scanner.nextInt();
 				scanner.nextLine();
 				boolean assigned = tm.enrollPatientInTrial(patientId, trialId);
-				
+
 				if (assigned) {
 					System.out.println("Patient assigned to trial successfully.");
 				} else {
@@ -428,33 +448,33 @@ public class Main {
 				System.out.println("Adding patient description...");
 				System.out.println("Enter patient ID:");
 				int patientIdForDescription = scanner.nextInt();
-				
+
 				System.out.println("Please add the description of the patient:");
 				System.out.println("Description id:");
 				int descriptionId = scanner.nextInt();
 				scanner.nextLine();
-				
+
 				System.out.println("Gender:");
-				gender = scanner.nextLine();
-				
+				String gender = scanner.nextLine();
+
 				System.out.println("Cause:");
-				cause = scanner.nextLine();
-				
+				String cause = scanner.nextLine();
+
 				dpm.insertDescription(descriptionId, gender, cause, patientIdForDescription);
 				break;
 			case 6: // update patient description
 				System.out.println("Updating patient description...");
 				System.out.println("Enter patient ID of the description you want to change:");
 				int patientIdForNewDescription = scanner.nextInt();
-				
+
 				System.out.println("Please add the description of the patient:");
 				System.out.println("description id:");
 				int newDescriptionId = scanner.nextInt();
 				scanner.nextLine();
-				
+
 				System.out.println("Gender:");
 				String newGender = scanner.nextLine();
-				
+
 				System.out.println("Cause:");
 				String newCause = scanner.nextLine();
 				dpm.updateDescription(newDescriptionId, newGender, newCause, patientIdForNewDescription);
@@ -464,15 +484,14 @@ public class Main {
 				System.out.println("Enter patient ID:");
 				int patientIdForDescriptionView = scanner.nextInt();
 				scanner.nextLine();
-				
-				System.out.println(dpm.findDescriptionByPatientId(patientIdForDescriptionView));
+				System.out.println(pm.getDescriptionOfPatientById(patientIdForDescriptionView)); 
 				break;
-			case 8: // remove patient description
+			case 8: // remove patient description 
 				System.out.println("Removing patient description...");
-				System.out.println("Enter description ID:");
-				int descriptionIdToRemove = scanner.nextInt();
-				scanner.nextLine();
-				dpm.removeDescription(descriptionIdToRemove);
+				System.out.println("Enter patient name of the description you want to remove:");
+				String patientNameForDescriptionRemoval = scanner.nextLine();
+				dpm.removeDescriptionByPatientName(patientNameForDescriptionRemoval); 
+				System.out.println("Description removed"); 
 				break;
 			case 9: // get female count of patients
 				System.out.println("calculating the number of female patients...");
@@ -495,6 +514,13 @@ public class Main {
 				scanner.nextLine();
 				System.out.println(htm.findTrialsByHospitalId(hospitalIdForTrialsView));
 				break;
+			case 13: // remove patient
+				System.out.println("Removing patient...");
+				System.out.println("Enter patient ID:");
+				int patientIdToRemove = scanner.nextInt();
+				scanner.nextLine();
+				pm.removePatient(patientIdToRemove);
+				break;
 			case 00:
 				System.out.println("Exiting to login...");
 				break;
@@ -507,36 +533,29 @@ public class Main {
 
 	}
 
-	private static void patientFunctions(Scanner scanner, PatientManager pm) {
+	private static void patientFunctions(Scanner scanner, PatientManager pm, User user) {
 		int patientChoice;
-		
+
 		do {
 			System.out.println("Please choose an option:");
-			System.out.println("1. View my trial by ID");
+			System.out.println("1. View my trial");
 			System.out.println("2. View patient description");
-		    System.out.println("00. Exit - volver al login");
-		    
-		    patientChoice = scanner.nextInt();
-		    scanner.nextLine();
-		    
-		    switch (patientChoice) {
+			System.out.println("00. Exit - volver al login");
+
+			patientChoice = scanner.nextInt();
+			scanner.nextLine();
+
+			switch (patientChoice) {
 			case 1:
 				System.out.println("Viewing patient by ID...");
-				System.out.println("Enter patient ID:");
-				int patientIdToView = scanner.nextInt();
-				scanner.nextLine();
-
-				System.out.println(pm.getPatientById(patientIdToView));
+				String patientNameToView = user.getUsername();
+				System.out.println(pm.getPatientByName(patientNameToView));
 				break;
-
 			case 2:
 				System.out.println("Viewing patient description...");
-				System.out.println("Enter patient name:");
-				String patientName = scanner.nextLine();
-
+				String patientName = user.getUsername();
 				pm.getPatientDescription(patientName);
 				break;
-
 			case 00:
 				System.out.println("Exiting to login...");
 				break;
@@ -549,8 +568,6 @@ public class Main {
 		} while (patientChoice != 00);
 
 	}
-
-			
 
 	private static void guestFunctions(Scanner scanner, TrialManager tm) {
 		int guestChoice;
@@ -613,6 +630,8 @@ public class Main {
 		System.out.println("7. probando el xml");
 		System.out.println("8. probando hospital trial manager");
 		System.out.println("9. probando meotdo get all users del jpa manager");
+		System.out.println("10. view all doctors ");
+		System.out.println("11. view all hospitals ");
 
 		Scanner scanner = new Scanner(System.in);
 		int choice = scanner.nextInt();
@@ -621,10 +640,10 @@ public class Main {
 		case 1:
 			System.out.println("Testing Patient Manager...");
 			PatientManager pm = new PatientManager(cm.getConnection());
-			System.out.println(pm.getPatientById(1));
+			// System.out.println(pm.getPatientById(1));
 			// pm.insertPatient(3, "Alice", "Positive", 1, 1, 1);
-			System.out.println(pm.getPatientById(2));
-			System.out.println(pm.getPatientById(3));
+			// System.out.println(pm.getPatientById(2));
+			// System.out.println(pm.getPatientById(3));
 			pm.removePatient(2);
 			System.out.println(pm.getAllPatients());
 			pm.getPatientDescription("Alice");
@@ -711,8 +730,8 @@ public class Main {
 
 			// tm.addTrial(trialToRemove);
 
-			boolean removed = tm.removeTrial(removeTrialId);
-			System.out.println("11. removeTrial -> " + removed);
+			//boolean removed = tm.removeTrial(removeTrialId);
+			//System.out.println("11. removeTrial -> " + removed);
 
 			break;
 
@@ -738,9 +757,9 @@ public class Main {
 			// Create user with role default
 			jpaManager.createUser("testEncryptedUser", "testPassword123", "default");
 
-			jpaManager.login("testEncryptedUser", "testPassword123");
+			// jpaManager.login("testEncryptedUser", "testPassword123");
 
-			jpaManager.login("testEncryptedUser", "wrongPassword");
+			// jpaManager.login("testEncryptedUser", "wrongPassword");
 
 			List<User> users = jpaManager.findAllUsers();
 
@@ -808,11 +827,11 @@ public class Main {
 
 			// Login with old password after update
 			System.out.println("\nTesting login with old password after update:");
-			jpaManager.login("testEncryptedUser", "testPassword123");
+			// jpaManager.login("testEncryptedUser", "testPassword123");
 
 			// Login with new password after update
 			System.out.println("\nTesting login with new password after update:");
-			jpaManager.login("testEncryptedUser", "newpassword");
+			// jpaManager.login("testEncryptedUser", "newpassword");
 
 			// Check updated user
 			System.out.println("\nChecking user after password update:");
@@ -911,6 +930,15 @@ public class Main {
 			System.out.println("All users in the system:" + allUsers);
 
 			break;
+		case 10:
+			System.out.println("view all doctors");
+			DoctorManager dm2 = new DoctorManager(cm.getConnection());
+			System.out.println(dm2.showAllDoctors());
+			break;
+		case 11:
+			System.out.println("view all hospitals");
+			HospitalManager hm2 = new HospitalManager(cm.getConnection());
+			hm2.showAllHospitals();	
 		default:
 			System.out.println("Invalid choice.");
 		}

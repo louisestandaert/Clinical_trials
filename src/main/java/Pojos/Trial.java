@@ -124,7 +124,7 @@ public class Trial {
                 ", durationDays=" + durationDays +
                 ", budget=" + budget +
                 ", targetPatients=" + targetPatients +
-                '}';
+                '}' +"\n";
     }
 }
 

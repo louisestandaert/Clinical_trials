@@ -77,6 +77,6 @@ public class Hospitals {
 	            "hospitalID=" + hospitalId +
                 ", name='" + hospitalName + '\'' +
                 ", city=" + hospitalCity +
-                '}';
+                '}' + "\n";
 	}
 }

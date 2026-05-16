@@ -80,12 +80,12 @@ public class Description {
 
 	@Override 
 	public String toString() {
-		return  "Description:" + 
-	            "descriptionID=" + description_id +
-                ", gender='" + gender + '\'' +
-                ", cause=" + cause + '\'' +
-                ", patientID=" + patient_id +
-                '}';
+	    return "Description {" + 
+	           "description_id=" + description_id +
+	           ", gender='" + gender + '\'' + 
+	           ", cause='" + cause + '\'' +   
+	           ", patient_id=" + patient_id +
+	           '}' + "\n";
 	}
 	
 }

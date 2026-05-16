@@ -112,6 +112,6 @@ public class Doctors {
                 ", name='" + doctorName + 
                 ", gender=" + doctorGender +
                 ", specialty=" + doctorSpecialty +
-                '}';
+                '}' + "\n";
 	}
 }

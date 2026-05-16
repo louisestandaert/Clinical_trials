@@ -58,6 +58,31 @@ public class DescriptionManager {
 			System.err.println("There has been an error while trying to remove the description: " + e.getMessage());
 			 e.printStackTrace();
 		}
+	
+	}
+	
+	public void removeDescriptionByPatientName(String patientName) {
+		String sql = "DELETE FROM Descriptions WHERE patient_id IN (SELECT patients_id FROM Patients WHERE patient_name = ?)";
+
+		try {
+			PreparedStatement pst = descriptionConnection.prepareStatement(sql);
+
+			pst.setString(1, patientName);
+
+			int row = pst.executeUpdate();
+
+			if (row > 0) {
+				System.out.println("The description(s) related to the patient name has been removed correctly.");
+			} else {
+				System.out.println("No description is related to the patient name given: " + patientName);
+			}
+
+		} catch (SQLException e) {
+			System.err.println("There has been an error while trying to remove the description by patient name: "
+					+ e.getMessage());
+			e.printStackTrace();
+		}
+
 	}
 	
 	

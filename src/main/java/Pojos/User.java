@@ -73,7 +73,7 @@ public class User {
 	}
 	
 	public String toString() {
-		return "User [id=" + user_id + ", username=" + username + ", password=" + password + ", role=" + role + "]";
+		return "User [id=" + user_id + ", username=" + username + ", password=" + password + ", role=" + role + "] \n";
 	}
 
 }

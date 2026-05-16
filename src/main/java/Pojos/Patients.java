@@ -83,6 +83,6 @@ public class Patients {
 	public String toString() {
 		return "Patients{" + "patientsId=" + patientsId + ", patientName='" + patientName + '\'' + ", results='"
 				+ results + '\'' + ", trialId=" + trialId + ", hospitalId=" + hospitalId + ", descriptionId="
-				+ descriptionId + '}';
+				+ descriptionId + '}' + "\n";
 	}
 }

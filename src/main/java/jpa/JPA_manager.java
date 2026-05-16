@@ -102,13 +102,12 @@ public class JPA_manager {
 		return query.getResultList();
 	}
 	
-	public void login(String username, String password) {
+	public void login(String username, String password) throws Exception {
 	    try {
 	        User user = findUserByUsername(username);
 
 	        if (user == null) {
-	            System.out.println("Login failed. User not found.");
-	            return;
+	        	throw new Exception("User not found: " + username);
 	        }
 
 	        boolean passwordCorrect = PasswordUtil.verifyPassword(password, user.getPassword());
@@ -117,10 +116,12 @@ public class JPA_manager {
 	            System.out.println("Login successful for user: " + user.getUsername());
 	        } else {
 	            System.out.println("Login failed. Incorrect password.");
+	            throw new Exception("Incorrect password for user: " + username);
 	        }
 
 	    } catch (Exception e) {
 	        System.err.println("Login failed: " + e.getMessage());
+	        throw e;
 	    }
 	}
 
@@ -283,7 +284,21 @@ public class JPA_manager {
 	    }
 	}
 	
+	
+	public void removeUser(String username) {
+        User user = findUserByUsername(username);
+        
+        if (user != null) {
+            this.em.getTransaction().begin();
+            this.em.remove(user);
+            this.em.getTransaction().commit();
+            System.out.println("User removed successfully: " + username);
+        } else {
+            System.out.println("No user found with username: " + username);
+        }
 }
+}
+
 	
 	
 	
