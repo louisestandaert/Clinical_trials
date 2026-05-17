@@ -16,7 +16,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 
 public class Patients {
 
-	@XmlAttribute(name = "patientsId")
+	@XmlAttribute(name = "patientnsId")
 	private int patientsId;
 
 	@XmlAttribute(name = "patientName")

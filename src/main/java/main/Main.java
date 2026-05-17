@@ -10,14 +10,18 @@ import jdbc.TrialManager;
 import jpa.JPA_manager;
 import xml.XmlManager;
 import java.util.List;
-import Pojos.User;
-import Pojos.HospitalTrial;
 import jdbc.HospitalTrialManager;
 
 import java.util.Scanner;
 
 import Pojos.DoctorSpecialty;
 import Pojos.Trial;
+import Pojos.User;
+import Pojos.HospitalTrial;
+import Pojos.Patients;
+import Pojos.Description;
+import Pojos.Hospitals;
+import Pojos.Doctors;
 
 public class Main {
 	public static void main(String[] args) {
@@ -852,16 +856,56 @@ public class Main {
 		case 7:
 			System.out.println("Testing XML...");
 
-			// creando un patient para poder mandarlo al xml
-			PatientManager pm1 = new PatientManager(cm.getConnection());
-			// pm1.insertPatient(4, "Juan", "Negative", 1, 1, 1);
-
-			String filePath = "xmlFiles/patients.xml";
+			// creando los paths de los archivos XML para cada entidad
+			String doctorsPath = "xmlFiles/doctors.xml";
+			String hospitalsPath = "xmlFiles/hospitals.xml";
+			String descriptionsPath = "xmlFiles/descriptions.xml";
+			String trialsPath = "xmlFiles/trials.xml";
+			String hospitalTrialsPath = "xmlFiles/hospitalTrials.xml";
+			String patientsPath = "xmlFiles/patients.xml";
 
 			try {
 				XmlManager xmlManager = new XmlManager();
-				// xmlManager.marshal(pm1.getPatientById(4), filePath);
-				System.out.println("Patients written to XML successfully.");
+				
+				//PATIENT  
+				Patients patient = new Patients(4, "Juan", "Negative", 1, 1, 1);
+				xmlManager.marshalPatient(patient, patientsPath);
+				Patients patientFromXML = xmlManager.unmarshalPatient(patientsPath);
+				System.out.println("Patient read from XML successfully: " + patientFromXML);
+				
+				//HOSPITAL 
+				Hospitals hospital = new Hospitals("Hospital D", "Seville", 1);
+				xmlManager.marshalHospital(hospital, hospitalsPath);
+				Hospitals hospitalFromXML = xmlManager.unmarshalHospital(hospitalsPath);
+				System.out.println("Hospital read from XML successfully: " + hospitalFromXML);
+				
+				//DESCRIPTION
+				Description description = new Description(1, "Female", "Asthma", 4);
+				xmlManager.marshalDescription(description, descriptionsPath);
+				Description descriptionFromXML = xmlManager.unmarshalDescription(descriptionsPath);
+				System.out.println("Description read from XML successfully: " + descriptionFromXML);
+				
+				//TRIAL 
+				Trial trial = new Trial(1, "Diabetes Research", LocalDate.of(2026, 7, 1), 60, 10000.0, 15);
+				xmlManager.marshalTrial(trial, trialsPath);
+				Trial trialFromXML = xmlManager.unmarshalTrial(trialsPath);
+				System.out.println("Trial read from XML successfully: " + trialFromXML);
+				
+				 //DOCTOR
+				Doctors doctor = new Doctors(3, "Dra Mencia", "Female", DoctorSpecialty.NEUROLOGY, 1, 3);
+				xmlManager.marshalDoctor(doctor, doctorsPath);
+				Doctors doctorFromXML = xmlManager.unmarshalDoctor(doctorsPath);
+				System.out.println("Doctor read from XML successfully: " + doctorFromXML);
+				
+				//HOSPITAL-TRIAL RELATION
+				HospitalTrial hospitalTrial = new HospitalTrial(1, 1);
+				xmlManager.marshalHospitalTrial(hospitalTrial, hospitalTrialsPath);
+				HospitalTrial hospitalTrialFromXML = xmlManager.unmarshalHospitalTrial(hospitalTrialsPath); 
+				System.out.println("Hospital-Trial relation read from XML successfully: " + hospitalTrialFromXML);
+				
+				System.out.println("All XML operations completed successfully.");
+				
+			
 			} catch (Exception e) {
 				System.err.println("Error writing to XML: " + e.getMessage());
 				e.printStackTrace();

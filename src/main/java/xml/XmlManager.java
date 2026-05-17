@@ -235,9 +235,6 @@ public class XmlManager {
 			e.printStackTrace();
 			return null;
 		}
-	}
-	
-	
-	
+	}	
 
 }

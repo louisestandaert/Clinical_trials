@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Doctors doctorId="3" doctorName="Dra Mencia" doctorGender="Female">
+    <hospitalId>1</hospitalId>
+    <trialId>3</trialId>
+</Doctors>

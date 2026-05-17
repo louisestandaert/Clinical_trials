@@ -1,5 +1,6 @@
 package Pojos;
 import java.util.Objects;
+
 import java.time.LocalDate;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -20,6 +21,7 @@ public class Trial {
     private String trialName; 
     
     @XmlAttribute(name = "startingDate")
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private LocalDate startingDate;
     
     @XmlAttribute(name = "durationDays")
