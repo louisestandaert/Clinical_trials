@@ -7,7 +7,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.RemovePatientDescriptionController">
    <children>
       <Label layoutX="169.0" layoutY="25.0" text="REMOVE PATIENT DESCRIPTION">
@@ -16,9 +15,9 @@
          </font>
       </Label>
       <Label fx:id="messageLabel" layoutX="285.0" layoutY="347.0" />
-      <TextField fx:id="descriptionIdField" layoutX="220.0" layoutY="125.0" promptText="Description ID" />
-      <Text layoutX="171.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Introduce the description ID you want to delete. " />
+      <TextField fx:id="patientNameField" layoutX="220.0" layoutY="125.0" promptText="Patient ID" />
+      <Text layoutX="118.0" layoutY="112.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Introduce the name of the patient whose description you want to remove:" />
       <Button fx:id="removeDescriptionButton" layoutX="227.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleRemoveDescription" text="DELETE DESCRIPTION" />
-      <Button layoutX="264.0" layoutY="240.0" mnemonicParsing="false" onAction="#handleBack" text="GO BACK" />
+      <Button fx:id="backButton" layoutX="264.0" layoutY="240.0" mnemonicParsing="false" onAction="#handleBack" text="GO BACK" />
    </children>
 </AnchorPane>

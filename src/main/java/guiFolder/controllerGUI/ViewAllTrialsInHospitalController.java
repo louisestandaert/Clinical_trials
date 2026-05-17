@@ -1,66 +1,80 @@
 package guiFolder.controllerGUI;
-
 import java.io.IOException;
 import java.net.URL;
-
+import java.util.List;
 
 import jdbc.ConnectionManager;
-import jdbc.DescriptionManager;
+import jdbc.HospitalTrialManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class RemovePatientDescriptionController {
-	
+public class ViewAllTrialsInHospitalController {
 	@FXML
-    private TextField patientNameField;
+    private TextField hospitalIdField;
+
+    @FXML
+    private TextArea trialsArea;
 
     @FXML
     private Label messageLabel;
 
     @FXML
-    private Button removeDescriptionButton;
-    
+    private Button searchTrialsButton;
+
     @FXML
     private Button backButton;
 
     private ConnectionManager cm;
-    private DescriptionManager dpm;
+    private HospitalTrialManager htm;
 
     @FXML
     private void initialize() {
         messageLabel.setText("");
-        messageLabel.setPrefWidth(400);
-        messageLabel.setWrapText(true);
+
+        trialsArea.setEditable(false);
+        trialsArea.setWrapText(true);
+
         cm = new ConnectionManager();
-        dpm = new DescriptionManager(cm.getConnection());
+        htm = new HospitalTrialManager(cm.getConnection());
     }
 
     @FXML
-    private void handleRemoveDescription() {
-    	try {
-            String patientName = patientNameField.getText();
+    private void handleSearchTrials() {
+        try {
+            int hospitalId = Integer.parseInt(hospitalIdField.getText());
 
-            if (patientName.isEmpty()) {
-                messageLabel.setText("Please enter the patient name.");
+            List<Integer> trials = htm.findTrialsByHospitalId(hospitalId);
+
+            if (trials == null || trials.isEmpty()) {
+                trialsArea.clear();
+                messageLabel.setText("No trials found for this hospital.");
                 return;
             }
 
-            dpm.removeDescriptionByPatientName(patientName);
+            StringBuilder text = new StringBuilder();
 
-            messageLabel.setText("Description removed successfully.");
-            patientNameField.clear();
+            for (Integer trialId : trials) {
+                text.append("Trial ID: ").append(trialId).append("\n");
+            }
 
+            trialsArea.setText(text.toString());
+            messageLabel.setText("Trials loaded successfully.");
+
+        } catch (NumberFormatException e) {
+            trialsArea.clear();
+            messageLabel.setText("Hospital ID must be a number.");
         } catch (Exception e) {
-            messageLabel.setText("Error removing description.");
+            trialsArea.clear();
+            messageLabel.setText("Error loading trials.");
             e.printStackTrace();
-   
-        } 
+        }
     }
 
     @FXML
@@ -79,7 +93,7 @@ public class RemovePatientDescriptionController {
 
             Parent root = FXMLLoader.load(fxmlUrl);
 
-            Stage stage = (Stage) removeDescriptionButton.getScene().getWindow();
+            Stage stage = (Stage) backButton.getScene().getWindow();
             Scene scene = new Scene(root, 800, 500);
 
             stage.setScene(scene);
@@ -90,6 +104,7 @@ public class RemovePatientDescriptionController {
             messageLabel.setText("Error opening window.");
             e.printStackTrace();
         }
-    }
+     }
+
 
 }

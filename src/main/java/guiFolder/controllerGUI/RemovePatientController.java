@@ -3,9 +3,9 @@ package guiFolder.controllerGUI;
 import java.io.IOException;
 import java.net.URL;
 
-
+import Pojos.Patients;
 import jdbc.ConnectionManager;
-import jdbc.DescriptionManager;
+import jdbc.PatientManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,52 +15,57 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class RemovePatientDescriptionController {
+
+public class RemovePatientController {
 	
 	@FXML
-    private TextField patientNameField;
+    private TextField patientIdField;
 
     @FXML
     private Label messageLabel;
 
     @FXML
-    private Button removeDescriptionButton;
-    
+    private Button removePatientButton;
+
     @FXML
     private Button backButton;
 
     private ConnectionManager cm;
-    private DescriptionManager dpm;
+    private PatientManager pm;
 
     @FXML
     private void initialize() {
         messageLabel.setText("");
         messageLabel.setPrefWidth(400);
         messageLabel.setWrapText(true);
+
         cm = new ConnectionManager();
-        dpm = new DescriptionManager(cm.getConnection());
+        pm = new PatientManager(cm.getConnection());
     }
 
     @FXML
-    private void handleRemoveDescription() {
-    	try {
-            String patientName = patientNameField.getText();
+    private void handleRemovePatient() {
+        try {
+            int patientId = Integer.parseInt(patientIdField.getText());
 
-            if (patientName.isEmpty()) {
-                messageLabel.setText("Please enter the patient name.");
+            Patients patient = pm.getPatientById(patientId);
+
+            if (patient == null) {
+                messageLabel.setText("Patient does not exist.");
                 return;
             }
 
-            dpm.removeDescriptionByPatientName(patientName);
+            pm.removePatient(patientId);
 
-            messageLabel.setText("Description removed successfully.");
-            patientNameField.clear();
+            messageLabel.setText("Patient removed successfully.");
+            patientIdField.clear();
 
+        } catch (NumberFormatException e) {
+            messageLabel.setText("Patient ID must be a number.");
         } catch (Exception e) {
-            messageLabel.setText("Error removing description.");
+            messageLabel.setText("Error removing patient.");
             e.printStackTrace();
-   
-        } 
+        }
     }
 
     @FXML
@@ -79,7 +84,7 @@ public class RemovePatientDescriptionController {
 
             Parent root = FXMLLoader.load(fxmlUrl);
 
-            Stage stage = (Stage) removeDescriptionButton.getScene().getWindow();
+            Stage stage = (Stage) backButton.getScene().getWindow();
             Scene scene = new Scene(root, 800, 500);
 
             stage.setScene(scene);
@@ -91,5 +96,6 @@ public class RemovePatientDescriptionController {
             e.printStackTrace();
         }
     }
+
 
 }

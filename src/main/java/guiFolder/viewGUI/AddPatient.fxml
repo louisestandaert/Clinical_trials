@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.AddPatientController">
+   <children>
+      <Label layoutX="102.0" layoutY="33.0" text="YOU CAN NOW ADD A PATIENT TO THE DATABASE!">
+         <font>
+            <Font name="Apple SD Gothic Neo Bold" size="17.0" />
+         </font>
+      </Label>
+      <TextField fx:id="patientIdField" layoutX="102.0" layoutY="106.0" promptText="Patient ID" />
+      <TextField fx:id="PatientNameField" layoutX="102.0" layoutY="150.0" promptText="Patient Name" />
+      <TextField fx:id="testResultField" layoutX="102.0" layoutY="200.0" promptText="Test Result" />
+      <TextField fx:id="trialIdField" layoutX="102.0" layoutY="245.0" promptText="Trial ID" />
+      <TextField fx:id="hospitalIdField" layoutX="102.0" layoutY="290.0" promptText="Hospital ID" />
+      <Button fx:id="addPatientButton" layoutX="355.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleAddPatient" prefHeight="56.0" prefWidth="117.0" text="ADD PATIENT">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="backButton" layoutX="355.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="56.0" prefWidth="117.0" text="GO BACK">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <TextField fx:id="descriptionIdField" layoutX="102.0" layoutY="331.0" promptText="Description ID" />
+      <Label fx:id="messageLabel" layoutX="300.0" layoutY="323.0" text="Label" textAlignment="CENTER" wrapText="true" />
+   </children>
+</AnchorPane>

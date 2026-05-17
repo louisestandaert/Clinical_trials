@@ -3,64 +3,54 @@ package guiFolder.controllerGUI;
 import java.io.IOException;
 import java.net.URL;
 
-
 import jdbc.ConnectionManager;
-import jdbc.DescriptionManager;
+import jdbc.PatientManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class RemovePatientDescriptionController {
-	
+public class GetFemalePatientsCountController {
 	@FXML
-    private TextField patientNameField;
+    private Label resultLabel;
 
     @FXML
     private Label messageLabel;
 
     @FXML
-    private Button removeDescriptionButton;
-    
+    private Button calculateButton;
+
     @FXML
     private Button backButton;
 
     private ConnectionManager cm;
-    private DescriptionManager dpm;
+    private PatientManager pm;
 
     @FXML
     private void initialize() {
         messageLabel.setText("");
-        messageLabel.setPrefWidth(400);
-        messageLabel.setWrapText(true);
+        resultLabel.setText("-");
+
         cm = new ConnectionManager();
-        dpm = new DescriptionManager(cm.getConnection());
+        pm = new PatientManager(cm.getConnection());
     }
 
     @FXML
-    private void handleRemoveDescription() {
-    	try {
-            String patientName = patientNameField.getText();
+    private void handleCalculateFemaleCount() {
+        try {
+            int femaleCount = pm.getFemalePatientsCount();
 
-            if (patientName.isEmpty()) {
-                messageLabel.setText("Please enter the patient name.");
-                return;
-            }
-
-            dpm.removeDescriptionByPatientName(patientName);
-
-            messageLabel.setText("Description removed successfully.");
-            patientNameField.clear();
+            resultLabel.setText(String.valueOf(femaleCount));
+            messageLabel.setText("Female patients count calculated successfully.");
 
         } catch (Exception e) {
-            messageLabel.setText("Error removing description.");
+            resultLabel.setText("-");
+            messageLabel.setText("Error calculating female patients count.");
             e.printStackTrace();
-   
-        } 
+        }
     }
 
     @FXML
@@ -79,7 +69,7 @@ public class RemovePatientDescriptionController {
 
             Parent root = FXMLLoader.load(fxmlUrl);
 
-            Stage stage = (Stage) removeDescriptionButton.getScene().getWindow();
+            Stage stage = (Stage) backButton.getScene().getWindow();
             Scene scene = new Scene(root, 800, 500);
 
             stage.setScene(scene);
@@ -90,6 +80,7 @@ public class RemovePatientDescriptionController {
             messageLabel.setText("Error opening window.");
             e.printStackTrace();
         }
-    }
+}
+
 
 }

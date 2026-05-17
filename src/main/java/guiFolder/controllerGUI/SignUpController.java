@@ -35,7 +35,7 @@ public class SignUpController {
 	
 	@FXML
 	private void initialize() {
-		messageLabel.setText("");
+		messageLabel.setText("ready");
 		roleComboBox.getItems().add("Trial Manager");
 		roleComboBox.getItems().add("Doctor");
 		roleComboBox.getItems().add("Patient");
@@ -47,8 +47,9 @@ public class SignUpController {
 	
 	@FXML
 	private void handleCreateUser() {
-		String username = usernameField.getText().trim();
-		String password = passwordField.getText().trim();
+		System.out.println("CREATE USER BUTTON CLICKED");
+		String username = usernameField.getText();
+		String password = passwordField.getText();
 		String role = roleComboBox.getValue();
 
 		if (username.isEmpty() || password.isEmpty() || role == null) {

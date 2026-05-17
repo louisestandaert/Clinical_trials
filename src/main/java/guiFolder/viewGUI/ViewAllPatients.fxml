@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.ViewAllPatientsController">
+   <children>
+      <Label layoutX="209.0" layoutY="20.0" text="VIEW ALL PATIENTS">
+         <font>
+            <Font name="Apple SD Gothic Neo Bold" size="20.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="patientsArea" editable="false" layoutX="50.0" layoutY="93.0" prefHeight="220.0" prefWidth="500.0" wrapText="true" />
+      <Button fx:id="refreshButton" layoutX="251.0" layoutY="61.0" mnemonicParsing="false" onAction="#handleRefreshPatients" text="REFRESH LIST" />
+      <Button fx:id="backButton" layoutX="263.0" layoutY="319.0" mnemonicParsing="false" onAction="#handleBack" text="GO BACK" />
+      <Label fx:id="messageLabel" layoutX="285.0" layoutY="360.0" textAlignment="CENTER" wrapText="true" />
+   </children>
+</AnchorPane>

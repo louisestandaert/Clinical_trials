@@ -9,7 +9,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.SignUpController">
    <children>
       <Label layoutX="186.0" layoutY="33.0" text="CREATE AN ACCOUNT">
@@ -21,10 +20,10 @@
       <PasswordField fx:id="passwordField" layoutX="220.0" layoutY="174.0" promptText="PASSWORD" />
       <Text layoutX="220.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pick a username:" />
       <Text layoutX="220.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create your password:" />
-      <ComboBox fx:id="roleComboBox" layoutX="225.0" layoutY="227.0" prefWidth="150.0" />
+      <ComboBox fx:id="roleComboBox" layoutX="225.0" layoutY="227.0" prefWidth="150.0" promptText="ROLE" />
       <Button fx:id="createUserButton" layoutX="250.0" layoutY="274.0" mnemonicParsing="false" onAction="#handleCreateUser" text="CREATE USER" />
       <Button layoutX="264.0" layoutY="309.0" mnemonicParsing="false" onAction="#handleBack" text="GO BACK" />
-      <Label fx:id="messageLabel" layoutX="284.0" layoutY="349.0" prefWidth="0.0" />
       <Text layoutX="261.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pick your role:" />
+      <Label fx:id="messageLabel" layoutX="112.0" layoutY="349.0" prefHeight="30.0" prefWidth="400.0" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

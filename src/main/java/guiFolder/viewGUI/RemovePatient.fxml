@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.RemovePatientController">
+   <children>
+      <Label layoutX="218.0" layoutY="30.0" text="REMOVE PATIENT">
+         <font>
+            <Font name="Apple SD Gothic Neo Bold" size="20.0" />
+         </font>
+      </Label>
+      <Text layoutX="158.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Introduce the ID of the patient you want to remove" />
+      <TextField fx:id="patientIdField" layoutX="220.0" layoutY="119.0" promptText="Patient ID" />
+      <Label fx:id="messageLabel" layoutX="285.0" layoutY="334.0" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="removePatientButton" layoutX="254.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleRemovePatient" prefHeight="44.0" prefWidth="92.0" text="REMOVE" />
+      <Button fx:id="backButton" layoutX="254.0" layoutY="232.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="44.0" prefWidth="92.0" text="GO BACK" />
+   </children>
+</AnchorPane>

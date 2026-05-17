@@ -3,64 +3,73 @@ package guiFolder.controllerGUI;
 import java.io.IOException;
 import java.net.URL;
 
-
+import Pojos.Description;
 import jdbc.ConnectionManager;
-import jdbc.DescriptionManager;
+import jdbc.PatientManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class RemovePatientDescriptionController {
-	
+public class ViewPatientDescriptionByIdController {
 	@FXML
-    private TextField patientNameField;
+    private TextField patientIdField;
+
+    @FXML
+    private TextArea descriptionArea;
 
     @FXML
     private Label messageLabel;
 
     @FXML
-    private Button removeDescriptionButton;
-    
+    private Button searchDescriptionButton;
+
     @FXML
     private Button backButton;
 
     private ConnectionManager cm;
-    private DescriptionManager dpm;
+    private PatientManager pm;
 
     @FXML
     private void initialize() {
         messageLabel.setText("");
-        messageLabel.setPrefWidth(400);
-        messageLabel.setWrapText(true);
+
+        descriptionArea.setEditable(false);
+        descriptionArea.setWrapText(true);
+
         cm = new ConnectionManager();
-        dpm = new DescriptionManager(cm.getConnection());
+        pm = new PatientManager(cm.getConnection());
     }
 
     @FXML
-    private void handleRemoveDescription() {
-    	try {
-            String patientName = patientNameField.getText();
+    private void handleSearchDescription() {
+        try {
+            int patientId = Integer.parseInt(patientIdField.getText());
 
-            if (patientName.isEmpty()) {
-                messageLabel.setText("Please enter the patient name.");
+            Description description = pm.getDescriptionOfPatientById(patientId);
+
+            if (description == null) {
+                descriptionArea.clear();
+                messageLabel.setText("Description not found for this patient.");
                 return;
             }
 
-            dpm.removeDescriptionByPatientName(patientName);
+            descriptionArea.setText(description.toString());
+            messageLabel.setText("Description loaded successfully.");
 
-            messageLabel.setText("Description removed successfully.");
-            patientNameField.clear();
-
+        } catch (NumberFormatException e) {
+            descriptionArea.clear();
+            messageLabel.setText("Patient ID must be a number.");
         } catch (Exception e) {
-            messageLabel.setText("Error removing description.");
+            descriptionArea.clear();
+            messageLabel.setText("Error loading description.");
             e.printStackTrace();
-   
-        } 
+        }
     }
 
     @FXML
@@ -79,7 +88,7 @@ public class RemovePatientDescriptionController {
 
             Parent root = FXMLLoader.load(fxmlUrl);
 
-            Stage stage = (Stage) removeDescriptionButton.getScene().getWindow();
+            Stage stage = (Stage) backButton.getScene().getWindow();
             Scene scene = new Scene(root, 800, 500);
 
             stage.setScene(scene);
@@ -90,6 +99,7 @@ public class RemovePatientDescriptionController {
             messageLabel.setText("Error opening window.");
             e.printStackTrace();
         }
-    }
+}
+
 
 }

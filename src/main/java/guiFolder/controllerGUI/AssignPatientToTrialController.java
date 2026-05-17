@@ -3,9 +3,9 @@ package guiFolder.controllerGUI;
 import java.io.IOException;
 import java.net.URL;
 
-
 import jdbc.ConnectionManager;
-import jdbc.DescriptionManager;
+import jdbc.PatientManager;
+import jdbc.TrialManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,52 +15,64 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class RemovePatientDescriptionController {
+public class AssignPatientToTrialController {
 	
 	@FXML
-    private TextField patientNameField;
+    private TextField patientIdField;
+
+    @FXML
+    private TextField trialIdField;
 
     @FXML
     private Label messageLabel;
 
     @FXML
-    private Button removeDescriptionButton;
-    
-    @FXML
-    private Button backButton;
+    private Button assignPatientButton;
 
     private ConnectionManager cm;
-    private DescriptionManager dpm;
+    private TrialManager tm;
+    private PatientManager pm;
 
     @FXML
     private void initialize() {
         messageLabel.setText("");
         messageLabel.setPrefWidth(400);
         messageLabel.setWrapText(true);
+
         cm = new ConnectionManager();
-        dpm = new DescriptionManager(cm.getConnection());
+        tm = new TrialManager(cm);
+        pm = new PatientManager(cm.getConnection());
     }
 
     @FXML
-    private void handleRemoveDescription() {
-    	try {
-            String patientName = patientNameField.getText();
+    private void handleAssignPatientToTrial() {
+        try {
+            int patientId = Integer.parseInt(patientIdField.getText());
+            int trialId = Integer.parseInt(trialIdField.getText());
 
-            if (patientName.isEmpty()) {
-                messageLabel.setText("Please enter the patient name.");
+            if (pm.getPatientById(patientId) == null) {
+                messageLabel.setText("Patient does not exist.");
                 return;
             }
 
-            dpm.removeDescriptionByPatientName(patientName);
+            boolean assigned = tm.enrollPatientInTrial(patientId, trialId);
 
-            messageLabel.setText("Description removed successfully.");
-            patientNameField.clear();
+            if (assigned) {
+                messageLabel.setText("Patient assigned to trial successfully.");
 
+                patientIdField.clear();
+                trialIdField.clear();
+
+            } else {
+                messageLabel.setText("Failed to assign patient. Check the IDs.");
+            }
+
+        } catch (NumberFormatException e) {
+            messageLabel.setText("Patient ID and Trial ID must be numbers.");
         } catch (Exception e) {
-            messageLabel.setText("Error removing description.");
+            messageLabel.setText("Error assigning patient to trial.");
             e.printStackTrace();
-   
-        } 
+        }
     }
 
     @FXML
@@ -79,7 +91,7 @@ public class RemovePatientDescriptionController {
 
             Parent root = FXMLLoader.load(fxmlUrl);
 
-            Stage stage = (Stage) removeDescriptionButton.getScene().getWindow();
+            Stage stage = (Stage) assignPatientButton.getScene().getWindow();
             Scene scene = new Scene(root, 800, 500);
 
             stage.setScene(scene);
@@ -91,5 +103,6 @@ public class RemovePatientDescriptionController {
             e.printStackTrace();
         }
     }
-
 }
+
+

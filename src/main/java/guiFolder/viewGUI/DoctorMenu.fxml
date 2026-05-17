@@ -6,7 +6,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.DoctorMenuController">
    <children>
       <Label layoutX="213.0" layoutY="21.0" text="WELCOME DOCTOR!">
@@ -19,10 +18,82 @@
             <Font size="11.0" />
          </font>
       </Text>
-      <Button fx:id="doctorMenuButton" layoutX="179.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleOpenAddPatientToTrial" prefHeight="43.0" prefWidth="243.0" text="ADD PATIENT TO TRIAL" />
-      <Button layoutX="179.0" layoutY="142.0" mnemonicParsing="false" onAction="#handleOpenAddPatientDescription" prefHeight="43.0" prefWidth="243.0" text="ADD PATIENT DESCRIPTION" />
-      <Button layoutX="179.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleOpenUpdatePatientDescription" prefHeight="43.0" prefWidth="243.0" text="UPDATE PATIENT DESCRIPTION" />
-      <Button layoutX="179.0" layoutY="259.0" mnemonicParsing="false" onAction="#handleOpenRemovePatientDescription" prefHeight="43.0" prefWidth="243.0" text="REMOVE PATIENT DESCRIPTION" />
-      <Button layoutX="264.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleBack" text="GO BACK" />
+      <Button fx:id="doctorMenuButton" layoutX="21.0" layoutY="151.0" mnemonicParsing="false" onAction="#handleOpenAssignPatientToTrial" prefHeight="25.0" prefWidth="160.0" text="ASSIGN PATIENT TO TRIAL">
+         <font>
+            <Font size="10.0" />
+         </font></Button>
+      <Button layoutX="222.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleOpenAddPatientDescription" prefHeight="25.0" prefWidth="170.0" text="ADD PATIENT DESCRIPTION">
+         <font>
+            <Font size="10.0" />
+         </font></Button>
+      <Button layoutX="222.0" layoutY="157.0" mnemonicParsing="false" onAction="#handleOpenUpdatePatientDescription" prefHeight="25.0" prefWidth="170.0" text="UPDATE PATIENT DESCRIPTION">
+         <font>
+            <Font size="10.0" />
+         </font></Button>
+      <Button layoutX="222.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleOpenRemovePatientDescription" prefHeight="25.0" prefWidth="170.0" text="REMOVE PATIENT DESCRIPTION">
+         <font>
+            <Font size="10.0" />
+         </font></Button>
+      <Button fx:id="backButton" layoutX="220.0" layoutY="340.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="34.0" prefWidth="160.0" text="GO BACK" />
+      <Label layoutX="72.0" layoutY="82.0" text="PATIENTS">
+         <font>
+            <Font name="Apple SD Gothic Neo Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="263.0" layoutY="81.0" text="DESCRIPTIONS">
+         <font>
+            <Font name="Apple SD Gothic Neo Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="472.0" layoutY="80.0" text="TRIALS">
+         <font>
+            <Font name="Apple SD Gothic Neo Bold" size="13.0" />
+         </font>
+      </Label>
+      <Button layoutX="21.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleOpenAddPatient" prefHeight="25.0" prefWidth="160.0" text="ADD PATIENT">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button layoutX="21.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleOpenViewPatientById" prefHeight="25.0" prefWidth="160.0" text="VIEW PATIENT BY ID">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button layoutX="21.0" layoutY="228.0" mnemonicParsing="false" onAction="#handleOpenViewAllPatients" prefHeight="25.0" prefWidth="160.0" text="VIEW ALL PATIENTS">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button layoutX="21.0" layoutY="268.0" mnemonicParsing="false" onAction="#handleOpenRemovePatient" prefHeight="25.0" prefWidth="160.0" text="REMOVE PATIENT">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button layoutX="222.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleOpenViewPatientDescription" prefHeight="25.0" prefWidth="170.0" text="VIEW PATIENT DESCRIPTION BY ID">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button layoutX="413.0" layoutY="117.0" mnemonicParsing="false" onAction="#handleOpenFemalePatientsCount" prefHeight="25.0" prefWidth="170.0" text="GET FEMALE PATIENTS COUNT">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button layoutX="414.0" layoutY="157.0" mnemonicParsing="false" onAction="#handleOpenMalePatientsCount" prefHeight="25.0" prefWidth="170.0" text="GET MALE PATIENTS COUNT">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button layoutX="414.0" layoutY="201.0" mnemonicParsing="false" onAction="#handleOpenTrialsByHospital" prefHeight="25.0" prefWidth="170.0" text="VIEW ALL TRIALS IN A HOSPITAL">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
+      <Button layoutX="414.0" layoutY="244.0" mnemonicParsing="false" onAction="#handleOpenPatientsWithSameCause" prefHeight="25.0" prefWidth="170.0" text="PATIENTS WITH THE SAME CAUSE">
+         <font>
+            <Font size="10.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

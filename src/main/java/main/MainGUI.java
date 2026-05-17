@@ -14,7 +14,7 @@ public class MainGUI extends Application {
 		Parent root = FXMLLoader.load(getClass().getResource("/guiFolder/viewGUI/Welcome.fxml"));
 		
 		System.out.println("FXML file loaded successfully.");
-		Scene scene = new Scene(root,800,500);
+		Scene scene = new Scene(root);
 		
 		primaryStage.setTitle("Clinical Trials Database");
 		primaryStage.setScene(scene);
