@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.PatientMenuController">
+   <children>
+      <Label layoutX="208.0" layoutY="23.0" text="WELCOME PATIENT!">
+         <font>
+            <Font name="Apple SD Gothic Neo Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="211.0" layoutY="49.0" text="What would you like to do today?" />
+      <Button fx:id="backButton" layoutX="172.0" layoutY="270.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="70.0" prefWidth="257.0" text="GO BACK" />
+      <Button fx:id="viewMyTrialButton" layoutX="172.0" layoutY="82.0" mnemonicParsing="false" onAction="#handleOpenViewMyTrial" prefHeight="70.0" prefWidth="257.0" text="VIEW MY TRIAL" />
+      <Button fx:id="viewMyDescriptionButton" layoutX="172.0" layoutY="176.0" mnemonicParsing="false" onAction="#handleOpenViewMyDescription" prefHeight="70.0" prefWidth="257.0" text="VIEW PATIENT DESCRIPTION" />
+   </children>
+</AnchorPane>

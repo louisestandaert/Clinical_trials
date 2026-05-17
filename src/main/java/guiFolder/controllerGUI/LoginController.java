@@ -1,7 +1,7 @@
 package guiFolder.controllerGUI;
 import java.io.IOException;
-import java.net.URL;
 
+import java.net.URL;
 import Pojos.User;
 import jpa.JPA_manager;
 import javafx.fxml.FXML;
@@ -62,6 +62,7 @@ public class LoginController {
 			return;
 		}
 		String roleName = jpaManager.getRoleByUser(user);
+		Sesion.setCurrentUser(user);
 		if (roleName == null) {
 			messageLabel.setText("User role not found.");
 			return;
@@ -74,7 +75,7 @@ public class LoginController {
 		case "Doctor":
 			openWindow("/guiFolder/viewGUI/DoctorMenu.fxml");
 			break;
-		case "patient":
+		
 		case "Patient":
 			openWindow("/guiFolder/viewGUI/PatientMenu.fxml");
 			break;

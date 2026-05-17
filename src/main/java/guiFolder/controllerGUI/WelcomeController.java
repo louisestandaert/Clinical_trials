@@ -20,7 +20,7 @@ public class WelcomeController {
 	
 	@FXML
 	private void handleGuest() {
-		openWindow("/guiFolder/viewGUI/Guest.fxml");
+		openWindow("/guiFolder/viewGUI/GuestMenu.fxml");
 	}
 	
 	@FXML
