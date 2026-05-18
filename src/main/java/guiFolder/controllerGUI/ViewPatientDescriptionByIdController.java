@@ -89,7 +89,7 @@ public class ViewPatientDescriptionByIdController {
             Parent root = FXMLLoader.load(fxmlUrl);
 
             Stage stage = (Stage) backButton.getScene().getWindow();
-            Scene scene = new Scene(root, 800, 500);
+            Scene scene = new Scene(root); // 800 500
 
             stage.setScene(scene);
             stage.centerOnScreen();

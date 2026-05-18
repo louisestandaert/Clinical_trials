@@ -109,7 +109,7 @@ public class AddPatientDescriptionController {
             Parent root = FXMLLoader.load(fxmlUrl);
 
             Stage stage = (Stage) addDescriptionButton.getScene().getWindow();
-            Scene scene = new Scene(root, 800, 500);
+            Scene scene = new Scene(root); //800 500
 
             stage.setScene(scene);
             stage.centerOnScreen();

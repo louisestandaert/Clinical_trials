@@ -85,7 +85,7 @@ public class SignUpController {
 			}
 			Parent root = FXMLLoader.load(fxmlURL);
 			Stage stage = (Stage) createUserButton.getScene().getWindow();
-			Scene scene = new Scene(root, 800, 500);
+			Scene scene = new Scene(root); // 800 500
 			
 			stage.setScene(scene);
 			stage.centerOnScreen();

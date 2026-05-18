@@ -92,7 +92,7 @@ public class AssignPatientToTrialController {
             Parent root = FXMLLoader.load(fxmlUrl);
 
             Stage stage = (Stage) assignPatientButton.getScene().getWindow();
-            Scene scene = new Scene(root, 800, 500);
+            Scene scene = new Scene(root); //800 500
 
             stage.setScene(scene);
             stage.centerOnScreen();

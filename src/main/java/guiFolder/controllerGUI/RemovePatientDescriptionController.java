@@ -80,7 +80,7 @@ public class RemovePatientDescriptionController {
             Parent root = FXMLLoader.load(fxmlUrl);
 
             Stage stage = (Stage) removeDescriptionButton.getScene().getWindow();
-            Scene scene = new Scene(root, 800, 500);
+            Scene scene = new Scene(root); // 800 500
 
             stage.setScene(scene);
             stage.centerOnScreen();

@@ -102,7 +102,7 @@ public class LoginController {
 			}
 			Parent root = FXMLLoader.load(fxmlURL);
 			Stage stage = (Stage) loginButton.getScene().getWindow();
-			Scene scene = new Scene(root,800,500);
+			Scene scene = new Scene(root); // 800 500
 
 			stage.setTitle("Clinical Trials Database");
 			stage.setScene(scene);
