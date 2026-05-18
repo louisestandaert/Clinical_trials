@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ClinicalTrials>
+    <Doctors>
+        <Doctor doctorId="1" doctorName="Dr. Smith" doctorGender="female">
+            <hospitalId>0</hospitalId>
+            <trialId>0</trialId>
+        </Doctor>
+        <Doctor doctorId="2" doctorName="" doctorGender="jack">
+            <hospitalId>0</hospitalId>
+            <trialId>0</trialId>
+        </Doctor>
+    </Doctors>
+    <Patients>
+        <Patient patientnsId="1" patientName="John Doe" results="positive">
+            <trialId>1</trialId>
+            <hospitalId>1</hospitalId>
+            <descriptionId>1</descriptionId>
+        </Patient>
+        <Patient patientnsId="4" patientName="Juan" results="Negative">
+            <trialId>1</trialId>
+            <hospitalId>1</hospitalId>
+            <descriptionId>1</descriptionId>
+        </Patient>
+        <Patient patientnsId="10" patientName="jack" results="positive">
+            <trialId>1</trialId>
+            <hospitalId>1</hospitalId>
+            <descriptionId>1</descriptionId>
+        </Patient>
+    </Patients>
+    <Descriptions>
+        <Description descriptionId="1" gender="" cause="Male">
+            <patientId>1</patientId>
+        </Description>
+        <Description descriptionId="2" gender="male" cause="cause a">
+            <patientId>5</patientId>
+        </Description>
+        <Description descriptionId="3" gender="Male" cause="A">
+            <patientId>33</patientId>
+        </Description>
+        <Description descriptionId="4" gender="Female" cause="Asthma">
+            <patientId>1</patientId>
+        </Description>
+        <Description descriptionId="5" gender="Male" cause="Diabetes">
+            <patientId>2</patientId>
+        </Description>
+        <Description descriptionId="68" gender="Male" cause="A">
+            <patientId>67</patientId>
+        </Description>
+    </Descriptions>
+    <Trials>
+        <Trial trialId="0" trialName="No trial assigned" startingDate="1900-01-01" durationDays="0" budget="0.0" targetPatients="0"/>
+        <Trial trialId="1" trialName="Trial A" startingDate="2025-01-01" durationDays="180" budget="1000.0" targetPatients="200"/>
+        <Trial trialId="2" trialName="trial b" startingDate="+57259-01-24" durationDays="30" budget="10.0" targetPatients="200"/>
+    </Trials>
+    <HospitalTrials/>
+</ClinicalTrials>

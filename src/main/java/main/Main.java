@@ -11,9 +11,7 @@ import jpa.JPA_manager;
 import xml.XmlManager;
 import java.util.List;
 import jdbc.HospitalTrialManager;
-
 import java.util.Scanner;
-
 import Pojos.DoctorSpecialty;
 import Pojos.Trial;
 import Pojos.User;
@@ -22,6 +20,9 @@ import Pojos.Patients;
 import Pojos.Description;
 import Pojos.Hospitals;
 import Pojos.Doctors;
+import xml.XmlManager;
+import xml.ClinicalTrialsXMLDataBase;
+import java.util.ArrayList;
 
 public class Main {
 	public static void main(String[] args) {
@@ -43,8 +44,9 @@ public class Main {
 			System.out.println("1. Login");
 			System.out.println("2. Enter as Guest");
 			System.out.println("3. Sign up");
-			System.out.println("5. comprobaciones"); // esto luego se borrará, es solo para probar los managers y el jpa
+			System.out.println("5. Comprobaciones"); // esto luego se borrará, es solo para probar los managers y el jpa
 			System.out.println("4. Exit");
+			System.out.println("6. Insert/Export XML"); 
 
 			choice = scanner.nextInt();
 			scanner.nextLine();
@@ -153,6 +155,10 @@ public class Main {
 				break;
 			case 5:
 				comprobaciones();
+				break;
+			case 6:
+				System.out.println("Ready to export/import XML:");
+				xmlFunctions(scanner, tm, pm, dm, hm, dpm, htm);
 				break;
 			default:
 				System.out.println("Invalid choice.");
@@ -374,13 +380,13 @@ public class Main {
 		do {
 
 			System.out.println("Please choose an option:");
-			System.out.println("1. add patient");
+			System.out.println("1. Add patient");
 			System.out.println("2. Assign patient to existing trial");
 			System.out.println("3. View patient by id"); // seria mejor hacerlo por nombre pero bueno
 			System.out.println("4. View all patients");
 
-			System.out.println("5. add patient description");
-			System.out.println("6. update patient description");
+			System.out.println("5. Add patient description");
+			System.out.println("6. Update patient description");
 			System.out.println("7. View patient description by patient id");
 			System.out.println("8. Remove patient decription");
 
@@ -388,7 +394,7 @@ public class Main {
 			System.out.println("10. Get male count of patients");
 			System.out.println("11. Get list a patients with the same cause");
 			System.out.println("12. View all trials in given hospital");
-			System.out.println("13. remove patient");
+			System.out.println("13. Remove patient");
 
 			System.out.println("00. Exit - volver al login");
 			doctorChoice = scanner.nextInt();
@@ -989,6 +995,108 @@ public class Main {
 
 		cm.closeConnection();
 
+	}
+	
+	private static void xmlFunctions(Scanner scanner, TrialManager tm, PatientManager pm, DoctorManager dm,
+			HospitalManager hm, DescriptionManager dpm, HospitalTrialManager htm) {
+		
+		int xmlChoice;
+		XmlManager xmlManager = new XmlManager();
+		
+		do {
+			System.out.println("Please choose an XML option:");
+			System.out.println("1. Export whole database to XML");
+			System.out.println("2. Import whole database from XML");
+			System.out.println("3. Export one patient to XML");
+			System.out.println("4. Import one patient from XML");
+			System.out.println("5. Export one trial to XML");
+			System.out.println("6. Import one trial from XML");
+			System.out.println("00. Exit - return to login");
+			
+			xmlChoice = scanner.nextInt();
+			scanner.nextLine();
+			
+			switch(xmlChoice){
+			case 1:
+				System.out.println("Exporting whole database to XML...");
+
+				String databaseFilePath = "xmlFiles/clinical_trials_database.xml";
+
+				ClinicalTrialsXMLDataBase database = new ClinicalTrialsXMLDataBase();
+
+				database.setPatients(new ArrayList<>(pm.getAllPatients()));
+				database.setTrials(tm.getAllTrials());
+				database.setDescriptions(dpm.showAllDescriptions());
+				database.setDoctors(dm.showAllDoctors());
+				database.setHospitals(null);
+				database.setHospitalTrials(htm.showAllHospitalTrials());
+				xmlManager.marshalDatabase(database, databaseFilePath);
+
+				break;
+			case 2:
+				System.out.println("Importing whole database from XML...");
+
+				String importDatabaseFilePath = "xmlFiles/clinical_trials_database.xml";
+
+				ClinicalTrialsXMLDataBase importedDatabase = xmlManager.unmarshalDatabase(importDatabaseFilePath);
+
+				if (importedDatabase != null) {
+					System.out.println("Database imported correctly from XML.");
+					System.out.println("Doctors: " + importedDatabase.getDoctors());
+					System.out.println("Hospitals: " + importedDatabase.getHospitals());
+					System.out.println("Patients: " + importedDatabase.getPatients());
+					System.out.println("Descriptions: " + importedDatabase.getDescriptions());
+					System.out.println("Trials: " + importedDatabase.getTrials());
+					System.out.println("Hospital-Trials: " + importedDatabase.getHospitalTrials());
+				} else {
+					System.out.println("The database could not be imported from XML.");
+				}
+				
+				break;
+			case 3:
+				System.out.println("Exporting one patient to XML...");
+				System.out.println("Enter patient ID:");
+				int patientId = scanner.nextInt();
+				scanner.nextLine();
+				String patientFilePath = "xmlFiles/patient_" + patientId + ".xml";
+				xmlManager.marshalPatient(pm.getPatientById(patientId), patientFilePath);
+				
+				break;
+			case 4:
+				System.out.println("Importing one patient from XML...");
+				System.out.println("Enter XML file path:");
+				String patientImportPath = scanner.nextLine();
+				System.out.println(xmlManager.unmarshalPatient(patientImportPath));
+				
+				break;
+			case 5:
+				System.out.println("Exporting one trial to XML...");
+				System.out.println("Enter trial ID:");
+				int trialId = scanner.nextInt();
+				scanner.nextLine();
+				String trialFilePath = "xmlFiles/trial_" + trialId + ".xml";
+				xmlManager.marshalTrial(tm.viewTrial(trialId), trialFilePath);
+				
+				break;
+			case 6:
+				System.out.println("Importing one trial from XML...");
+				System.out.println("Enter XML file path:");
+				String trialImportPath = scanner.nextLine();
+
+				System.out.println(xmlManager.unmarshalTrial(trialImportPath));
+
+				break;
+
+			case 00:
+				System.out.println("Exiting XML menu...");
+				break;
+
+			default:
+				System.out.println("Invalid choice.");
+				break;
+			}
+			
+		} while (xmlChoice != 00);
 	}
 
 }
