@@ -51,6 +51,7 @@
         <Trial trialId="0" trialName="No trial assigned" startingDate="1900-01-01" durationDays="0" budget="0.0" targetPatients="0"/>
         <Trial trialId="1" trialName="Trial A" startingDate="2025-01-01" durationDays="180" budget="1000.0" targetPatients="200"/>
         <Trial trialId="2" trialName="trial b" startingDate="+57259-01-24" durationDays="30" budget="10.0" targetPatients="200"/>
+        <Trial trialId="3" trialName="trial c" startingDate="+58348-10-02" durationDays="100" budget="10.0" targetPatients="250"/>
     </Trials>
     <HospitalTrials/>
 </ClinicalTrials>

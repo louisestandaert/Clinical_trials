@@ -44,9 +44,8 @@ public class Main {
 			System.out.println("1. Login");
 			System.out.println("2. Enter as Guest");
 			System.out.println("3. Sign up");
-			System.out.println("5. Comprobaciones"); // esto luego se borrará, es solo para probar los managers y el jpa
+			//System.out.println("5. Comprobaciones"); // esto luego se borrará, es solo para probar los managers y el jpa
 			System.out.println("4. Exit");
-			System.out.println("6. Insert/Export XML"); 
 
 			choice = scanner.nextInt();
 			scanner.nextLine();
@@ -80,7 +79,7 @@ public class Main {
 
 				case "Trial Manager":
 					System.out.println("Welcome, Trial Manager! You have full access to the system.");
-					trialManagerFunctions(scanner, tm, pm, dm, hm, htm);
+					trialManagerFunctions(scanner, tm, pm, dm, hm, htm, dpm);
 
 					break;
 				case "Doctor":
@@ -156,10 +155,10 @@ public class Main {
 			case 5:
 				comprobaciones();
 				break;
-			case 6:
+			/*case 6:
 				System.out.println("Ready to export/import XML:");
 				xmlFunctions(scanner, tm, pm, dm, hm, dpm, htm);
-				break;
+				break;*/
 			default:
 				System.out.println("Invalid choice.");
 				break;
@@ -169,7 +168,7 @@ public class Main {
 	}
 
 	private static void trialManagerFunctions(Scanner scanner, TrialManager tm, PatientManager pm, DoctorManager dm,
-			HospitalManager hm, HospitalTrialManager htm) {
+			HospitalManager hm, HospitalTrialManager htm, DescriptionManager dpm) {
 
 		int trialChoice;
 		do {
@@ -197,6 +196,8 @@ public class Main {
 			System.out.println("15. Assign hospital to trial");
 			System.out.println("16. Remove hospital from trial");
 
+			System.out.println("17. Insert/Export XML");
+			
 			System.out.println("00. Exit - volver al login");
 
 			trialChoice = scanner.nextInt();
@@ -359,6 +360,10 @@ public class Main {
 				System.out.println("Enter trial ID:");
 				int trialIdToRemoveHospital = scanner.nextInt();
 				htm.removeTrialFromHospital(trialIdToRemoveHospital, hospitalIdToRemoveFromTrial);
+				break;
+			case 17: // Insert/Export XML
+				System.out.println("Ready to export/import XML:");
+				xmlFunctions(scanner, tm, pm, dm, hm, dpm, htm);
 				break;
 			case 00:
 				System.out.println("Exiting to login...");
