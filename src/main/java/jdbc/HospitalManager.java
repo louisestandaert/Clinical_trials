@@ -1,8 +1,12 @@
 package jdbc;
 import java.sql.Connection;
+
+import Pojos.Hospitals;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HospitalManager {
@@ -52,6 +56,32 @@ public class HospitalManager {
 	}
 
 	
+	public List<Hospitals> getAllHospitals() {
+	    String sql = "SELECT * FROM Hospitals";
+	    List<Hospitals> hospitals = new ArrayList<>();
+
+	    try {
+	        PreparedStatement ps = c.prepareStatement(sql);
+	        ResultSet rs = ps.executeQuery();
+
+	        while (rs.next()) {
+	            int hospitalId = rs.getInt("hospital_id");
+	            String hospitalName = rs.getString("hospital_name");
+	            String hospitalCity = rs.getString("city");
+
+	            Hospitals hospital = new Hospitals(hospitalName, hospitalCity, hospitalId);
+	            hospitals.add(hospital);
+	        }
+
+	        rs.close();
+	        ps.close();
+
+	    } catch (SQLException e) {
+	        System.err.println("There has been an error while trying to get all hospitals: " + e.getMessage());
+	    }
+
+	    return hospitals;
+	}
 	
 	public void showAllHospitals() {
 		String sql="SELECT * FROM Hospitals";

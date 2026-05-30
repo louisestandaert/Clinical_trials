@@ -732,6 +732,7 @@ public class Main {
 			System.out.println("4. Import one patient from XML");
 			System.out.println("5. Export one trial to XML");
 			System.out.println("6. Import one trial from XML");
+			System.out.println("7. Transform XML databse to HTML");
 			System.out.println("00. Exit - return to login");
 
 			xmlChoice = scanner.nextInt();
@@ -749,7 +750,7 @@ public class Main {
 				database.setTrials(tm.getAllTrials());
 				database.setDescriptions(dpm.showAllDescriptions());
 				database.setDoctors(dm.showAllDoctors());
-				database.setHospitals(null);
+				database.setHospitals(hm.getAllHospitals());
 				database.setHospitalTrials(htm.showAllHospitalTrials());
 				xmlManager.marshalDatabase(database, databaseFilePath);
 
@@ -807,6 +808,15 @@ public class Main {
 				System.out.println(xmlManager.unmarshalTrial(trialImportPath));
 
 				break;
+				
+			case 7: 
+				System.out.println("Transforming XML database to HTML...");
+
+			    xmlManager.transformXMLToHTML(
+			        "xmlFiles/clinical_trials_database.xml",
+			        "xmlFiles/clinical_trials_database.xsl",
+			        "xmlFiles/clinical_trials_database.html"
+			    );
 
 			case 00:
 				System.out.println("Exiting XML menu...");
