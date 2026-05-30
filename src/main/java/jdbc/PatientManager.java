@@ -87,7 +87,7 @@ public class PatientManager {
 	    return false;
 	}
 
-	// este metodo esta comprobado
+	
 	public void insertPatient(int patientId, String patientName, String results, int trialId, int hospitalId,
 			int descriptionId) {
 
@@ -128,7 +128,7 @@ public class PatientManager {
 
 	}
 
-	// metodo delete patient
+	
 
 	public void removePatient(int patientId) {
 		String sql = "DELETE FROM Patients WHERE patients_id=?";
@@ -154,22 +154,20 @@ public class PatientManager {
 		String sql = "SELECT * FROM Patients WHERE patient_name = ?";
 		Patients patient = null;
 
-		// 1. Abrimos y aseguramos el cierre del PreparedStatement
 		try (PreparedStatement ps = c.prepareStatement(sql)) {
 			ps.setString(1, patientName);
 
-			// 2. Abrimos y aseguramos el cierre del ResultSet
 			try (ResultSet rs = ps.executeQuery()) {
 				if (rs.next()) {
 					patient = new Patients(rs.getInt("patients_id"), rs.getString("patient_name"),
 							rs.getString("results"), rs.getInt("trial_id"), rs.getInt("hospital_id"),
 							rs.getInt("description_id"));
 				}
-			} // rs se cierra automáticamente aquí, pase lo que pase
+			} 
 
 		} catch (SQLException e) {
 			System.err.println("Error retrieving patient: " + e.getMessage());
-		} // ps se cierra automáticamente aquí, pase lo que pase
+		} 
 
 		return patient;
 	}
@@ -197,7 +195,7 @@ public class PatientManager {
 		return patient;
 	}
 
-	// este metodo esta comprobado
+	
 	public Set<Patients> getAllPatients() {
 
 		Set<Patients> patientsSet = new HashSet<>();
@@ -223,7 +221,7 @@ public class PatientManager {
 		return patientsSet;
 	}
 
-	// este metodo esta comprobado
+	
 	public void getPatientDescription(String patientName) {
 		String sql = "SELECT d.* FROM Descriptions d JOIN Patients p ON d.description_id = p.description_id WHERE p.patient_name = ?";
 		Description description = null;
@@ -268,7 +266,7 @@ public class PatientManager {
 		return count;
 	}
 
-	// este metodo esta comprobado
+	
 	public int getFemalePatientsCount() {
 		String sql = "SELECT COUNT(*) AS count FROM Patients p JOIN Descriptions d ON p.description_id = d.description_id WHERE d.gender='Female'";
 		int count = 0;
@@ -289,7 +287,7 @@ public class PatientManager {
 		return count;
 	}
 
-	// este metodo esta comprobado
+	
 	public int getMalePatientsCount() {
 		String sql = "SELECT COUNT(*) AS count FROM Patients p JOIN Descriptions d ON p.description_id = d.description_id WHERE d.gender='Male'";
 		int count = 0;
@@ -310,7 +308,7 @@ public class PatientManager {
 		return count;
 	}
 
-	// este metodo esta comprobado
+	
 	public Set<Patients> getListOfPatientsWithSameCause(String cause) {
 		String sql = "SELECT p.* FROM Patients p JOIN Descriptions d ON p.description_id = d.description_id WHERE d.cause =?";
 		Set<Patients> patientsSet = new HashSet<>();

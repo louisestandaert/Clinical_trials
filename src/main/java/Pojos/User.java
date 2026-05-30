@@ -9,14 +9,14 @@ import javax.persistence.*;
 
 public class User {
 	
-	//DECLARANDO LOS ATRIBUTOS
 
-	@Id // para indicar que es la primary key es el id
-	@GeneratedValue(strategy = GenerationType.IDENTITY) // para que el id se genere automaticamente y no se repita
+
+	@Id 
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private int user_id;
 	
 
-	@Column(unique = true) // para que username sea unico en la base de datos
+	@Column(unique = true) 
 	private String username;
 	
 
@@ -27,7 +27,6 @@ public class User {
 	private Role role;
 
 	
-	//CONSTRUCTORES
 	
 	public User() {
 	}

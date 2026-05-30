@@ -54,7 +54,7 @@ public class DoctorManager {
 		}
 	}
 	
-	//Enseña todos los doctores registrados en la base de datos independientemente de si estan asignados a algun hospital o a algun trial
+	
 	public List<Doctors> showAllDoctors() {
 		List<Doctors> doctorsList = new ArrayList<>();
 		String sql="SELECT * FROM Doctors";
@@ -80,88 +80,6 @@ public class DoctorManager {
 		return doctorsList;
 	}
 	
-	public List<Doctors> findDoctorByGender(String doctorGender) {
-		List<Doctors> doctorsByGender = new ArrayList<>();
-		String sql= "SELECT * FROM Doctors WHERE doctor_gender= ?";
-		
-		try {
-			PreparedStatement ps= doctorConnection.prepareStatement(sql);
-			ps.setString(1, doctorGender);
-			ResultSet rs= ps.executeQuery();
-			
-			
-			while(rs.next()) {
-				DoctorSpecialty specialty=DoctorSpecialty.valueOf(rs.getString("doctor_specialty"));
-				Doctors doctor= new Doctors(
-						rs.getInt("doctor_id"),
-		                rs.getString("doctor_name"),
-		                rs.getString("doctor_gender"),
-		                specialty
-		                );
-          
-                doctorsByGender.add(doctor);
-                
-               }
-		}catch(SQLException e) {
-			System.err.println("There has been an error while filtering the doctors by gender:" + e.getMessage());
-			e.printStackTrace();
-		}
-		return doctorsByGender;
-	}
-	
-	public List<Doctors> sortDoctorBySpecialty(DoctorSpecialty doctorSpecialty){
-		List<Doctors> doctorsBySpecialty = new ArrayList<>();
-		String sql="SELECT * FROM Doctors WHERE doctor_specialty= ?";
-		try {
-			PreparedStatement ps= doctorConnection.prepareStatement(sql);
-            ps.setString(1, doctorSpecialty.name());
-            ResultSet rs= ps.executeQuery();
-            while(rs.next()) {
-            	DoctorSpecialty specialty=DoctorSpecialty.valueOf(rs.getString("doctor_specialty"));
-            	Doctors doctor= new Doctors(
-            			rs.getInt("doctor_id"),
-                        rs.getString("doctor_name"),
-                        rs.getString("doctor_gender"),
-                        specialty
-                        );
-            	doctorsBySpecialty.add(doctor);
-		    }
-            
-	   }catch(SQLException e) {
-          System.err.println("There has been an error while sorting the doctors by specialty:" + e.getMessage());
-           e.printStackTrace(); 
-	   }
-		return doctorsBySpecialty;
-    }
-	
-	public Doctors findDoctorById(int doctorId) {
-		String sql = "SELECT * FROM Doctors WHERE doctor_id = ?";
-		
-		try {
-			PreparedStatement ps = doctorConnection.prepareStatement(sql);
-	        ps.setInt(1, doctorId);
-	        ResultSet rs = ps.executeQuery();
-	        
-	        if (rs.next()) {
-	            DoctorSpecialty specialty =
-	                    DoctorSpecialty.valueOf(rs.getString("doctor_specialty"));
-
-	            Doctors doctor = new Doctors(
-	                    rs.getInt("doctor_id"),
-	                    rs.getString("doctor_name"),
-	                    rs.getString("doctor_gender"),
-	                    specialty,
-	                    rs.getInt("hospital_id"),
-	                    rs.getInt("trial_id")
-	            );
-
-	            return doctor;
-	        }
-		}catch(SQLException e) {
-			System.err.println("There has been an error trying to find the doctor by the id given: " + e.getMessage());
-		}
-		return null;
-	}
 	
 	public void assignDoctorToHospital(int doctorId, int newhospitalId) {
 		String sql= "UPDATE Doctors SET hospital_id= ? WHERE doctor_id= ?";
@@ -177,21 +95,7 @@ public class DoctorManager {
 		}
 	}
 	
-	public void assignDoctorToTrial(int doctorId, int newTrialId) {
-	    String sql = "UPDATE Doctors SET trial_id = ? WHERE doctor_id = ?";
-
-	    try {
-	        PreparedStatement ps = doctorConnection.prepareStatement(sql);
-	        ps.setInt(1, newTrialId);
-	        ps.setInt(2, doctorId);
-
-	        ps.executeUpdate();
-	        System.out.println("Doctor assigned to another trial correctly.");
-
-	    } catch (SQLException e) {
-	        System.err.println("Error assigning doctor to trial: " + e.getMessage());
-	    }
-	}
+	
 }
 	
 	

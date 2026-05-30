@@ -37,29 +37,6 @@ public class DescriptionManager {
 			}			
 		}
 	
-	public void removeDescription (int descriptionId) {
-		String sql = "DELETE FROM Descriptions WHERE description_id=?"; 
-		
-		try { 
-			PreparedStatement pst = descriptionConnection.prepareStatement(sql); 
-			
-			pst.setInt(1, descriptionId); 
-			
-			int row = pst.executeUpdate();
-			
-			if (row > 0) {
-				System.out.println("The description has been removed correctly."); 
-			} else {
-				System.out.println("No description has the ID given: " + descriptionId); 
-			}
-			
-			
-		} catch (SQLException e) {
-			System.err.println("There has been an error while trying to remove the description: " + e.getMessage());
-			 e.printStackTrace();
-		}
-	
-	}
 	
 	public void removeDescriptionByPatientName(String patientName) {
 		String sql = "DELETE FROM Descriptions WHERE patient_id IN (SELECT patients_id FROM Patients WHERE patient_name = ?)";
@@ -143,70 +120,6 @@ public class DescriptionManager {
 		
 		return null;
 		
-	}
-	
-	
-	public List<Description> findDescriptionByGender(String gender){
-		List<Description> descriptionsByGender = new ArrayList<>();
-		
-		String sql = "SELECT * FROM Descriptions WHERE gender = ?";
-		
-		try {
-			PreparedStatement pst = descriptionConnection.prepareStatement(sql);
-			
-			pst.setString(1, gender);
-			
-			ResultSet rs = pst.executeQuery();
-			
-			while (rs.next()) {
-				Description description = new Description(
-						rs.getInt("description_id"),
-						rs.getString("gender"),
-						rs.getString("cause"),
-						rs.getInt("patient_id")
-						);
-				descriptionsByGender.add(description);
-			}
-			
-		} catch (SQLException e) {
-				System.err.println("There has been an error while trying to find description by gender: " + e.getMessage());
-				e.printStackTrace();
-		}
-		
-		return descriptionsByGender;
-	
-	}
-	
-	
-	public List<Description> findDescriptionByCause(String cause){
-		List<Description> descriptionsByCause = new ArrayList<>();
-		
-		String sql = "SELECT * FROM Descriptions WHERE cause = ?";
-		
-		try {
-			PreparedStatement pst = descriptionConnection.prepareStatement(sql);
-			
-			pst.setString(1, cause);
-			
-			ResultSet rs = pst.executeQuery();
-			
-			while (rs.next()) {
-				Description description = new Description(
-						rs.getInt("description_id"),
-						rs.getString("gender"),
-						rs.getString("cause"),
-						rs.getInt("patient_id")
-						); 
-				descriptionsByCause.add(description);
-			}
-			
-		} catch (SQLException e) {
-				System.err.println("There has been an error while trying to find description by cause: " + e.getMessage());
-				e.printStackTrace();
-		}
-
-		return descriptionsByCause;
-	
 	}
 	
 	

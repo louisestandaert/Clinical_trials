@@ -15,7 +15,6 @@ import java.util.Base64;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-
 import Pojos.Role;
 import Pojos.User;
 
@@ -24,7 +23,7 @@ public class JPA_manager {
 	private EntityManagerFactory emf;
 	private EntityManager em;
 
-	public JPA_manager() {	
+	public JPA_manager() {
 
 		try {
 			this.emf = Persistence.createEntityManagerFactory("Clinical_trials_provider");
@@ -35,7 +34,7 @@ public class JPA_manager {
 			this.em.getTransaction().commit(); // para confirmar la transaccion
 
 			List<Role> roles = getAllRoles();
-			
+
 			if (roles == null || roles.isEmpty()) {
 				this.createRole("default");
 			}
@@ -47,258 +46,217 @@ public class JPA_manager {
 		}
 
 	}
-	
-	//Métodos nuevos de role 
-	
+
+	// Métodos nuevos de role
+
 	public void createRole(String roleName) {
 		try {
 			Role existingRole = findRoleByName(roleName);
-			
+
 			if (existingRole != null) {
 				System.out.println("A role with this name already exists." + roleName);
 				return;
 			}
-			
+
 			em.getTransaction().begin();
-			
+
 			Role role = new Role(roleName);
-			
+
 			em.persist(role);
-			
+
 			em.getTransaction().commit();
-			
+
 			System.out.println("Role created successfully: " + roleName);
-			
+
 		} catch (Exception e) {
 			if (em.getTransaction().isActive()) {
 				this.em.getTransaction().rollback();
 			}
 			System.err.println("Error checking for existing role: " + e.getMessage());
-			
-			 return;
+
+			return;
 		}
-		
+
 	}
-	
+
 	public Role findRoleByName(String roleName) {
-	    try {
-	        Query query = em.createQuery("SELECT r FROM Role r WHERE r.role = :roleName", Role.class);
-	        
-	        query.setParameter("roleName", roleName);
-	        
-	            return (Role) query.getSingleResult();
-	            
-	    } catch (NoResultException e) {
-	        return null;
-	        
-	} catch (Exception e) {
-	        System.err.println("Error finding role: " + e.getMessage());
-	        return null;
-	    }
+		try {
+			Query query = em.createQuery("SELECT r FROM Role r WHERE r.role = :roleName", Role.class);
+
+			query.setParameter("roleName", roleName);
+
+			return (Role) query.getSingleResult();
+
+		} catch (NoResultException e) {
+			return null;
+
+		} catch (Exception e) {
+			System.err.println("Error finding role: " + e.getMessage());
+			return null;
+		}
 	}
-	
+
 	public List<Role> getAllRoles() {
 		Query query = em.createQuery("SELECT r FROM Role r");
 		return query.getResultList();
 	}
-	
+
 	public void login(String username, String password) throws Exception {
-	    try {
-	        User user = findUserByUsername(username);
+		try {
+			User user = findUserByUsername(username);
 
-	        if (user == null) {
-	        	throw new Exception("User not found: " + username);
-	        }
+			if (user == null) {
+				throw new Exception("User not found: " + username);
+			}
 
-	        boolean passwordCorrect = PasswordUtil.verifyPassword(password, user.getPassword());
+			boolean passwordCorrect = PasswordUtil.verifyPassword(password, user.getPassword());
 
-	        if (passwordCorrect) {
-	            System.out.println("Login successful for user: " + user.getUsername());
-	        } else {
-	            System.out.println("Login failed. Incorrect password.");
-	            throw new Exception("Incorrect password for user: " + username);
-	        }
+			if (passwordCorrect) {
+				System.out.println("Login successful for user: " + user.getUsername());
+			} else {
+				System.out.println("Login failed. Incorrect password.");
+				throw new Exception("Incorrect password for user: " + username);
+			}
 
-	    } catch (Exception e) {
-	        System.err.println("Login failed: " + e.getMessage());
-	        throw e;
-	    }
+		} catch (Exception e) {
+			System.err.println("Login failed: " + e.getMessage());
+			throw e;
+		}
 	}
 
-	
-	
 	public void createUser(String userName, String password, String roleName) {
-	    try {
-	    	User existingUser = findUserByUsername(userName);
-	    	
-	    	if(existingUser != null) {
-	    		System.out.println("A user with this username already exists." + userName);
-	    		return;
-	    	}
-	    	
-	        Role role = findRoleByName(roleName);
-	        
-	        if (role == null) {
-	            System.out.println("Role not found: " + roleName);
-	            return;
-	        }
-	        
+		try {
+			User existingUser = findUserByUsername(userName);
 
-	        User newUser = new User();
-	        newUser.setUsername(userName);
-	        
-	        String hashedPassword = PasswordUtil.hashPassword(password);
-	        newUser.setPassword(hashedPassword);
-	        newUser.setRole(role);
-	        
-	        
-	    	em.getTransaction().begin();
-	    	
-	        em.persist(newUser);
-	        
-	        em.getTransaction().commit();
-	        
-	        System.out.println("User created successfully: " + userName);
+			if (existingUser != null) {
+				System.out.println("A user with this username already exists." + userName);
+				return;
+			}
 
-	        
-	        } catch (Exception e) {
-	            if (em.getTransaction().isActive()) {
-	                this.em.getTransaction().rollback();
-	            }
+			Role role = findRoleByName(roleName);
 
-	            System.err.println("Error creating user: " + e.getMessage());
-	    }
+			if (role == null) {
+				System.out.println("Role not found: " + roleName);
+				return;
+			}
+
+			User newUser = new User();
+			newUser.setUsername(userName);
+
+			String hashedPassword = PasswordUtil.hashPassword(password);
+			newUser.setPassword(hashedPassword);
+			newUser.setRole(role);
+
+			em.getTransaction().begin();
+
+			em.persist(newUser);
+
+			em.getTransaction().commit();
+
+			System.out.println("User created successfully: " + userName);
+
+		} catch (Exception e) {
+			if (em.getTransaction().isActive()) {
+				this.em.getTransaction().rollback();
+			}
+
+			System.err.println("Error creating user: " + e.getMessage());
+		}
 	}
 
-	
-	
-            
 	public List<User> findAllUsers() {
-	    try {
-	        Query query = em.createQuery("SELECT u FROM User u", User.class);
-	        return query.getResultList();
+		try {
+			Query query = em.createQuery("SELECT u FROM User u", User.class);
+			return query.getResultList();
 
-	    } catch (Exception e) {
-	        System.err.println("Error finding all users: " + e.getMessage());
-	        return null;
-	    }
+		} catch (Exception e) {
+			System.err.println("Error finding all users: " + e.getMessage());
+			return null;
+		}
 	}
-	
+
 	public void deleteUser(String username) {
-		User user= findUserByUsername(username);
-		
-		if(user!=null) {
-            this.em.getTransaction().begin();
-            this.em.remove(user);
-            this.em.getTransaction().commit();
-            System.out.println("User deleted successfully.");
-            
+		User user = findUserByUsername(username);
+
+		if (user != null) {
+			this.em.getTransaction().begin();
+			this.em.remove(user);
+			this.em.getTransaction().commit();
+			System.out.println("User deleted successfully.");
+
 		} else {
 			System.out.println("No user found with username: " + username);
 		}
-		
-		
+
 	}
-	
+
 	public User findUserByUsername(String username) {
 		try {
-			Query query=em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
+			Query query = em.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class);
 			query.setParameter("username", username);
-			List <User> users = query.getResultList();
-			
+			List<User> users = query.getResultList();
+
 			if (users.isEmpty()) {
 				return null;
 			} else {
 				return users.get(0);
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			System.err.println("Error finding user: " + e.getMessage());
 			return null;
 		}
 	}
-	
+
 	public void updatePassword(String username, String newPassword) {
-	    User user = findUserByUsername(username);
+		User user = findUserByUsername(username);
 
-	    if (user == null) {
-	        System.out.println("No user found with username: " + username);
-	        return;
-	    }
+		if (user == null) {
+			System.out.println("No user found with username: " + username);
+			return;
+		}
 
-	    try {
-	        String hashedPassword = PasswordUtil.hashPassword(newPassword);
-
-	        this.em.getTransaction().begin();
-	        user.setPassword(hashedPassword);
-	        this.em.getTransaction().commit();
-
-	        System.out.println("Password updated successfully for user: " + username);
-
-	    } catch (Exception e) {
-	        if (this.em.getTransaction().isActive()) {
-	            this.em.getTransaction().rollback();
-	        }
-
-	        System.err.println("Error updating password: " + e.getMessage());
-	    }
-	}
-	
-	
-	public List<User> findUserByRole(String roleName) {
 		try {
-			Query query = em.createQuery("SELECT u FROM User u  WHERE u.role.role = :roleName", 
-					User.class);
-			
-			query.setParameter("roleName", roleName);
-			
-			return query.getResultList();
-			
+			String hashedPassword = PasswordUtil.hashPassword(newPassword);
+
+			this.em.getTransaction().begin();
+			user.setPassword(hashedPassword);
+			this.em.getTransaction().commit();
+
+			System.out.println("Password updated successfully for user: " + username);
+
 		} catch (Exception e) {
-			System.err.println("Error finding users by role: " + e.getMessage());
-			return new ArrayList<User>();
+			if (this.em.getTransaction().isActive()) {
+				this.em.getTransaction().rollback();
+			}
+
+			System.err.println("Error updating password: " + e.getMessage());
 		}
 	}
+
 	
+
 	public String getRoleByUser(User user) {
-	
+
 		return user.getRole().getRole();
-    		
+
 	}
-	
-	
+
 	public boolean checkLogin(String username, String password) {
-	    try {
-	        User user = findUserByUsername(username);
+		try {
+			User user = findUserByUsername(username);
 
-	        if (user == null) {
-	            return false;
-	        }
+			if (user == null) {
+				return false;
+			}
 
-	        boolean passwordCorrect = PasswordUtil.verifyPassword(password, user.getPassword());
+			boolean passwordCorrect = PasswordUtil.verifyPassword(password, user.getPassword());
 
-	        return passwordCorrect;
+			return passwordCorrect;
 
-	    } catch (Exception e) {
-	        System.err.println("Login failed: " + e.getMessage());
-	        return false;
-	    }
+		} catch (Exception e) {
+			System.err.println("Login failed: " + e.getMessage());
+			return false;
+		}
 	}
-	
-	
-	public void removeUser(String username) {
-        User user = findUserByUsername(username);
-        
-        if (user != null) {
-            this.em.getTransaction().begin();
-            this.em.remove(user);
-            this.em.getTransaction().commit();
-            System.out.println("User removed successfully: " + username);
-        } else {
-            System.out.println("No user found with username: " + username);
-        }
-}
-}
 
-	
-	
-	
+}

@@ -52,6 +52,7 @@ public class HospitalManager {
 	}
 
 	
+	
 	public void showAllHospitals() {
 		String sql="SELECT * FROM Hospitals";
 		

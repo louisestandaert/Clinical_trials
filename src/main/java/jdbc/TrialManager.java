@@ -45,7 +45,7 @@ public class TrialManager {
 	    return trial;
 	}
 	
-	//add ensayo clinico
+	
 	public boolean addTrial(int trialId, String trialName, LocalDate startingDate, int durationDays, double budget,
 			int targetPatients) {
 		String sql = "INSERT INTO Trials (trial_id, trial_name, starting_date, duration_days, budget, target_patients) VALUES (?, ?, ?, ?, ?, ?)";
@@ -73,7 +73,7 @@ public class TrialManager {
 		
     }		
 	
-	//Select all 
+	 
 	public List<Trial> getAllTrials(){
 		List<Trial> trialsList = new ArrayList<>();
 		String sql = "SELECT * FROM Trials";
@@ -94,7 +94,7 @@ public class TrialManager {
 		return trialsList;
 	}
 	
-	//COMPROBADO 
+	
 	public boolean assignDoctorToTrial (int doctorId, int trialId) {
 		 String sql = "UPDATE Doctors SET trial_id = ? WHERE doctor_id = ?";
 
@@ -115,7 +115,7 @@ public class TrialManager {
 	        }
 	    }                             
 	
-	//Inscribir paciente de ensayo 3
+	
 	public boolean enrollPatientInTrial(int patientId, int trialId) {
         String sql = "UPDATE Patients SET trial_id = ? WHERE patients_id = ?";
 
@@ -136,28 +136,6 @@ public class TrialManager {
         }
     }
 	
-	//eliminar paciente de ensayo 4
-	public boolean removePatientFromTrial(int patientId) {
-		 String sql = "UPDATE Patients SET trial_id = 0 WHERE patients_id = ?";
-		 //para no hacer null, lo pongo a 0, que no existe en la tabla de ensayos. ID 0 = sin ensayo asignado.
-		 try {
-		        Connection connection = connectionManager.getConnection();
-
-		        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-		            ps.setInt(1, patientId);
-
-		            int rowsAffected = ps.executeUpdate();
-		            return rowsAffected > 0;
-		        }
-
-
-        } catch (SQLException e) {
-            System.err.println("Error quiting patient from trial: " + e.getMessage());
-            return false;
-        }
-    }
-	
-	// See del ensayo 5
 	 public Trial viewTrial(int trialId) {
 	        String sql = "SELECT * FROM Trials WHERE trial_id = ?";
 
@@ -181,7 +159,6 @@ public class TrialManager {
 	        return null;
 	    }
 	 
-	 //COMPROBADO
 	 public boolean removeTrial(int trialId) throws Exception {
 		 String checkDoctorSql = "SELECT COUNT (*) FROM Doctors WHERE trial_id = ?";
 		 String checkPatientSql = "SELECT COUNT(*) FROM Patients WHERE trial_id = ?";
@@ -236,7 +213,7 @@ public class TrialManager {
 	    }  
 	 }
 	 
-	 //calcular media duracion 7
+	 
 	 public double calculateAverageDuration() {
 	        String sql = "SELECT AVG(duration_days) AS avg_duration FROM Trials"; //añado el apodo AS para lgo recuperarlo por el nombre y no la posicion
 	        
@@ -259,7 +236,7 @@ public class TrialManager {
 	        return 0.0;
 	 }
 	 
-	//COMPROBADO
+	
 	    public double calculateAverageBudget() {
 	        String sql = "SELECT AVG(budget) AS avg_budget FROM Trials";
 	        try {
@@ -281,7 +258,7 @@ public class TrialManager {
 	        return 0.0;
 	    }
 	    
-	    //COMPROBADO
+	   
 	    public String resultsComparation(int trialId) {
 	        String sql =
 	            "SELECT " +
@@ -316,7 +293,7 @@ public class TrialManager {
 	        return "No results available.";
 	    }
 	    
-	    //prediccion pacientes nuevos 10
+	    
 	    public int predictHowManyNewPatientsRequired(int trialId) {
 	        String sql =
 	            "SELECT t.target_patients, COUNT(p.patients_id) AS current_patients " +
@@ -348,5 +325,5 @@ public class TrialManager {
 
 	        return 0;
 	    }
-}//end
+}
 
