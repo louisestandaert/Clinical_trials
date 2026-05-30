@@ -17,11 +17,96 @@ public class PatientManager {
 	public PatientManager(Connection c) {
 		this.c = c;
 	}
+	
+	private boolean trialExists(int trialId) {
+	    String sql = "SELECT COUNT(*) FROM Trials WHERE trial_id = ?";
+
+	    try {
+	        PreparedStatement ps = c.prepareStatement(sql);
+	        ps.setInt(1, trialId);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0;
+	        }
+
+	        rs.close();
+	        ps.close();
+
+	    } catch (SQLException e) {
+	        System.err.println("Error checking trial: " + e.getMessage());
+	    }
+
+	    return false;
+	}
+
+	private boolean hospitalExists(int hospitalId) {
+	    String sql = "SELECT COUNT(*) FROM Hospitals WHERE hospital_id = ?";
+
+	    try {
+	        PreparedStatement ps = c.prepareStatement(sql);
+	        ps.setInt(1, hospitalId);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0;
+	        }
+
+	        rs.close();
+	        ps.close();
+
+	    } catch (SQLException e) {
+	        System.err.println("Error checking hospital: " + e.getMessage());
+	    }
+
+	    return false;
+	}
+
+	private boolean descriptionExists(int descriptionId) {
+	    String sql = "SELECT COUNT(*) FROM Descriptions WHERE description_id = ?";
+
+	    try {
+	        PreparedStatement ps = c.prepareStatement(sql);
+	        ps.setInt(1, descriptionId);
+
+	        ResultSet rs = ps.executeQuery();
+
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0;
+	        }
+
+	        rs.close();
+	        ps.close();
+
+	    } catch (SQLException e) {
+	        System.err.println("Error checking description: " + e.getMessage());
+	    }
+
+	    return false;
+	}
 
 	// este metodo esta comprobado
 	public void insertPatient(int patientId, String patientName, String results, int trialId, int hospitalId,
 			int descriptionId) {
 
+		
+		 if (!trialExists(trialId)) {
+		        System.out.println("Error: The trial ID does not exist.");
+		        return;
+		    }
+
+		    if (!hospitalExists(hospitalId)) {
+		        System.out.println("Error: The hospital ID does not exist.");
+		        return;
+		    }
+
+		    if (!descriptionExists(descriptionId)) {
+		        System.out.println("Error: The description ID does not exist.");
+		        return;
+		    }
+		
 		String sql = "INSERT INTO Patients (patients_id, patient_name, results, trial_id, hospital_id, description_id) VALUES (?, ?, ?, ?, ?, ?)";
 
 		try {
