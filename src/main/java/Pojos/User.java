@@ -1,25 +1,28 @@
 package Pojos;
 
 import java.util.List;
+import java.io.Serializable;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "User")
 
-public class User {
+public class User implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 
 
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY) 
+	@Column(name = "user_id")
 	private int user_id;
 	
 
-	@Column(unique = true) 
+	@Column(name="username", unique = true, nullable = false) 
 	private String username;
 	
-
+	@Column(name="password", nullable = false)
 	private String password;
 
 	@ManyToOne(fetch = FetchType.EAGER)

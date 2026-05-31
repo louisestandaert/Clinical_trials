@@ -83,7 +83,7 @@ public class ConnectionManager {
 				st.execute(HospitalsTable);
 				st.execute(PatientsTable);
 				st.execute(TrialHospitalRelacionTable);
-				System.out.println("Todas las tablas han sido verificadas/creadas.");
+				System.out.println("All the tables have been verified.");
 			} catch (java.sql.SQLException e) {
 				e.printStackTrace();
 			}
@@ -128,13 +128,13 @@ public class ConnectionManager {
 			try {
 	            stmt.executeUpdate("ALTER TABLE Doctors ADD COLUMN doctor_specialty TEXT DEFAULT 'UNKNOWN'");
 	        } catch (Exception e) {
-	            System.out.println("doctor_specialty already exists.");
+	            
 	        }
 			
 			try {
 			    stmt.executeUpdate("ALTER TABLE Doctors ADD COLUMN hospital_id INTEGER REFERENCES Hospitals(hospital_id)");
 			} catch (Exception e) {
-			    System.out.println("hospital_id already exists in Doctors.");
+			    
 			}
 			
 			stmt.executeUpdate(

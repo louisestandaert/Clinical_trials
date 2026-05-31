@@ -1,0 +1,160 @@
+<html>
+    <head>
+        <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Clinical Trials Database</title>
+        <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                        background-color: #f4f9f9;
+                        color: #333333;
+                        margin: 30px;
+                    }
+
+                    h1 {
+                        text-align: center;
+                        color: #1f6f78;
+                        margin-bottom: 10px;
+                    }
+
+                    h2 {
+                        color: #2c8c99;
+                        margin-top: 35px;
+                        border-bottom: 2px solid #2c8c99;
+                        padding-bottom: 5px;
+                    }
+
+                    .subtitle {
+                        text-align: center;
+                        color: #555555;
+                        margin-bottom: 35px;
+                    }
+
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        background-color: white;
+                        margin-bottom: 30px;
+                        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
+                    }
+
+                    th {
+                        background-color: #1f6f78;
+                        color: white;
+                        padding: 10px;
+                        text-align: center;
+                    }
+
+                    td {
+                        border: 1px solid #cccccc;
+                        padding: 8px;
+                        text-align: center;
+                    }
+
+                    tr:nth-child(even) {
+                        background-color: #eef7f7;
+                    }
+
+                    .empty {
+                        color: #999999;
+                        font-style: italic;
+                    }
+                </style>
+    </head>
+    <body>
+        <h1>Clinical Trials Database</h1>
+        <p class="subtitle">XML database transformed into HTML using XSLT</p>
+        <h2>Patients</h2>
+        <table>
+            <tr>
+                <th>Patient ID</th><th>Name</th><th>Results</th><th>Trial ID</th><th>Hospital ID</th><th>Description ID</th>
+            </tr>
+            <tr>
+                <td>1</td><td>John Doe</td><td>positive</td><td>1</td><td>1</td><td>1</td>
+            </tr>
+            <tr>
+                <td>2</td><td>Marc</td><td>Negative</td><td>3</td><td>1</td><td>2</td>
+            </tr>
+            <tr>
+                <td>3</td><td>Jose</td><td>Negative</td><td>3</td><td>2</td><td>3</td>
+            </tr>
+            <tr>
+                <td>4</td><td>Juan</td><td>Negative</td><td>1</td><td>1</td><td>1</td>
+            </tr>
+            <tr>
+                <td>10</td><td>jack</td><td>positive</td><td>1</td><td>1</td><td>1</td>
+            </tr>
+        </table>
+        <h2>Descriptions</h2>
+        <table>
+            <tr>
+                <th>Description ID</th><th>Gender</th><th>Cause</th><th>Patient ID</th>
+            </tr>
+            <tr>
+                <td>1</td><td></td><td>Male</td><td>1</td>
+            </tr>
+            <tr>
+                <td>2</td><td>male</td><td>cause a</td><td>5</td>
+            </tr>
+            <tr>
+                <td>3</td><td>Male</td><td>A</td><td>33</td>
+            </tr>
+            <tr>
+                <td>4</td><td>Female</td><td>Asthma</td><td>1</td>
+            </tr>
+            <tr>
+                <td>5</td><td>Male</td><td>Diabetes</td><td>2</td>
+            </tr>
+            <tr>
+                <td>68</td><td>Male</td><td>A</td><td>67</td>
+            </tr>
+        </table>
+        <h2>Trials</h2>
+        <table>
+            <tr>
+                <th>Trial ID</th><th>Name</th><th>Starting Date</th><th>Duration Days</th><th>Budget</th><th>Target Patients</th>
+            </tr>
+            <tr>
+                <td>0</td><td>No trial assigned</td><td>1900-01-01</td><td>0</td><td>0.0</td><td>0</td>
+            </tr>
+            <tr>
+                <td>1</td><td>Trial A</td><td>2025-01-01</td><td>180</td><td>1000.0</td><td>200</td>
+            </tr>
+            <tr>
+                <td>2</td><td>trial b</td><td>+57259-01-24</td><td>30</td><td>10.0</td><td>200</td>
+            </tr>
+            <tr>
+                <td>3</td><td>trial c</td><td>+58348-10-02</td><td>100</td><td>10.0</td><td>250</td>
+            </tr>
+        </table>
+        <h2>Doctors</h2>
+        <table>
+            <tr>
+                <th>Doctor ID</th><th>Name</th><th>Gender</th><th>Specialty</th><th>Hospital ID</th><th>Trial ID</th>
+            </tr>
+            <tr>
+                <td>1</td><td>Dr. Smith</td><td>female</td><td></td><td>0</td><td>0</td>
+            </tr>
+            <tr>
+                <td>2</td><td></td><td>jack</td><td></td><td>0</td><td>0</td>
+            </tr>
+        </table>
+        <h2>Hospitals</h2>
+        <table>
+            <tr>
+                <th>Hospital ID</th><th>Name</th><th>City</th>
+            </tr>
+            <tr>
+                <td>1</td><td>Hospital A</td><td>Madrid</td>
+            </tr>
+            <tr>
+                <td>2</td><td>hospital b</td><td>bcn</td>
+            </tr>
+        </table>
+        <h2>Hospital - Trial Relations</h2>
+        <table>
+            <tr>
+                <th>Trial ID</th><th>Hospital ID</th>
+            </tr>
+        </table>
+    </body>
+</html>

@@ -39,7 +39,10 @@ public class Main {
 		HospitalTrialManager htm = new HospitalTrialManager(cm.getConnection());
 
 		do {
+			System.out.println();
+			System.out.println("=========================================");
 			System.out.println("Welcome to the Clinical Trials Database!");
+			System.out.println("=========================================");
 			System.out.println("Please select an option:");
 			System.out.println("1. Login");
 			System.out.println("2. Enter as Guest");
@@ -817,6 +820,7 @@ public class Main {
 			        "xmlFiles/clinical_trials_database.xsl",
 			        "xmlFiles/clinical_trials_database.html"
 			    );
+			    break;
 
 			case 00:
 				System.out.println("Exiting XML menu...");

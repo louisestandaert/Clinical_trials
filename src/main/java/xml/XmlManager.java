@@ -21,7 +21,7 @@ import Pojos.HospitalTrial;
 
 public class XmlManager {
 	
-	//PATIENTS
+
 	public void marshalPatient(Patients patient, String filePath) {
 		
 		try {
@@ -60,7 +60,7 @@ public class XmlManager {
 	}
 	
 	
-	//HOSPITALS
+
 	public void marshalHospital(Hospitals hospital, String filePath) {
 		try {
 			JAXBContext context = JAXBContext.newInstance(Hospitals.class);
@@ -91,7 +91,7 @@ public class XmlManager {
 	}
 	
 	
-	//TRIAL
+
 	public void marshalTrial(Trial trial, String filePath) {
 		try {
 			JAXBContext context = JAXBContext.newInstance(Trial.class);
@@ -121,7 +121,7 @@ public class XmlManager {
 		}
 	}
 	
-	//DOCTOR
+
 	public void marshalDoctor(Doctors doctor, String filePath) {
 		try {
 			JAXBContext context = JAXBContext.newInstance(Doctors.class);
@@ -152,7 +152,6 @@ public class XmlManager {
 	}
 	
 	
-	// DESCRIPTION
 	public void marshalDescription(Description description, String filePath) {
 		try {
 			JAXBContext context = JAXBContext.newInstance(Description.class);
@@ -182,7 +181,7 @@ public class XmlManager {
 		}
 	}
 	
-	//HOSPITAL TRIAL
+
 	public void marshalHospitalTrial(HospitalTrial hospitalTrial, String filePath) {
 		try {
 			JAXBContext context = JAXBContext.newInstance(HospitalTrial.class);
@@ -214,7 +213,7 @@ public class XmlManager {
 	
 	
 	
-	//THE WHOLE DATABASE AT THE SAME TIME 
+
 	public void marshalDatabase(ClinicalTrialsXMLDataBase database, String filePath) {
         try {
             JAXBContext context = JAXBContext.newInstance(ClinicalTrialsXMLDataBase.class);

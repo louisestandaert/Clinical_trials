@@ -10,18 +10,32 @@
             <trialId>0</trialId>
         </Doctor>
     </Doctors>
+    <Hospitals>
+        <Hospital hospitalName="Hospital A" hospitalCity="Madrid" hospitalId="1"/>
+        <Hospital hospitalName="hospital b" hospitalCity="bcn" hospitalId="2"/>
+    </Hospitals>
     <Patients>
-        <Patient patientnsId="1" patientName="John Doe" results="positive">
+        <Patient patientsId="1" patientName="John Doe" results="positive">
             <trialId>1</trialId>
             <hospitalId>1</hospitalId>
             <descriptionId>1</descriptionId>
         </Patient>
-        <Patient patientnsId="4" patientName="Juan" results="Negative">
+        <Patient patientsId="2" patientName="Marc" results="Negative">
+            <trialId>3</trialId>
+            <hospitalId>1</hospitalId>
+            <descriptionId>2</descriptionId>
+        </Patient>
+        <Patient patientsId="3" patientName="Jose" results="Negative">
+            <trialId>3</trialId>
+            <hospitalId>2</hospitalId>
+            <descriptionId>3</descriptionId>
+        </Patient>
+        <Patient patientsId="4" patientName="Juan" results="Negative">
             <trialId>1</trialId>
             <hospitalId>1</hospitalId>
             <descriptionId>1</descriptionId>
         </Patient>
-        <Patient patientnsId="10" patientName="jack" results="positive">
+        <Patient patientsId="10" patientName="jack" results="positive">
             <trialId>1</trialId>
             <hospitalId>1</hospitalId>
             <descriptionId>1</descriptionId>

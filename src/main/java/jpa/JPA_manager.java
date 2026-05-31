@@ -28,10 +28,9 @@ public class JPA_manager {
 		try {
 			this.emf = Persistence.createEntityManagerFactory("Clinical_trials_provider");
 			this.em = emf.createEntityManager();
-			this.em.getTransaction().begin(); // para empezar la transaccion
-			this.em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate(); // para activar las claves foraneas en
-																					// sqlite)
-			this.em.getTransaction().commit(); // para confirmar la transaccion
+			this.em.getTransaction().begin(); 
+			this.em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate(); 
+			this.em.getTransaction().commit(); 
 
 			List<Role> roles = getAllRoles();
 
@@ -47,7 +46,7 @@ public class JPA_manager {
 
 	}
 
-	// Métodos nuevos de role
+
 
 	public void createRole(String roleName) {
 		try {

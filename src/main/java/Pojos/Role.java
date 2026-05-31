@@ -1,18 +1,18 @@
 package Pojos;
 
 import java.util.List;
-
+import java.io.Serializable;
 import javax.persistence.*;
 
 @Entity
 @Table(name= "Role")
-
-
 public class Role {
 
+	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name= "role_id")
 	private int role_id; 
 	
 	
@@ -24,8 +24,6 @@ public class Role {
 	@OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
 	private List<User> users;
 	
-	
-	//constructores
 	
 	public Role() {
 	

@@ -74,12 +74,3 @@ public class PasswordUtil {
         }
     }
 }
-/*
-PasswordUtil:
-1. Genera un salt aleatorio.
-2. Aplica PBKDF2WithHmacSHA256.
-3. Guarda iterations:salt:hash.
-4. En login, recupera esos datos.
-5. Recalcula el hash.
-6. Compara ambos hashes.
- */
