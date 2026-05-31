@@ -26,9 +26,8 @@
 			<attribute name="optional" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-21">
 		<attributes>
-			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
@@ -45,13 +44,5 @@
 	<classpathentry kind="lib" path="Libraries/javax.activation-api-1.2.0.jar"/>
 	<classpathentry kind="lib" path="Libraries/jaxb-api-2.3.1.jar"/>
 	<classpathentry kind="lib" path="Libraries/jaxb-impl-2.3.1.jar"/>
-	<classpathentry kind="lib" path="Libraries/javafx/javafx.base.jar"/>
-	<classpathentry kind="lib" path="Libraries/javafx/javafx.controls.jar"/>
-	<classpathentry kind="lib" path="Libraries/javafx/javafx.fxml.jar"/>
-	<classpathentry kind="lib" path="Libraries/javafx/javafx.graphics.jar"/>
-	<classpathentry kind="lib" path="Libraries/javafx/javafx.media.jar"/>
-	<classpathentry kind="lib" path="Libraries/javafx/javafx.swing.jar"/>
-	<classpathentry kind="lib" path="Libraries/javafx/javafx.web.jar"/>
-	<classpathentry kind="lib" path="Libraries/javafx/javafx-swt.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
