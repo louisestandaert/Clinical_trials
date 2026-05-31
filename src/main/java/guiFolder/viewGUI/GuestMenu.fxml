@@ -6,7 +6,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.GuestMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #EAF4F8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.GuestMenuController">
    <children>
       <Label layoutX="215.0" layoutY="22.0" text="WELCOME GUEST! ">
          <font>
@@ -14,8 +14,8 @@
          </font>
       </Label>
       <Label layoutX="211.0" layoutY="48.0" text="What would you like to do today?" />
-      <Button fx:id="viewAllTrialsButton" layoutX="176.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleOpenViewAllTrials" prefHeight="70.0" prefWidth="250.0" text="VIEW ALL TRIALS" />
-      <Button fx:id="viewTrialDetailsButton" layoutX="176.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleOpenViewTrialDetails" prefHeight="70.0" prefWidth="250.0" text="VIEW TRIAL DETAILS" />
-      <Button fx:id="backButton" layoutX="175.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="70.0" prefWidth="250.0" text="GO BACK" />
+      <Button fx:id="viewAllTrialsButton" layoutX="176.0" layoutY="85.0" mnemonicParsing="false" onAction="#handleOpenViewAllTrials" prefHeight="70.0" prefWidth="250.0" text="VIEW ALL TRIALS" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" />
+      <Button fx:id="viewTrialDetailsButton" layoutX="176.0" layoutY="179.0" mnemonicParsing="false" onAction="#handleOpenViewTrialDetails" prefHeight="70.0" prefWidth="250.0" text="VIEW TRIAL DETAILS" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" />
+      <Button fx:id="backButton" layoutX="175.0" layoutY="277.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="70.0" prefWidth="250.0" text="GO BACK" style="-fx-background-color: #6A7D84; -fx-text-fill: white; -fx-font-family: Georgia;" />
    </children>
 </AnchorPane>

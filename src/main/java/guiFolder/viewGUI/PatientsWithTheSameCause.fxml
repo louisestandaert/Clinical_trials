@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.PatientsWithTheSameCauseController">
+<AnchorPane style="-fx-background-color: #EAF4F8;" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.PatientsWithTheSameCauseController">
    <children>
       <Label layoutX="125.0" layoutY="29.0" text="GET PATIENTS WITH THE SAME CAUSE">
          <font>
@@ -21,7 +21,7 @@
       <Text layoutX="306.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Patients with the same cause:" />
       <TextArea fx:id="patientsArea" layoutX="186.0" layoutY="88.0" prefHeight="294.0" prefWidth="400.0" />
       <Label fx:id="messageLabel" layoutX="14.0" layoutY="369.0" prefHeight="17.0" prefWidth="283.0" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="searchPatientsButton" layoutX="44.0" layoutY="157.0" mnemonicParsing="false" onAction="#handleSearchPatients" prefHeight="47.0" prefWidth="90.0" text="SEARCH" />
-      <Button fx:id="backButton" layoutX="44.0" layoutY="227.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="47.0" prefWidth="90.0" text="GO BACK" />
+      <Button fx:id="searchPatientsButton" layoutX="44.0" layoutY="157.0" mnemonicParsing="false" onAction="#handleSearchPatients" prefHeight="47.0" prefWidth="90.0" text="SEARCH" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" />
+      <Button fx:id="backButton" layoutX="44.0" layoutY="227.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="47.0" prefWidth="90.0" text="GO BACK" style="-fx-background-color: #6A7D84; -fx-text-fill: white; -fx-font-family: Georgia;" />
    </children>
 </AnchorPane>

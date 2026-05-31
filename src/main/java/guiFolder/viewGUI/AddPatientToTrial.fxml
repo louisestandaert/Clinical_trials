@@ -8,7 +8,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.AddPatientToTrialController">
+<AnchorPane style="-fx-background-color: #EAF4F8;" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.AddPatientToTrialController">
    <children>
       <Label layoutX="198.0" layoutY="25.0" text="ADD PATIENT TO TRIAL">
          <font>
@@ -17,8 +17,8 @@
       </Label>
       <TextField fx:id="patientIdField" layoutX="221.0" layoutY="103.0" promptText="Patient ID" />
       <TextField fx:id="trialIdField" layoutX="220.0" layoutY="188.0" promptText="Trial ID" />
-      <Button fx:id="addButton" layoutX="278.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleAddPatientToTrial" text="ADD" />
-      <Button layoutX="263.0" layoutY="284.0" mnemonicParsing="false" onAction="#handleBack" text="GO BACK" />
+      <Button fx:id="addButton" layoutX="278.0" layoutY="245.0" mnemonicParsing="false" onAction="#handleAddPatientToTrial" prefWidth="90.0" text="ADD" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" />
+      <Button layoutX="263.0" layoutY="284.0" mnemonicParsing="false" onAction="#handleBack" prefWidth="90.0" text="GO BACK" style="-fx-background-color: #6A7D84; -fx-text-fill: white; -fx-font-family: Georgia;" />
       <Label fx:id="messageLabel" layoutX="297.0" layoutY="325.0" />
       <Text layoutX="184.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID of the patient you want to add to the trial:" />
       <Text layoutX="238.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID of the trial you want:" />

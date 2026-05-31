@@ -44,6 +44,9 @@ public class AddPatientController {
     @FXML
     private Button addPatientButton;
 
+    @FXML
+    private Button backButton;
+
     private ConnectionManager cm;
     private PatientManager pm;
     private TrialManager tm;

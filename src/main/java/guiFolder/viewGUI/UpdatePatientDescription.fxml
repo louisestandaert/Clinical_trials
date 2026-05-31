@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.UpdatePatientDescriptionController">
+<AnchorPane style="-fx-background-color: #EAF4F8;" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.UpdatePatientDescriptionController">
    <children>
       <Label layoutX="171.0" layoutY="26.0" text="UPDATE PATIENT DESCRIPTION">
          <font>
@@ -16,10 +16,10 @@
       </Label>
       <Label fx:id="messageLabel" layoutX="300.0" layoutY="355.0" />
       <TextField fx:id="patientIdField" layoutX="235.0" layoutY="74.0" promptText="Patient ID" />
-      <TextField fx:id="DescriptionIdField" layoutX="235.0" layoutY="121.0" promptText="Description ID" />
+      <TextField fx:id="descriptionIdField" layoutX="235.0" layoutY="121.0" promptText="Description ID" />
       <TextField fx:id="newGenderField" layoutX="235.0" layoutY="174.0" promptText="New Gender" />
       <TextField fx:id="newCauseField" layoutX="235.0" layoutY="225.0" promptText="New Cause" />
-      <Button fx:id="updateDescriptionButton" layoutX="241.0" layoutY="265.0" mnemonicParsing="false" onAction="#handleUpdateDescription" text="UPDATE DESCRIPTION" />
-      <Button layoutX="279.0" layoutY="303.0" mnemonicParsing="false" onAction="#handleBack" text="GO BACK" />
+      <Button fx:id="updateDescriptionButton" layoutX="241.0" layoutY="265.0" mnemonicParsing="false" onAction="#handleUpdateDescription" prefWidth="170.0" text="UPDATE DESCRIPTION" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" />
+      <Button layoutX="279.0" layoutY="303.0" mnemonicParsing="false" onAction="#handleBack" prefWidth="90.0" text="GO BACK" style="-fx-background-color: #6A7D84; -fx-text-fill: white; -fx-font-family: Georgia;" />
    </children>
 </AnchorPane>

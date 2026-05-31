@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="470.0" prefWidth="660.0" style="-fx-background-color: #EAF4F8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.EditUserController">
+   <children>
+      <Label layoutX="273.0" layoutY="25.0" text="EDIT USER" textFill="#1f4652">
+         <font>
+            <Font name="Georgia Bold" size="22.0" />
+         </font>
+      </Label>
+      <TextField fx:id="usernameField" layoutX="92.0" layoutY="86.0" prefWidth="200.0" promptText="Username" />
+      <PasswordField fx:id="currentPasswordField" layoutX="92.0" layoutY="132.0" prefWidth="200.0" promptText="Current password" />
+      <PasswordField fx:id="newPasswordField" layoutX="92.0" layoutY="178.0" prefWidth="200.0" promptText="New password" />
+      <TextField fx:id="confirmDeleteField" layoutX="92.0" layoutY="224.0" prefWidth="200.0" promptText="Type yes to delete" />
+
+      <Button fx:id="updatePasswordButton" layoutX="350.0" layoutY="86.0" mnemonicParsing="false" onAction="#handleUpdatePassword" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" text="UPDATE PASSWORD" />
+      <Button layoutX="350.0" layoutY="132.0" mnemonicParsing="false" onAction="#handleViewUser" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" text="VIEW USER" />
+      <Button layoutX="350.0" layoutY="178.0" mnemonicParsing="false" onAction="#handleDeleteUser" prefHeight="32.0" prefWidth="190.0" style="-fx-background-color: #B45151; -fx-text-fill: white; -fx-font-family: Georgia;" text="DELETE USER" />
+
+      <TextArea fx:id="userInfoArea" layoutX="92.0" layoutY="285.0" prefHeight="80.0" prefWidth="448.0" wrapText="true" />
+      <Label fx:id="messageLabel" layoutX="92.0" layoutY="382.0" prefWidth="448.0" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="backButton" layoutX="285.0" layoutY="420.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="32.0" prefWidth="90.0" style="-fx-background-color: #6A7D84; -fx-text-fill: white; -fx-font-family: Georgia;" text="GO BACK" />
+   </children>
+</AnchorPane>

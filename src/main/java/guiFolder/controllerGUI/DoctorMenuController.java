@@ -16,6 +16,9 @@ public class DoctorMenuController {
     private Button backButton;
 
     @FXML
+    private Button doctorMenuButton;
+
+    @FXML
     private void handleOpenAddPatient() {
         openWindow("/guiFolder/viewGUI/AddPatient.fxml");
     }

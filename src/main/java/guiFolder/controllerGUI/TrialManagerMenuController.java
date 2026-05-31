@@ -105,6 +105,11 @@ public class TrialManagerMenuController {
         openWindow("/guiFolder/viewGUI/RemoveHospitalFromTrial.fxml");
     }
 
+    @FXML
+    private void handleOpenXmlTools() {
+        openWindow("/guiFolder/viewGUI/XmlTools.fxml");
+    }
+
 
     
     

@@ -16,11 +16,19 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class SignUpController {
+	private static final String ADMIN_PASSWORD = "admin123";
+
 	@FXML
 	private TextField usernameField;
 	
 	@FXML
 	private PasswordField passwordField;
+
+	@FXML
+	private PasswordField adminPasswordField;
+
+	@FXML
+	private Label adminPasswordLabel;
 	
 	@FXML
 	private ComboBox<String> roleComboBox;
@@ -35,10 +43,16 @@ public class SignUpController {
 	
 	@FXML
 	private void initialize() {
-		messageLabel.setText("ready");
+		messageLabel.setText("");
 		roleComboBox.getItems().add("Trial Manager");
 		roleComboBox.getItems().add("Doctor");
 		roleComboBox.getItems().add("Patient");
+		adminPasswordLabel.setVisible(false);
+		adminPasswordField.setVisible(false);
+		adminPasswordField.setManaged(false);
+		adminPasswordLabel.setManaged(false);
+
+		roleComboBox.setOnAction(event -> updateAdminPasswordVisibility());
 		
 		jpaManager.createRole("Trial Manager");
 		jpaManager.createRole("Doctor");
@@ -56,6 +70,11 @@ public class SignUpController {
 			messageLabel.setText("Please fill in all fields.");
 			return;
 		}
+
+		if (isTrialManager(role) && !ADMIN_PASSWORD.equals(adminPasswordField.getText())) {
+			messageLabel.setText("Incorrect admin password for this role.");
+			return;
+		}
 		
 		if (jpaManager.findUserByUsername(username) != null) {
 			messageLabel.setText("Username already exists. Please choose another.");
@@ -67,7 +86,25 @@ public class SignUpController {
 		
 		usernameField.clear();
 		passwordField.clear();
+		adminPasswordField.clear();
 		roleComboBox.setValue(null);
+		updateAdminPasswordVisibility();
+	}
+
+	private void updateAdminPasswordVisibility() {
+		boolean showAdminPassword = isTrialManager(roleComboBox.getValue());
+		adminPasswordLabel.setVisible(showAdminPassword);
+		adminPasswordField.setVisible(showAdminPassword);
+		adminPasswordLabel.setManaged(showAdminPassword);
+		adminPasswordField.setManaged(showAdminPassword);
+
+		if (!showAdminPassword) {
+			adminPasswordField.clear();
+		}
+	}
+
+	private boolean isTrialManager(String role) {
+		return "Trial Manager".equalsIgnoreCase(role);
 	}
 	
 	@FXML

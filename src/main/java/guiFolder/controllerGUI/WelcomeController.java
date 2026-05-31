@@ -27,6 +27,11 @@ public class WelcomeController {
 	private void handleSingUp() {
 		openWindow("/guiFolder/viewGUI/SignUp.fxml");
 	}
+
+	@FXML
+	private void handleEditUser() {
+		openWindow("/guiFolder/viewGUI/EditUser.fxml");
+	}
 	
 	@FXML
 	private void handleExit() {

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #EAF4F8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.LoginController">
    <children>
       <Label layoutX="102.0" layoutY="41.0" text="CLINICAL TRIALS DATABASE">
          <font>
@@ -15,8 +15,8 @@
          </font>
       </Label>
       <PasswordField fx:id="passwordField" layoutX="224.0" layoutY="200.0" promptText="PASSWORD" />
-      <Button fx:id="loginButton" layoutX="272.0" layoutY="255.0" mnemonicParsing="false" onAction="#handleLogin" text="LOG IN" />
-      <Button layoutX="265.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleBack" text="GO BACK" />
+      <Button fx:id="loginButton" layoutX="245.0" layoutY="255.0" mnemonicParsing="false" onAction="#handleLogin" prefWidth="110.0" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" text="LOG IN" />
+      <Button layoutX="245.0" layoutY="304.0" mnemonicParsing="false" onAction="#handleBack" prefWidth="110.0" style="-fx-background-color: #6A7D84; -fx-text-fill: white; -fx-font-family: Georgia;" text="GO BACK" />
       <Label fx:id="messageLabel" layoutX="204.0" layoutY="357.0" />
       <TextField fx:id="usernameField" layoutX="224.0" layoutY="144.0" promptText="USERNAME" />
    </children>

@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.GuestViewTrialDetailsController">
+<AnchorPane style="-fx-background-color: #EAF4F8;" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.GuestViewTrialDetailsController">
    <children>
       <Label layoutX="205.0" layoutY="26.0" text="VIEW TRIAL DETAILS">
          <font>
@@ -21,7 +21,7 @@
       <TextArea fx:id="trialDetailsArea" layoutX="163.0" layoutY="165.0" prefHeight="166.0" prefWidth="289.0" />
       <Text layoutX="253.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Introduce Trial ID" />
       <Text layoutX="268.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trial Details" />
-      <Button fx:id="searchButton" layoutX="266.0" layoutY="115.0" mnemonicParsing="false" onAction="#handleSearchTrial" text="SEARCH" />
-      <Button fx:id="backButton" layoutX="514.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleBack" text="GO BACK" />
+      <Button fx:id="searchButton" layoutX="266.0" layoutY="115.0" mnemonicParsing="false" onAction="#handleSearchTrial" prefWidth="90.0" text="SEARCH" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" />
+      <Button fx:id="backButton" layoutX="514.0" layoutY="359.0" mnemonicParsing="false" onAction="#handleBack" prefWidth="90.0" text="GO BACK" style="-fx-background-color: #6A7D84; -fx-text-fill: white; -fx-font-family: Georgia;" />
    </children>
 </AnchorPane>

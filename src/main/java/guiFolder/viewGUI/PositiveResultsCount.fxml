@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="330.0" prefWidth="560.0" style="-fx-background-color: #EAF4F8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.PositiveResultsCountController">
+   <children>
+      <Label layoutX="154.0" layoutY="31.0" text="POSITIVE RESULTS COUNT" textFill="#1f4652">
+         <font><Font name="Apple SD Gothic Neo Bold" size="20.0" /></font>
+      </Label>
+      <Button fx:id="countButton" layoutX="214.0" layoutY="95.0" mnemonicParsing="false" onAction="#handleCountPositiveResults" prefWidth="132.0" style="-fx-background-color: #2F7F95; -fx-text-fill: white;" text="COUNT" />
+      <Label fx:id="resultLabel" layoutX="80.0" layoutY="162.0" prefWidth="400.0" textAlignment="CENTER" wrapText="true">
+         <font><Font size="16.0" /></font>
+      </Label>
+      <Label fx:id="messageLabel" layoutX="80.0" layoutY="217.0" prefWidth="400.0" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="backButton" layoutX="240.0" layoutY="265.0" mnemonicParsing="false" onAction="#handleBack" style="-fx-background-color: #6A7D84; -fx-text-fill: white;" prefWidth="90.0" text="GO BACK" />
+   </children>
+</AnchorPane>

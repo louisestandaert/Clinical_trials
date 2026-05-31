@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.WelcomeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="600.0" style="-fx-background-color: #EAF4F8;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="guiFolder.controllerGUI.WelcomeController">
    <children>
       <Label layoutX="166.0" layoutY="42.0" text="CLINICAL TRIALS DATABASE">
          <font>
@@ -15,11 +15,12 @@
          </font>
       </Label>
       <Label layoutX="185.0" layoutY="71.0" text="Welcome! How would you like to proceed?" />
-      <Button fx:id="loginButton" layoutX="115.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="41.0" prefWidth="141.0" text="LOG IN" />
-      <Button layoutX="115.0" layoutY="165.0" mnemonicParsing="false" onAction="#handleSingUp" prefHeight="41.0" prefWidth="141.0" text="SIGN UP" />
-      <Button layoutX="115.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleGuest" prefHeight="41.0" prefWidth="141.0" text="ENTER AS GUEST" />
-      <Button layoutX="115.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="41.0" prefWidth="141.0" text="EXIT" />
-      <ImageView fitHeight="243.0" fitWidth="219.0" layoutX="322.0" layoutY="111.0" pickOnBounds="true" preserveRatio="true">
+      <Button fx:id="loginButton" layoutX="115.0" layoutY="105.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" text="LOG IN" />
+      <Button layoutX="115.0" layoutY="154.0" mnemonicParsing="false" onAction="#handleSingUp" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" text="SIGN UP" />
+      <Button layoutX="115.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleGuest" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" text="ENTER AS GUEST" />
+      <Button layoutX="115.0" layoutY="252.0" mnemonicParsing="false" onAction="#handleEditUser" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" text="EDIT USER" />
+      <Button layoutX="115.0" layoutY="301.0" mnemonicParsing="false" onAction="#handleExit" prefHeight="38.0" prefWidth="150.0" style="-fx-background-color: #6A7D84; -fx-text-fill: white; -fx-font-family: Georgia;" text="EXIT" />
+      <ImageView fitHeight="243.0" fitWidth="219.0" layoutX="322.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@/imagesGUI/logo.png" />
          </image>
