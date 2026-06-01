@@ -11,8 +11,7 @@ public class ConnectionManager {
 		try {
 			Class.forName("org.sqlite.JDBC");
 			c = java.sql.DriverManager.getConnection("jdbc:sqlite:ClinicalTrials.db");
-			c.createStatement().execute("PRAGMA foreign_keys = ON;"); // esto es para activar las claves foraneas en
-																		// sqlite, si usas otro sql no es necesario
+			c.createStatement().execute("PRAGMA foreign_keys = ON;"); 
 			System.out.println("Connection to database established.");
 			createTables(); 
 			initializeData();
