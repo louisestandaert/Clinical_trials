@@ -3,10 +3,12 @@ package guiFolder.controllerGUI;
 import java.io.IOException;
 import java.net.URL;
 
+import Pojos.Description;
+import Pojos.Hospitals;
 import jdbc.ConnectionManager;
+import jdbc.HospitalManager;
 import jdbc.PatientManager;
 import jdbc.TrialManager;
-import jdbc.HospitalManager;
 import jdbc.DescriptionManager;
 
 import javafx.fxml.FXML;
@@ -34,9 +36,6 @@ public class AddPatientController {
 
     @FXML
     private TextField hospitalIdField;
-
-    @FXML
-    private TextField descriptionIdField;
 
     @FXML
     private Label messageLabel;
@@ -72,7 +71,6 @@ public class AddPatientController {
             String testResult = testResultField.getText();
             int trialId = Integer.parseInt(trialIdField.getText());
             int hospitalId = Integer.parseInt(hospitalIdField.getText());
-            int descriptionId = Integer.parseInt(descriptionIdField.getText());
 
             if (patientName.isEmpty() || testResult.isEmpty()) {
                 messageLabel.setText("Please complete patient name and test result.");
@@ -94,28 +92,62 @@ public class AddPatientController {
                 return;
             }
 
+            if (!hospitalExists(hospitalId)) {
+                messageLabel.setText("Hospital does not exist.");
+                return;
+            }
+
+            int descriptionId = getNextDescriptionId();
+            dm.insertDescription(descriptionId, "Unknown", "Unknown", patientId);
+
             if (dm.findDescriptionByID(descriptionId) == null) {
-                messageLabel.setText("Description does not exist.");
+                messageLabel.setText("The initial description could not be created.");
                 return;
             }
 
             pm.insertPatient(patientId, patientName, testResult, trialId, hospitalId, descriptionId);
 
-            messageLabel.setText("Patient added successfully.");
+            if (pm.getPatientById(patientId) == null) {
+                messageLabel.setText("Patient could not be added.");
+                return;
+            }
+
+            messageLabel.setText("Patient added successfully. Initial description ID: " + descriptionId);
 
             patientIdField.clear();
             patientNameField.clear();
             testResultField.clear();
             trialIdField.clear();
             hospitalIdField.clear();
-            descriptionIdField.clear();
 
         } catch (NumberFormatException e) {
-            messageLabel.setText("Patient ID, Trial ID, Hospital ID and Description ID must be numbers.");
+            messageLabel.setText("Patient ID, Trial ID and Hospital ID must be numbers.");
         } catch (Exception e) {
             messageLabel.setText("Error adding patient.");
             e.printStackTrace();
         }
+    }
+
+    private int getNextDescriptionId() {
+        int maxId = 0;
+
+        for (Description description : dm.showAllDescriptions()) {
+            if (description.getDescription_id() > maxId) {
+                maxId = description.getDescription_id();
+            }
+        }
+
+        return maxId + 1;
+    }
+
+    private boolean hospitalExists(int hospitalId) {
+        for (Hospitals hospital : hm.getAllHospitals()) {
+            if (hospital.getHospitalId() == hospitalId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @FXML

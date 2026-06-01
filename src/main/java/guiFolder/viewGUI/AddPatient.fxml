@@ -21,7 +21,6 @@
       <TextField fx:id="hospitalIdField" layoutX="102.0" layoutY="290.0" promptText="Hospital ID" />
       <Button fx:id="addPatientButton" layoutX="355.0" layoutY="135.0" mnemonicParsing="false" onAction="#handleAddPatient" prefHeight="56.0" prefWidth="117.0" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" text="ADD PATIENT" />
       <Button fx:id="backButton" layoutX="355.0" layoutY="217.0" mnemonicParsing="false" onAction="#handleBack" prefHeight="56.0" prefWidth="117.0" style="-fx-background-color: #6A7D84; -fx-text-fill: white; -fx-font-family: Georgia;" text="GO BACK" />
-      <TextField fx:id="descriptionIdField" layoutX="102.0" layoutY="331.0" promptText="Description ID" />
-      <Label fx:id="messageLabel" layoutX="300.0" layoutY="323.0" text="Label" textAlignment="CENTER" wrapText="true" />
+      <Label fx:id="messageLabel" layoutX="300.0" layoutY="300.0" prefHeight="70.0" prefWidth="250.0" text="Label" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

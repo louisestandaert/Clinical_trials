@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Patients patientnsId="4" patientName="Juan" results="Negative">
+<Patients patientsId="4" patientName="Juan" results="Negative">
     <trialId>1</trialId>
     <hospitalId>1</hospitalId>
     <descriptionId>1</descriptionId>

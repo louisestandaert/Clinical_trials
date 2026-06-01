@@ -15,13 +15,13 @@
             <Font name="Apple SD Gothic Neo Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="patientIdField" layoutX="220.0" layoutY="106.0" promptText="Patient ID" />
-      <TextField fx:id="descriptionIdField" layoutX="220.0" layoutY="154.0" promptText="Description ID:" />
-      <TextField fx:id="genderField" layoutX="220.0" layoutY="200.0" promptText="Gender:" />
-      <TextField fx:id="causeField" layoutX="220.0" layoutY="250.0" promptText="Cause:" />
-      <Button fx:id="addDescriptionButton" layoutX="237.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleAddDescription" prefWidth="147.0" text="ADD DESCRIPTION" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" />
-      <Button layoutX="264.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleBack" prefWidth="90.0" text="GO BACK" style="-fx-background-color: #6A7D84; -fx-text-fill: white; -fx-font-family: Georgia;" />
-      <Text layoutX="220.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose the patient:" />
-      <Label fx:id="messageLabel" layoutX="285.0" layoutY="369.0" />
+      <TextField fx:id="patientIdField" layoutX="225.0" layoutY="106.0" prefWidth="150.0" promptText="Patient ID" />
+      <TextField fx:id="descriptionIdField" layoutX="225.0" layoutY="154.0" prefWidth="150.0" promptText="Description ID if new" />
+      <TextField fx:id="genderField" layoutX="225.0" layoutY="200.0" prefWidth="150.0" promptText="Gender:" />
+      <TextField fx:id="causeField" layoutX="225.0" layoutY="250.0" prefWidth="150.0" promptText="Cause:" />
+      <Button fx:id="addDescriptionButton" layoutX="225.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleAddDescription" prefWidth="150.0" style="-fx-background-color: #2F7F95; -fx-text-fill: white; -fx-font-family: Georgia;" text="ADD DESCRIPTION" />
+      <Button layoutX="225.0" layoutY="332.0" mnemonicParsing="false" onAction="#handleBack" prefWidth="150.0" style="-fx-background-color: #6A7D84; -fx-text-fill: white; -fx-font-family: Georgia;" text="GO BACK" />
+      <Text layoutX="225.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose the patient:" />
+      <Label fx:id="messageLabel" layoutX="100.0" layoutY="369.0" prefWidth="400.0" textAlignment="CENTER" wrapText="true" />
    </children>
 </AnchorPane>

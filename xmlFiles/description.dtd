@@ -1,4 +1,4 @@
-<!ELEMENT Descriptions (patientId)>
+<!ELEMENT Descriptions (#PCDATA|patientId)*>
 
 <!ATTLIST Descriptions
     descriptionId CDATA #REQUIRED

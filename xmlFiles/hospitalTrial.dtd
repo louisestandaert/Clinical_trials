@@ -1,6 +1,4 @@
-<!ELEMENT TrialHospitals (TrialHospital*)>
-
-<!ELEMENT TrialHospital (trialId, hospitalId)>
+<!ELEMENT TrialHospital (#PCDATA|trialId|hospitalId)*>
 
 <!ELEMENT trialId (#PCDATA)>
 <!ELEMENT hospitalId (#PCDATA)>

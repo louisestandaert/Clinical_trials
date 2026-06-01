@@ -2,6 +2,7 @@ package guiFolder.controllerGUI;
 import java.io.IOException;
 import java.net.URL;
 
+import Pojos.Description;
 import Pojos.Patients;
 import jdbc.ConnectionManager;
 import jdbc.DescriptionManager;
@@ -49,9 +50,8 @@ public class AddPatientDescriptionController {
 
 	@FXML
 	private void handleAddDescription() {
-		try {
+        try {
             int patientId = Integer.parseInt(patientIdField.getText());
-            int descriptionId = Integer.parseInt(descriptionIdField.getText());
             String gender= genderField.getText();
             String cause = causeField.getText();
             
@@ -66,18 +66,22 @@ public class AddPatientDescriptionController {
             	return;
             }
             
-            if(descriptionManager.findDescriptionByID(descriptionId) != null) {
-            	messageLabel.setText("Description with ID " + descriptionId + " already exists.");
-            	return;
+            Description currentDescription = descriptionManager.findDescriptionByPatientId(patientId);
+
+            if(currentDescription != null) {
+            	descriptionManager.updateDescription(currentDescription.getDescription_id(), gender, cause, patientId);
+            	messageLabel.setText("Description updated successfully.");
+            } else {
+            	int descriptionId = Integer.parseInt(descriptionIdField.getText());
+
+            	if(descriptionManager.findDescriptionByID(descriptionId) != null) {
+            		messageLabel.setText("Description with ID " + descriptionId + " already exists.");
+            		return;
+            	}
+
+            	descriptionManager.insertDescription(descriptionId,gender,cause,patientId);
+            	messageLabel.setText("Description added successfully.");
             }
-            
-            if(descriptionManager.findDescriptionByPatientId(patientId) != null) {
-            	messageLabel.setText("Patient with ID " + patientId + " already has a description.");
-            	return;
-            }
-            
-            descriptionManager.insertDescription(descriptionId,gender,cause,patientId);
-            messageLabel.setText("Description added successfully.");
             
             patientIdField.clear();
             descriptionIdField.clear();

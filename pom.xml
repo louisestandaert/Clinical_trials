@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>base_de_datos</groupId>
-    <artifactId>clinical_tirals</artifactId>
+    <artifactId>clinical_trials</artifactId>
     <version>0.0.1-SNAPSHOT</version>
 
     <properties>

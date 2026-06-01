@@ -1,4 +1,4 @@
-<!ELEMENT Doctors (hospitalId, trialId)>
+<!ELEMENT Doctors (#PCDATA|hospitalId|trialId)*>
 
 <!ATTLIST Doctors
     doctorId CDATA #REQUIRED

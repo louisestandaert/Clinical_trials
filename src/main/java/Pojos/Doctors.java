@@ -34,7 +34,7 @@ public class Doctors {
 	public Doctors() {
 	}
 	
-	public Doctors(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpeciatly, int hospitalId) {
+	public Doctors(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpecialty, int hospitalId) {
 		this.doctorId=doctorId;
 		this.doctorName=doctorName;
 		this.doctorGender=doctorGender;
@@ -42,14 +42,14 @@ public class Doctors {
 		this.hospitalId=hospitalId;
 	}
 	
-	public Doctors(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpeciatly) {
+	public Doctors(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpecialty) {
 		this.doctorId=doctorId;
 		this.doctorName=doctorName;
 		this.doctorGender=doctorGender;
 		this.doctorSpecialty=doctorSpecialty;
 	}
 	
-	public Doctors(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpeciatly, int hospitalId, int trialId) {
+	public Doctors(int doctorId, String doctorName, String doctorGender, DoctorSpecialty doctorSpecialty, int hospitalId, int trialId) {
 		this.doctorId=doctorId;
         this.doctorName=doctorName;
         this.doctorGender=doctorGender;

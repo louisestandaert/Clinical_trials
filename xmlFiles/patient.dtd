@@ -1,4 +1,4 @@
-<!ELEMENT Patients (trialId, hospitalId, descriptionId)>
+<!ELEMENT Patients (#PCDATA|trialId|hospitalId|descriptionId)*>
 
 <!ATTLIST Patients
     patientsId CDATA #REQUIRED
