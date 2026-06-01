@@ -58,7 +58,7 @@ public class Doctors {
         this.trialId=trialId;
 	}
 	
-	//Getters y setters
+
 	public int getDoctorId() {
 		return doctorId;
 	}

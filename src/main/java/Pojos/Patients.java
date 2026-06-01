@@ -47,7 +47,6 @@ public class Patients {
 		this.descriptionId = descriptionId;
 	}
 
-	// Getters y Setters
 	public int getPatientsId() {
 		return patientsId;
 	}

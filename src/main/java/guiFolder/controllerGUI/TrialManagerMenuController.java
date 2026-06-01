@@ -15,7 +15,7 @@ public class TrialManagerMenuController {
 	@FXML
 	private Button backButton;
 	
-	//falta definir todos los botones en el scene builder y luego declararlos aqui
+
 	
 	@FXML
     private void handleOpenCreateTrial() {

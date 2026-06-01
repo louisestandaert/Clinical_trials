@@ -88,10 +88,6 @@ public class ConnectionManager {
 			}
 
 		
-			// modify the database - execute.update
-			// to do a select (does change the database) use executeQuery or just an
-			// execute.
-			
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 		}
